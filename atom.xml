@@ -4,9 +4,9 @@
   <subtitle>知无不言  言无不尽</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://chenxushan.oschina.io/"/>
   <updated>2017-03-12T06:13:43.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://chenxushan.oschina.io/</id>
   
   <author>
     <name>sunniberg</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2017/03/12/hello-world/"/>
-    <id>http://yoursite.com/2017/03/12/hello-world/</id>
+    <link href="http://chenxushan.oschina.io/2017/03/12/hello-world/"/>
+    <id>http://chenxushan.oschina.io/2017/03/12/hello-world/</id>
     <published>2017-03-12T06:13:43.000Z</published>
     <updated>2017-03-12T06:13:43.000Z</updated>
     
