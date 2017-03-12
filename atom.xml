@@ -4,9 +4,9 @@
   <subtitle>知无不言  言无不尽</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://chenxushan.oschina.io/"/>
-  <updated>2017-03-12T06:13:43.000Z</updated>
-  <id>http://chenxushan.oschina.io/</id>
+  <link href="http://hillychen.github.io/"/>
+  <updated>2017-03-12T10:00:35.000Z</updated>
+  <id>http://hillychen.github.io/</id>
   
   <author>
     <name>sunniberg</name>
@@ -16,9 +16,23 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>resume</title>
+    <link href="http://hillychen.github.io/2017/03/12/resume/"/>
+    <id>http://hillychen.github.io/2017/03/12/resume/</id>
+    <published>2017-03-12T10:00:35.000Z</published>
+    <updated>2017-03-12T10:00:35.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Hello World</title>
-    <link href="http://chenxushan.oschina.io/2017/03/12/hello-world/"/>
-    <id>http://chenxushan.oschina.io/2017/03/12/hello-world/</id>
+    <link href="http://hillychen.github.io/2017/03/12/hello-world/"/>
+    <id>http://hillychen.github.io/2017/03/12/hello-world/</id>
     <published>2017-03-12T06:13:43.000Z</published>
     <updated>2017-03-12T06:13:43.000Z</updated>
     
