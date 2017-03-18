@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2017-03-18T11:38:57.000Z</updated>
+  <updated>2017-03-18T13:01:27.000Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
     <published>2017-03-18T10:40:32.000Z</published>
-    <updated>2017-03-18T11:38:57.000Z</updated>
+    <updated>2017-03-18T13:01:27.000Z</updated>
     
     <content type="html"><![CDATA[<p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
 <h2 id="PHP中的常用函数"><a href="#PHP中的常用函数" class="headerlink" title="PHP中的常用函数"></a>PHP中的常用函数</h2><blockquote>
@@ -91,7 +91,7 @@
 <li><p>变变量其实就是——已声明的变量前，再上变量符</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$shu = <span class="string">'biao'</span>;</div><div class="line">$biao = <span class="string">'wo'</span>;</div><div class="line">$wo = <span class="string">'test'</span>;</div><div class="line">$test = <span class="string">'sina'</span>;</div><div class="line">$sina = <span class="string">'zhongguo'</span>;</div><div class="line">$zhongguo = <span class="string">'china'</span>;</div><div class="line">$china = <span class="string">'我爱你'</span>;</div><div class="line"><span class="comment">//别运行，自己去推理一下代码。也写几个可变变量玩玩吧！</span></div><div class="line"><span class="keyword">echo</span> $$$$$shu;(输出是zhongguo)</div></pre></td></tr></table></figure>
 </li>
-<li><p>PHP的外部变量是PHP 在使用过程中规定好的一些变量:$_GET,$_POST,$_REQUEST(既可以接收get方法也可以接收post方法的传值)<br>应有场景：<br>user.html</p>
+<li><p>PHP的外部变量是PHP 在使用过程中规定好的一些变量:<br>应有场景：<br>user.html</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"reg.php"</span> <span class="attr">method</span>=<span class="string">"get"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"pwd"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>reg.php</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//$_GET后面加上中括号，将username作为字符串放在中括号里面，就得到了表单里面的&lt;input type="text" name="username" /&gt; 的值</span></div><div class="line">$u = $_GET[<span class="string">'username'</span>];</div><div class="line">$u = $_POST[<span class="string">'username'</span>];</div><div class="line"><span class="keyword">echo</span> $u.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"></div><div class="line"><span class="comment">//$_GET['pwd'] 得到表单&lt;input type="password" name="pwd" /&gt; 的值</span></div><div class="line">$passwd = $_GET[<span class="string">'pwd'</span>];</div><div class="line"><span class="keyword">echo</span> $passwd.<span class="string">'&lt;br /&gt;'</span>;</div></pre></td></tr></table></figure>
@@ -127,7 +127,99 @@
 </tr>
 </tbody>
 </table>
+<ul>
+<li>一些常用的环境变量的键名和值对应的意思：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">键名</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$_SERVER[“REQUEST_METHOD”]</td>
+<td style="text-align:left">请求当前PHP页面的方法</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“REQUEST_URI”]</td>
+<td style="text-align:left">请求的URI</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“SERVER_SOFTWARE”]</td>
+<td style="text-align:left">用的是哪一种服务器</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“REMOTE_ADDR”]</td>
+<td style="text-align:left">客户的IP地址</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“SERVER_ADDR”]</td>
+<td style="text-align:left">当前服务器的IP地址</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“SCRIPT_FILENAME”]</td>
+<td style="text-align:left">当前请求文件的路径</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“HTTP_USER_AGENT”]</td>
+<td style="text-align:left">当前访问这个网址的电脑和浏览器的情况</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“HTTP_REFERER”]</td>
+<td style="text-align:left">上级来源（用户从哪个地址进入当前网页的）</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“REQUEST_TIME”]</td>
+<td style="text-align:left">当前请求时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>变量引用(类似于C语言指正)<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$fo = <span class="number">5</span>;</div><div class="line"><span class="comment">//注意，加上了一个&amp;符哟</span></div><div class="line">$bar = &amp;$fo;</div><div class="line">$bar = <span class="number">6</span>;</div><div class="line"><span class="comment">//$bar的结果为6</span></div><div class="line"><span class="keyword">echo</span> $bar.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"><span class="comment">//$fo的结果为6</span></div><div class="line"><span class="keyword">echo</span> $fo.<span class="string">'&lt;br /&gt;'</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
 </blockquote>
+<h2 id="三元运算符"><a href="#三元运算符" class="headerlink" title="三元运算符"></a>三元运算符</h2><blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">符号</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$x? 真代码段:假代码段</td>
+<td style="text-align:left">判断是否为真假 ? 真情况 : 假情况;</td>
+</tr>
+<tr>
+<td style="text-align:left">``（反引号）</td>
+<td style="text-align:left">反引号中间插代命令，执行系统命令，等价于shell_exec函数</td>
+</tr>
+<tr>
+<td style="text-align:left">@</td>
+<td style="text-align:left">单行抑制错误，把这一行的错误不让它显示出来了，效率低不建议使用</td>
+</tr>
+<tr>
+<td style="text-align:left">=&gt;</td>
+<td style="text-align:left">数组下标访问符</td>
+</tr>
+<tr>
+<td style="text-align:left">-&gt;</td>
+<td style="text-align:left">对象访问符</td>
+</tr>
+<tr>
+<td style="text-align:left">instanceof</td>
+<td style="text-align:left">判断某个对象是否来自某个类，如果是的返回true，如果不是返回false</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">woziji</span><span class="params">($one,$two,$func)</span></span>&#123;</div><div class="line">        <span class="comment">//我规定：检查$func是否是函数，如果不是函数停止执行本段代码，返回false</span></div><div class="line">        <span class="keyword">if</span>(!is_callable($func))&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//我把$one、$two相加，再把$one和$two传入$func这个函数中处理一次</span></div><div class="line">        <span class="comment">//$func是一个变量函数，参见变量函数这一章</span></div><div class="line">        <span class="keyword">echo</span> $one + $two + $func($one,$two);</div><div class="line">&#125;</div><div class="line"><span class="comment">//我们定义几个函数试试</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">plusx2</span><span class="params">( $foo , $bar)</span></span>&#123;</div><div class="line">        $result = ($foo+$bar)*<span class="number">2</span>;</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">jian</span><span class="params">( $x , $y )</span></span>&#123;</div><div class="line">    $result = $x - $y;</div><div class="line">    <span class="keyword">return</span> $result;</div><div class="line">&#125;</div><div class="line"><span class="comment">//调用一下函数，woziji，向里面传入参数试试</span></div><div class="line"><span class="keyword">echo</span> woziji(<span class="number">20</span>,<span class="number">10</span>,<span class="string">'plusx2'</span>);</div><div class="line"><span class="comment">//将plusx2改成jian试试结果</span></div><div class="line"><span class="keyword">echo</span> woziji(<span class="number">20</span>,<span class="number">10</span>,<span class="string">'jian'</span>);</div></pre></td></tr></table></figure>
+<h3 id="变量函数"><a href="#变量函数" class="headerlink" title="变量函数"></a>变量函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">echo</span> <span class="string">'天王盖地虎'</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'小鸡炖蘑菇'</span>;</div><div class="line">&#125;</div><div class="line">$fu = <span class="string">'demo'</span>;</div><div class="line"><span class="comment">//把$fu变为了demo,把demo后加上了一个括号，就执行函数了</span></div><div class="line">$fu();</div><div class="line"><span class="comment">//把$fu的值改为test字符串再试试？</span></div></pre></td></tr></table></figure>
+<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.变量函数式的匿名函数</span></div><div class="line">$greet = <span class="function"><span class="keyword">function</span><span class="params">($name)</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">echo</span> $name.<span class="string">'，你好'</span>;</div><div class="line">&#125;;</div><div class="line">$greet(<span class="string">'明天'</span>);</div><div class="line">$greet(<span class="string">'PHP学院'</span>);</div><div class="line"><span class="comment">//2.回调式的匿名函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">woziji</span><span class="params">($one,$two,$func)</span></span>&#123;</div><div class="line">        <span class="comment">//我规定：检查$func是否是函数，如果不是函数停止执行本段代码，返回false</span></div><div class="line">        <span class="keyword">if</span>(!is_callable($func))&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//我把$one、$two相加，再把$one和$two传入$func这个函数中处理一次</span></div><div class="line">        <span class="comment">//$func是一个变量函数，参见变量函数这一章</span></div><div class="line">        <span class="keyword">echo</span> $one + $two + $func($one,$two);</div><div class="line"></div><div class="line">&#125;</div><div class="line">woziji(<span class="number">20</span>,<span class="number">30</span>,<span class="function"><span class="keyword">function</span><span class="params">( $foo , $bar)</span></span>&#123;</div><div class="line">                $result = ($foo+$bar)*<span class="number">2</span>;</div><div class="line">                <span class="keyword">return</span> $result;</div><div class="line">            &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
