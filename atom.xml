@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2017-03-12T14:38:17.000Z</updated>
+  <updated>2017-03-18T11:02:44.000Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP学习总结</title>
+    <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
+    <published>2017-03-18T10:40:32.000Z</published>
+    <updated>2017-03-18T11:02:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>#PHP学习笔记</p>
+<h2 id="PHP中的常用函数"><a href="#PHP中的常用函数" class="headerlink" title="PHP中的常用函数"></a>PHP中的常用函数</h2><blockquote>
+<p>其实学习PHP或者Python，最终要的一点就是要熟悉一些常用库或者函数，这样在应用的时候才能游刃有余，下面总结一下常用的函数<br>查看数据类型</p>
+<ul>
+<li>gettype(传入一个变量) 能够获得变量的类型</li>
+<li>var_dump(传入一个变量) 输出变类型和值<br>判断数据类型</li>
+<li>is_int/bool/float/string/array/object/null/resource(资源)/scalar(标量)/numeric(是否为数值类型)/callable(是否为函数)<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$float = <span class="number">88.8</span>;</div><div class="line">$type = gettype($float);</div><div class="line">var_dump($float);</div><div class="line"><span class="keyword">echo</span> $type;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><blockquote>
+<p>强制类型转换有三种方式：</p>
+<ul>
+<li>用后面的三个函数可以完成类型转换，intval()、floatval()、strval()</li>
+<li>变量前加上()里面写上类型，将它转换后赋值给其他变量</li>
+<li>settype(变量，类型) 直接改变量本身</li>
+</ul>
+</blockquote>
+<h2 id="常量和变量"><a href="#常量和变量" class="headerlink" title="常量和变量"></a>常量和变量</h2><h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><blockquote>
+<p>定义 define(常量名，常量值)<br>系统的一些常量：<br>|常量明|说明|常量明|说明|<br>|:—–|:—–||:—–|:—–|<br>|LINE|当前所在的行|FILE|当前文件在服务器的路径|<br>|FUNCTIOIN|当前函数名|CLASS|当前类名|<br>|METHOD|当前成员方法名|PHP_OS|PHP运行的操作系统|<br>|PHP_VERSION|当前PHP的版本|TRAIT|Trait 的名字,php5.4新加|<br>|DIR|文件所在的目录|NAMESPACE|当前命名空间的名称（区分大小写）|</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">define(<span class="string">'MY_NAME'</span>,<span class="string">'PHP'</span>);</div><div class="line"><span class="keyword">echo</span> MY_NAME;</div><div class="line"><span class="comment">//下面是错误的调用方式</span></div><div class="line"><span class="keyword">echo</span> <span class="string">'我的名字是MY_NAME'</span>;</div><div class="line"><span class="comment">//正确的调用方式该这么写</span></div><div class="line"><span class="keyword">echo</span> <span class="string">'我的名字是'</span> . MY_NAME;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#PHP学习笔记&lt;/p&gt;
+&lt;h2 id=&quot;PHP中的常用函数&quot;&gt;&lt;a href=&quot;#PHP中的常用函数&quot; class=&quot;headerlink&quot; title=&quot;PHP中的常用函数&quot;&gt;&lt;/a&gt;PHP中的常用函数&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;其实学习PHP或者Pyth
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://hillychen.github.io/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://hillychen.github.io/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>算法学习01</title>
@@ -74,7 +120,7 @@
     <link href="http://hillychen.github.io/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://hillychen.github.io/2017/03/12/Mysql学习总结/</id>
     <published>2017-03-12T14:05:44.000Z</published>
-    <updated>2017-03-16T17:31:23.000Z</updated>
+    <updated>2017-03-16T17:33:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>##mysql学习总结</p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
