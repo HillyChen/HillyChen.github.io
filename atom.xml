@@ -39,7 +39,7 @@
     <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
     <published>2017-03-18T10:40:32.000Z</published>
-    <updated>2017-03-18T13:54:03.000Z</updated>
+    <updated>2017-03-18T14:46:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
 <h2 id="PHP中的常用函数"><a href="#PHP中的常用函数" class="headerlink" title="PHP中的常用函数"></a>PHP中的常用函数</h2><blockquote>
@@ -242,6 +242,22 @@
 <h3 id="内部函数"><a href="#内部函数" class="headerlink" title="内部函数"></a>内部函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'我是函数foo哟，调一下我才会执行定义函数bar的过程&lt;br /&gt;'</span>;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span></span></div><div class="line">  &#123;</div><div class="line">       <span class="keyword">echo</span> <span class="string">'在foo函数内部有个函数叫bar函数&lt;br /&gt;'</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//现在还不能调用bar()函数，因为它还不存在</span></div><div class="line">bar();</div><div class="line">foo();</div><div class="line"><span class="comment">//现在可以调用bar()函数了，因为foo()函数的执行使得bar()函数变为已定义的函数</span></div><div class="line">bar();</div><div class="line"><span class="comment">//再调一次foo()看看是不是会报错？</span></div><div class="line">foo();</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
 <h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><blockquote>
 <p>我们将函数体外的变量通过$GLOBALS拿到了函数体使用。所以，打破了函数外的变量不能在函数体内使用的限定。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$one = <span class="number">10</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span><span class="params">()</span></span>&#123;</div><div class="line">    $two = <span class="number">100</span>;</div><div class="line">    $result = $two + $GLOBALS[<span class="string">'one'</span>];</div><div class="line">    <span class="keyword">return</span> $result;</div><div class="line">&#125;</div><div class="line"><span class="comment">//你会发现结果变成了110</span></div><div class="line"><span class="keyword">echo</span> demo();</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="使用内置函数"><a href="#使用内置函数" class="headerlink" title="使用内置函数"></a>使用内置函数</h2><blockquote>
+<p>主要掌握如何使用内置函数，就是会看<a href="http://php.net/manual/en/" target="_blank" rel="external">PHP官方文档</a><br>使用函数的重点是三块：</p>
+<ul>
+<li>了解函数的功能，特别是常用函数的功能</li>
+<li>了解函数的参数</li>
+<li>了解函数的返回值<br>针对上面的三块，讲解6个函数，这6个函数，概况了函数的基本用法的全部注意事项：</li>
+<li>直接返回布尔型，如bool copy ()</li>
+<li>带有MIXED参数的函数如何调用。Mixed表示任何类型的数据。如Array_unshift()</li>
+<li>参数中带有&amp;符的参数，一定要传一个变量做为参数。函数里面改变了他的值。</li>
+<li>带有[]的参数，表示可选项。</li>
+<li>带有…的参数，表示可以传任意多个参数。</li>
+<li>带有callback的参数，表示回调函数。需要传一个函数进来。Array_map()</li>
+<li>函数支持的版本你要了解<h5 id="bool-copy-string-source-string-dest-resource-context"><a href="#bool-copy-string-source-string-dest-resource-context" class="headerlink" title="bool copy ( string $source , string $dest [, resource $context ])"></a>bool copy ( string $source , string $dest [, resource $context ])</h5>这个函数的功能为： 拷备一个文件<br>返回值为为： bool型值，就是成功返回true，失败返回false<br>参数为： 两个字符串的值，一个是copy的源文件，一个为目标文件。第三个参数可选的，不常用，我们不管它。<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$file = <span class="string">'example.txt'</span>;</div><div class="line">$newfile = <span class="string">'example.txt.bak'</span>;</div><div class="line"><span class="keyword">if</span> (!copy($file, $newfile)) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"failed to copy $file...\n"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
 </blockquote>
 ]]></content>
     
