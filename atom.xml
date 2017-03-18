@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2017-03-18T11:05:59.000Z</updated>
+  <updated>2017-03-18T11:38:57.000Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
     <published>2017-03-18T10:40:32.000Z</published>
-    <updated>2017-03-18T11:05:59.000Z</updated>
+    <updated>2017-03-18T11:38:57.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="PHP学习笔记"><a href="#PHP学习笔记" class="headerlink" title="PHP学习笔记"></a>PHP学习笔记</h1><h2 id="PHP中的常用函数"><a href="#PHP中的常用函数" class="headerlink" title="PHP中的常用函数"></a>PHP中的常用函数</h2><blockquote>
+    <content type="html"><![CDATA[<p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
+<h2 id="PHP中的常用函数"><a href="#PHP中的常用函数" class="headerlink" title="PHP中的常用函数"></a>PHP中的常用函数</h2><blockquote>
 <p>其实学习PHP或者Python，最终要的一点就是要熟悉一些常用库或者函数，这样在应用的时候才能游刃有余，下面总结一下常用的函数<br>查看数据类型</p>
 <ul>
 <li>gettype(传入一个变量) 能够获得变量的类型</li>
@@ -40,14 +41,99 @@
 </ul>
 </blockquote>
 <h2 id="常量和变量"><a href="#常量和变量" class="headerlink" title="常量和变量"></a>常量和变量</h2><h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><blockquote>
-<p>定义 define(常量名，常量值)<br>系统的一些常量：<br>|常量明|说明|常量明|说明|<br>|:—–|:—–||:—–|:—–|<br>|LINE|当前所在的行|FILE|当前文件在服务器的路径|<br>|FUNCTIOIN|当前函数名|CLASS|当前类名|<br>|METHOD|当前成员方法名|PHP_OS|PHP运行的操作系统|<br>|PHP_VERSION|当前PHP的版本|TRAIT|Trait 的名字,php5.4新加|<br>|DIR|文件所在的目录|NAMESPACE|当前命名空间的名称（区分大小写）|</p>
-</blockquote>
+<p>定义 define(常量名，常量值)；defined()函数来做安全机制<br>系统的一些常量：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">常量明</th>
+<th style="text-align:left">说明</th>
+<th>常量明</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">LINE</td>
+<td style="text-align:left">当前所在的行</td>
+<td>FILE</td>
+<td style="text-align:left">当前文件在服务器的路径</td>
+</tr>
+<tr>
+<td style="text-align:left">FUNCTIOIN</td>
+<td style="text-align:left">当前函数名</td>
+<td>CLASS</td>
+<td style="text-align:left">当前类名</td>
+</tr>
+<tr>
+<td style="text-align:left">METHOD</td>
+<td style="text-align:left">当前成员方法名</td>
+<td>PHP_OS</td>
+<td style="text-align:left">PHP运行的操作系统</td>
+</tr>
+<tr>
+<td style="text-align:left">PHP_VERSION</td>
+<td style="text-align:left">当前PHP的版本</td>
+<td>TRAIT</td>
+<td style="text-align:left">Trait 的名字,php5.4新加</td>
+</tr>
+<tr>
+<td style="text-align:left">DIR</td>
+<td style="text-align:left">文件所在的目录</td>
+<td>NAMESPACE</td>
+<td style="text-align:left">当前命名空间的名称（区分大小写</td>
+</tr>
+</tbody>
+</table>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">define(<span class="string">'MY_NAME'</span>,<span class="string">'PHP'</span>);</div><div class="line"><span class="keyword">echo</span> MY_NAME;</div><div class="line"><span class="comment">//下面是错误的调用方式</span></div><div class="line"><span class="keyword">echo</span> <span class="string">'我的名字是MY_NAME'</span>;</div><div class="line"><span class="comment">//正确的调用方式该这么写</span></div><div class="line"><span class="keyword">echo</span> <span class="string">'我的名字是'</span> . MY_NAME;</div></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><blockquote>
+<ul>
+<li><p>变变量其实就是——已声明的变量前，再上变量符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$shu = <span class="string">'biao'</span>;</div><div class="line">$biao = <span class="string">'wo'</span>;</div><div class="line">$wo = <span class="string">'test'</span>;</div><div class="line">$test = <span class="string">'sina'</span>;</div><div class="line">$sina = <span class="string">'zhongguo'</span>;</div><div class="line">$zhongguo = <span class="string">'china'</span>;</div><div class="line">$china = <span class="string">'我爱你'</span>;</div><div class="line"><span class="comment">//别运行，自己去推理一下代码。也写几个可变变量玩玩吧！</span></div><div class="line"><span class="keyword">echo</span> $$$$$shu;(输出是zhongguo)</div></pre></td></tr></table></figure>
+</li>
+<li><p>PHP的外部变量是PHP 在使用过程中规定好的一些变量:$_GET,$_POST,$_REQUEST(既可以接收get方法也可以接收post方法的传值)<br>应有场景：<br>user.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"reg.php"</span> <span class="attr">method</span>=<span class="string">"get"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"pwd"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>reg.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//$_GET后面加上中括号，将username作为字符串放在中括号里面，就得到了表单里面的&lt;input type="text" name="username" /&gt; 的值</span></div><div class="line">$u = $_GET[<span class="string">'username'</span>];</div><div class="line">$u = $_POST[<span class="string">'username'</span>];</div><div class="line"><span class="keyword">echo</span> $u.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"></div><div class="line"><span class="comment">//$_GET['pwd'] 得到表单&lt;input type="password" name="pwd" /&gt; 的值</span></div><div class="line">$passwd = $_GET[<span class="string">'pwd'</span>];</div><div class="line"><span class="keyword">echo</span> $passwd.<span class="string">'&lt;br /&gt;'</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">全局变量名</th>
+<th style="text-align:left">功能说明</th>
+<th style="text-align:left">全局变量名</th>
+<th style="text-align:left">功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$_COOKIE</td>
+<td style="text-align:left">得到会话控制中cookie传值</td>
+<td style="text-align:left">$_SESSION</td>
+<td style="text-align:left">得到会话控制中session的值</td>
+</tr>
+<tr>
+<td style="text-align:left">$_FILES</td>
+<td style="text-align:left">得到文件上传的结果</td>
+<td style="text-align:left">$_GET</td>
+<td style="text-align:left">得到get传值的结果</td>
+</tr>
+<tr>
+<td style="text-align:left">$_POST</td>
+<td style="text-align:left">得到post传值的结果</td>
+<td style="text-align:left">$_REQUEST</td>
+<td style="text-align:left">即能得到get的传值结果，也能得到post传值的结果</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;PHP学习笔记&quot;&gt;&lt;a href=&quot;#PHP学习笔记&quot; class=&quot;headerlink&quot; title=&quot;PHP学习笔记&quot;&gt;&lt;/a&gt;PHP学习笔记&lt;/h1&gt;&lt;h2 id=&quot;PHP中的常用函数&quot;&gt;&lt;a href=&quot;#PHP中的常用函数&quot; class=&quot;header
+      &lt;p&gt;知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。&lt;/p&gt;
+&lt;h2 id=&quot;PHP中的常用函数&quot;&gt;&lt;a href=&quot;#PHP中的常用函数&quot; class=&quot;headerlink&quot; title=&quot;PHP中的常
     
     </summary>
     
@@ -117,9 +203,10 @@
     <link href="http://hillychen.github.io/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://hillychen.github.io/2017/03/12/Mysql学习总结/</id>
     <published>2017-03-12T14:05:44.000Z</published>
-    <updated>2017-03-18T11:05:56.000Z</updated>
+    <updated>2017-03-18T11:10:57.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="mysql学习总结"><a href="#mysql学习总结" class="headerlink" title="mysql学习总结"></a>mysql学习总结</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
+    <content type="html"><![CDATA[<p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
 <ul>
 <li>MySQL 是一个关系数据库系统，支持 SQL 查询语言。</li>
 <li>MySQL 可以是免费的，你不需要为它付费。</li>
@@ -140,7 +227,8 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;mysql学习总结&quot;&gt;&lt;a href=&quot;#mysql学习总结&quot; class=&quot;headerlink&quot; title=&quot;mysql学习总结&quot;&gt;&lt;/a&gt;mysql学习总结&lt;/h2&gt;&lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; 
+      &lt;p&gt;知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。&lt;/p&gt;
+&lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;bloc
     
     </summary>
     
