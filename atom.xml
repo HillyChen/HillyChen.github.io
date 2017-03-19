@@ -39,7 +39,7 @@
     <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
     <published>2017-03-18T10:40:32.000Z</published>
-    <updated>2017-03-18T14:52:20.000Z</updated>
+    <updated>2017-03-19T15:06:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
 <h2 id="PHP中的常用函数"><a href="#PHP中的常用函数" class="headerlink" title="PHP中的常用函数"></a>PHP中的常用函数</h2><blockquote>
@@ -255,12 +255,75 @@
 <li>带有[]的参数，表示可选项。</li>
 <li>带有…的参数，表示可以传任意多个参数。</li>
 <li>带有callback的参数，表示回调函数。需要传一个函数进来。Array_map()</li>
-<li>函数支持的版本你要了解<h5 id="1-bool-copy-string-source-string-dest-resource-context"><a href="#1-bool-copy-string-source-string-dest-resource-context" class="headerlink" title="1.bool copy ( string $source , string $dest [, resource $context ])"></a>1.bool copy ( string $source , string $dest [, resource $context ])</h5>这个函数的功能为： 拷备一个文件<br>返回值为为： bool型值，就是成功返回true，失败返回false<br>参数为： 两个字符串的值，一个是copy的源文件，一个为目标文件。第三个参数可选的，不常用，我们不管它。<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$file = <span class="string">'example.txt'</span>;</div><div class="line">$newfile = <span class="string">'example.txt.bak'</span>;</div><div class="line"><span class="keyword">if</span> (!copy($file, $newfile)) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"failed to copy $file...\n"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+<li>函数支持的版本你要了解</li>
 </ul>
+</blockquote>
+<h5 id="1-bool-copy-string-source-string-dest-resource-context"><a href="#1-bool-copy-string-source-string-dest-resource-context" class="headerlink" title="1.bool copy ( string $source , string $dest [, resource $context ])"></a>1.bool copy ( string $source , string $dest [, resource $context ])</h5><blockquote>
+<p>这个函数的功能为： 拷备一个文件<br>返回值为为： bool型值，就是成功返回true，失败返回false<br>参数为： 两个字符串的值，一个是copy的源文件，一个为目标文件。第三个参数可选的，不常用，我们不管它。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$file = <span class="string">'example.txt'</span>;</div><div class="line">$newfile = <span class="string">'example.txt.bak'</span>;</div><div class="line"><span class="keyword">if</span> (!copy($file, $newfile)) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"failed to copy $file...\n"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 </blockquote>
 <h5 id="2-int-array-unshift-array-amp-array-mixed-value1-mixed-…"><a href="#2-int-array-unshift-array-amp-array-mixed-value1-mixed-…" class="headerlink" title="2.int array_unshift ( array &amp;$array , mixed $value1 [, mixed $… ] )"></a>2.int array_unshift ( array &amp;$array , mixed $value1 [, mixed $… ] )</h5><blockquote>
 <p>Mixed表示任何类型的数据。<br>功能： 操作一个数组，向数组中之前插入其他类型的参数。<br>返回值： int 类型，可能就是插入成功最后的个数<br>参数： 第一个参数为&amp;符，也就是在操作的过程中，改变了第一个参数的值。引用传参。也就是操作这个数组，向这个数组中传入参数。会直接改变这个数组的值。第二个参数为mixed，因为数组可以存入多个不同的类型.mixed是指混合的意思。因此，mixed是指可传入任意类型。第三个数数加了中括号，我们所有遇到中括号的。都是指后面的参数可传，也可以不传。第四，最后还看到了三个…(省略号)。代表可以传入任意多个参数。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$queue = <span class="keyword">array</span>(<span class="string">"orange"</span>, <span class="string">"banana"</span>);</div><div class="line">array_unshift($queue, <span class="string">"apple"</span>, <span class="string">"raspberry"</span>);</div><div class="line">print_r($queue);</div><div class="line"><span class="comment">// The above example will output:</span></div><div class="line"><span class="comment">// Array</span></div><div class="line"><span class="comment">// (</span></div><div class="line"><span class="comment">//     [0] =&gt; apple</span></div><div class="line"><span class="comment">//     [1] =&gt; raspberry</span></div><div class="line"><span class="comment">//     [2] =&gt; orange</span></div><div class="line"><span class="comment">//     [3] =&gt; banana</span></div><div class="line"><span class="comment">// )</span></div></pre></td></tr></table></figure></p>
+</blockquote>
+<h5 id="3、bool-array-walk-array-amp-array-callable-callback-mixed-userdata-NULL"><a href="#3、bool-array-walk-array-amp-array-callable-callback-mixed-userdata-NULL" class="headerlink" title="3、bool array_walk ( array &amp;$array , callable $callback [, mixed $userdata = NULL ] )"></a>3、bool array_walk ( array &amp;$array , callable $callback [, mixed $userdata = NULL ] )</h5><p>功能：传入一个回调函数，将数组的原来的组操作，并且发生变化。<br>返回值：bool 值 也就是意味着，提示成功或者失败<br>参数：第一个参数是要操作的数组。第二个参数是callback 代表着可以传入函数或者匿名函数。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">$fruits = <span class="keyword">array</span>(<span class="string">"d"</span> =&gt; <span class="string">"lemon"</span>, <span class="string">"a"</span> =&gt; <span class="string">"orange"</span>, <span class="string">"b"</span> =&gt; <span class="string">"banana"</span>, <span class="string">"c"</span> =&gt; <span class="string">"apple"</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test_alter</span><span class="params">(&amp;$item1, $key, $prefix)</span></span></div><div class="line">&#123;</div><div class="line">    $item1 = <span class="string">"$prefix: $item1"</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test_print</span><span class="params">($item2, $key)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"$key. $item2&lt;br /&gt;\n"</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">echo</span> <span class="string">"Before ...:\n"</span>;</div><div class="line">array_walk($fruits, <span class="string">'test_print'</span>);</div><div class="line">array_walk($fruits, <span class="string">'test_alter'</span>, <span class="string">'fruit'</span>);</div><div class="line"><span class="keyword">echo</span> <span class="string">"... and after:\n"</span>;</div><div class="line">array_walk($fruits, <span class="string">'test_print'</span>);</div><div class="line"><span class="comment">// The above example will output:</span></div><div class="line"><span class="comment">// Before ...:</span></div><div class="line"><span class="comment">// d. lemon</span></div><div class="line"><span class="comment">// a. orange</span></div><div class="line"><span class="comment">// b. banana</span></div><div class="line"><span class="comment">// c. apple</span></div><div class="line"><span class="comment">// ... and after:</span></div><div class="line"><span class="comment">// d. fruit: lemon</span></div><div class="line"><span class="comment">// a. fruit: orange</span></div><div class="line"><span class="comment">// b. fruit: banana</span></div><div class="line"><span class="comment">// c. fruit: apple</span></div></pre></td></tr></table></figure></p>
+<h2 id="文件包含函数"><a href="#文件包含函数" class="headerlink" title="文件包含函数"></a>文件包含函数</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">函数</th>
+<th style="text-align:left">包含失败</th>
+<th style="text-align:left">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Inlcude</td>
+<td style="text-align:left">返回一条警告</td>
+<td style="text-align:left">文件继续向下执行。通常用于动态包含</td>
+</tr>
+<tr>
+<td style="text-align:left">Require</td>
+<td style="text-align:left">一个致命的错</td>
+<td style="text-align:left">代码就不会继续向下执行。通常包含极为重要的文件，整个代码甭想执行</td>
+</tr>
+<tr>
+<td style="text-align:left">Include_once</td>
+<td style="text-align:left">返回一条警告</td>
+<td style="text-align:left">除了原有include的功能以外，它还会做once检测，如果文件曾经已经被被包含过，不再包含</td>
+</tr>
+<tr>
+<td style="text-align:left">Require_once</td>
+<td style="text-align:left">一个致命的错</td>
+<td style="text-align:left">除了原的功能一外，会做一次once检测，防止文件反复被包含</td>
+</tr>
+</tbody>
+</table>
+<h2 id="日期常用函数"><a href="#日期常用函数" class="headerlink" title="日期常用函数"></a>日期常用函数</h2><blockquote>
+<p>在正式学习日期函数前大家要了解几个概念:</p>
+<ul>
+<li>时区:1884年在华盛顿召开国际经度会议时，为了克服时间上的混乱，规定将全球划分为24个时区。在中国采用首都北京所在地东八区的时间为全国统一使用时间。</li>
+<li>世界时:如果对国际上某一重大事情，用地方时间来记录，就会感到复杂不便．而且将来日子一长容易搞错。因此，天文学家就提出一个大家都能接受且又方便的记录方法，那就是以格林尼治（英国某地区）的地方时间为标准。</li>
+<li>unix时间戳:从Unix纪元（1970 年 1月1日零时）开始到一个时间经过的秒数。<br>时间函数有：</li>
+<li>设置时区：<ul>
+<li>date_default_timezone_get()</li>
+<li>date_default_timezone_set()<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义一下时区常量，以后你可以放到配置文件里</span></div><div class="line">define(<span class="string">'TIME_ZONE'</span>,<span class="string">'Asia/shanghai'</span>);</div><div class="line"><span class="comment">//执行函数</span></div><div class="line">date_default_timezone_set(TIME_ZONE);</div><div class="line"><span class="keyword">echo</span> date_default_timezone_get ();</div><div class="line"><span class="keyword">echo</span> date(<span class="string">'Y-m-d H:i:s'</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>time()获取当前的unix时间戳:time()获取当前的unix时间戳</li>
+<li><p>getdate获取当前系统时间</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">$mytime= getdate()；    </div><div class="line">print_r( $mytime)；</div><div class="line"><span class="comment">// Array</span></div><div class="line"><span class="comment">// (</span></div><div class="line"><span class="comment">//     [seconds] =&gt; 1            //秒</span></div><div class="line"><span class="comment">//     [minutes] =&gt; 10            //分钟</span></div><div class="line"><span class="comment">//     [hours] =&gt; 17            //小时</span></div><div class="line"><span class="comment">//     [mday] =&gt; 18            //日</span></div><div class="line"><span class="comment">//     [wday] =&gt; 0            //星期中的第几天</span></div><div class="line"><span class="comment">//     [mon] =&gt; 1            //月</span></div><div class="line"><span class="comment">//     [year] =&gt; 2015            //年</span></div><div class="line"><span class="comment">//     [yday] =&gt; 17            //年中的第几天</span></div><div class="line"><span class="comment">//     [weekday] =&gt; Sunday        //星期</span></div><div class="line"><span class="comment">//     [month] =&gt; January        //月份</span></div><div class="line"><span class="comment">//     [0] =&gt; 1421597401        //时间戳</span></div><div class="line"><span class="comment">// )</span></div><div class="line">$mytime = getdate();</div><div class="line"><span class="keyword">echo</span> <span class="string">"年 :"</span>.$mytime[<span class="string">'year'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"月 :"</span>.$mytime[<span class="string">'mon'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"日 :"</span>.$mytime[<span class="string">'mday'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"时 :"</span>.$mytime[<span class="string">'hours'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"分 :"</span>.$mytime[<span class="string">'minutes'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"秒 :"</span>.$mytime[<span class="string">'seconds'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"一个小时中的第几钟 :"</span>.$mytime[<span class="string">'minutes'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"这是一分钟的第几秒 :"</span>.$mytime[<span class="string">'seconds'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"星期名称 :"</span>.$mytime[<span class="string">'weekday'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"月份名称 :"</span>.$mytime[<span class="string">'month'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"时间戳   :"</span>.$mytime[<span class="number">0</span>].<span class="string">"\n"</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>日期验证函数:bool checkdate ( int $month , int $day , int $year )</p>
+</li>
+<li>mktime()函数可以对一个日期和时间获得一个本地化时间戳:int mktime (int $hour [, int $minute [, int $second [, int $month [, int $day [. int$year [, int $.is_dstl.l } ] ] 31 )</li>
+<li>将英文文本的日期时间描述解析为 Unix 时间戳:int strtotime ( string $time [, int $now = time() ] )</li>
+<li>程序执行时间检测,microtime()这个函数，能够返回当前 Unix 时间戳和微秒数:mixed microtime ([ bool $get_as_float ] )</li>
+</ul>
+<h2 id="字符串常用函数"><a href="#字符串常用函数" class="headerlink" title="字符串常用函数"></a><a href="http://php.net/manual/zh/book.strings.php" target="_blank" rel="external">字符串常用函数</a></h2><p>声明：</p>
+<blockquote>
+<p>内容参考：<a href="http://www.kancloud.cn/phpxy/phpbook/33191" target="_blank" rel="external">《7天学会PHP》</a></p>
 </blockquote>
 ]]></content>
     
