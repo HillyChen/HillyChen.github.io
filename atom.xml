@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2017-04-05T15:27:02.000Z</updated>
+  <updated>2017-04-07T15:22:04.000Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -14,6 +14,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机专业基础知识</title>
+    <link href="http://hillychen.github.io/2017/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://hillychen.github.io/2017/04/07/计算机专业基础知识/</id>
+    <published>2017-04-07T15:12:31.000Z</published>
+    <updated>2017-04-07T15:22:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>从事IT行业的人，可能有一部分人不是科班出身，或者即使是科班出身，可能对计算机的一些基础理论知识掌握的不是很牢靠，目前国内的计算机学院的专业课程中最重要的就是这四门：计算机组成、操作系统、数据结构、计算机网络。这四门也是目前计算机考研所涉及的，很重要，也很基础，虽然现在很多软件开发人员在工作中都不涉及这些知识，但是对于大公司来说，要想深入技术领域产品的研发，这些知识是很重要的，所以对于打算一直走技术路线的人来说，职业生涯很有必要抽出时间进行学习。八个字：“巩固、充实、深入、探索”。</p>
+<h3 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h3><blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1feeiqrjx0wj23g21dxnp4.jpg" alt="计算机系统概述"></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从事IT行业的人，可能有一部分人不是科班出身，或者即使是科班出身，可能对计算机的一些基础理论知识掌握的不是很牢靠，目前国内的计算机学院的专业课程中最重要的就是这四门：计算机组成、操作系统、数据结构、计算机网络。这四门也是目前计算机考研所涉及的，很重要，也很基础，虽然现在很多
+    
+    </summary>
+    
+      <category term="计算机基础" scheme="http://hillychen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="计算机基础" scheme="http://hillychen.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
   
   <entry>
     <title>设计师和程序员必备：全世界最著名的 icons 网站</title>
