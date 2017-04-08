@@ -4,9 +4,9 @@
   <subtitle>知无不言  言无不尽</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://hillychen.github.io/"/>
+  <link href="https://git.coding.net/hilly/hilly.git/"/>
   <updated>2017-04-07T15:22:04.000Z</updated>
-  <id>http://hillychen.github.io/</id>
+  <id>https://git.coding.net/hilly/hilly.git/</id>
   
   <author>
     <name>sunniberg</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>计算机专业基础知识</title>
-    <link href="http://hillychen.github.io/2017/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    <id>http://hillychen.github.io/2017/04/07/计算机专业基础知识/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/04/07/计算机专业基础知识/</id>
     <published>2017-04-07T15:12:31.000Z</published>
     <updated>2017-04-07T15:22:04.000Z</updated>
     
@@ -34,17 +34,17 @@
     
     </summary>
     
-      <category term="计算机基础" scheme="http://hillychen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="https://git.coding.net/hilly/hilly.git/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="计算机基础" scheme="http://hillychen.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="https://git.coding.net/hilly/hilly.git/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>设计师和程序员必备：全世界最著名的 icons 网站</title>
-    <link href="http://hillychen.github.io/2017/04/05/%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%92%8C%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%EF%BC%9A%E5%85%A8%E4%B8%96%E7%95%8C%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84-icons-%E7%BD%91%E7%AB%99/"/>
-    <id>http://hillychen.github.io/2017/04/05/设计师和程序员必备：全世界最著名的-icons-网站/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/04/05/%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%92%8C%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%EF%BC%9A%E5%85%A8%E4%B8%96%E7%95%8C%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84-icons-%E7%BD%91%E7%AB%99/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/04/05/设计师和程序员必备：全世界最著名的-icons-网站/</id>
     <published>2017-04-05T15:05:33.000Z</published>
     <updated>2017-04-05T15:27:02.000Z</updated>
     
@@ -70,17 +70,17 @@
     
     </summary>
     
-      <category term="UI" scheme="http://hillychen.github.io/categories/UI/"/>
+      <category term="UI" scheme="https://git.coding.net/hilly/hilly.git/categories/UI/"/>
     
     
-      <category term="UI" scheme="http://hillychen.github.io/tags/UI/"/>
+      <category term="UI" scheme="https://git.coding.net/hilly/hilly.git/tags/UI/"/>
     
   </entry>
   
   <entry>
     <title>学习vue.js实现的一个小demo</title>
-    <link href="http://hillychen.github.io/2017/03/18/%E5%AD%A6%E4%B9%A0vue-js%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8Fdemo/"/>
-    <id>http://hillychen.github.io/2017/03/18/学习vue-js实现的一个小demo/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/18/%E5%AD%A6%E4%B9%A0vue-js%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8Fdemo/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/18/学习vue-js实现的一个小demo/</id>
     <published>2017-03-18T14:18:13.000Z</published>
     <updated>2017-03-18T14:25:07.000Z</updated>
     
@@ -98,8 +98,8 @@
   
   <entry>
     <title>PHP学习总结</title>
-    <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/18/PHP学习总结/</id>
     <published>2017-03-18T10:40:32.000Z</published>
     <updated>2017-03-19T15:06:02.000Z</updated>
     
@@ -396,17 +396,17 @@
     
     </summary>
     
-      <category term="PHP" scheme="http://hillychen.github.io/categories/PHP/"/>
+      <category term="PHP" scheme="https://git.coding.net/hilly/hilly.git/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://hillychen.github.io/tags/PHP/"/>
+      <category term="PHP" scheme="https://git.coding.net/hilly/hilly.git/tags/PHP/"/>
     
   </entry>
   
   <entry>
     <title>算法学习01</title>
-    <link href="http://hillychen.github.io/2017/03/12/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A001/"/>
-    <id>http://hillychen.github.io/2017/03/12/算法学习01/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/12/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A001/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/12/算法学习01/</id>
     <published>2017-03-12T14:08:09.000Z</published>
     <updated>2017-03-12T14:38:17.000Z</updated>
     
@@ -414,17 +414,17 @@
     
     </summary>
     
-      <category term="algorithm" scheme="http://hillychen.github.io/categories/algorithm/"/>
+      <category term="algorithm" scheme="https://git.coding.net/hilly/hilly.git/categories/algorithm/"/>
     
     
-      <category term="algorithm" scheme="http://hillychen.github.io/tags/algorithm/"/>
+      <category term="algorithm" scheme="https://git.coding.net/hilly/hilly.git/tags/algorithm/"/>
     
   </entry>
   
   <entry>
     <title>javascript学习总结</title>
-    <link href="http://hillychen.github.io/2017/03/12/javascript%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/12/javascript学习总结/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/12/javascript%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/12/javascript学习总结/</id>
     <published>2017-03-12T14:06:51.000Z</published>
     <updated>2017-03-16T12:56:34.000Z</updated>
     
@@ -432,17 +432,17 @@
     
     </summary>
     
-      <category term="javascript" scheme="http://hillychen.github.io/categories/javascript/"/>
+      <category term="javascript" scheme="https://git.coding.net/hilly/hilly.git/categories/javascript/"/>
     
     
-      <category term="javascript" scheme="http://hillychen.github.io/tags/javascript/"/>
+      <category term="javascript" scheme="https://git.coding.net/hilly/hilly.git/tags/javascript/"/>
     
   </entry>
   
   <entry>
     <title>Git总结</title>
-    <link href="http://hillychen.github.io/2017/03/12/Git%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/12/Git总结/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/12/Git%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/12/Git总结/</id>
     <published>2017-03-12T14:06:27.000Z</published>
     <updated>2017-03-12T14:38:11.000Z</updated>
     
@@ -450,17 +450,17 @@
     
     </summary>
     
-      <category term="git" scheme="http://hillychen.github.io/categories/git/"/>
+      <category term="git" scheme="https://git.coding.net/hilly/hilly.git/categories/git/"/>
     
     
-      <category term="git" scheme="http://hillychen.github.io/tags/git/"/>
+      <category term="git" scheme="https://git.coding.net/hilly/hilly.git/tags/git/"/>
     
   </entry>
   
   <entry>
     <title>Mysql学习总结</title>
-    <link href="http://hillychen.github.io/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/12/Mysql学习总结/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/12/Mysql学习总结/</id>
     <published>2017-03-12T14:05:44.000Z</published>
     <updated>2017-03-18T11:10:57.000Z</updated>
     
@@ -491,17 +491,17 @@
     
     </summary>
     
-      <category term="Mysql" scheme="http://hillychen.github.io/categories/Mysql/"/>
+      <category term="Mysql" scheme="https://git.coding.net/hilly/hilly.git/categories/Mysql/"/>
     
     
-      <category term="Mysql" scheme="http://hillychen.github.io/tags/Mysql/"/>
+      <category term="Mysql" scheme="https://git.coding.net/hilly/hilly.git/tags/Mysql/"/>
     
   </entry>
   
   <entry>
     <title>java学习</title>
-    <link href="http://hillychen.github.io/2017/03/12/Java/"/>
-    <id>http://hillychen.github.io/2017/03/12/Java/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/12/Java/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/12/Java/</id>
     <published>2017-03-12T10:00:35.000Z</published>
     <updated>2017-03-12T14:10:59.000Z</updated>
     
@@ -509,17 +509,17 @@
     
     </summary>
     
-      <category term="java" scheme="http://hillychen.github.io/categories/java/"/>
+      <category term="java" scheme="https://git.coding.net/hilly/hilly.git/categories/java/"/>
     
     
-      <category term="java" scheme="http://hillychen.github.io/tags/java/"/>
+      <category term="java" scheme="https://git.coding.net/hilly/hilly.git/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://hillychen.github.io/2017/03/12/hello-world/"/>
-    <id>http://hillychen.github.io/2017/03/12/hello-world/</id>
+    <link href="https://git.coding.net/hilly/hilly.git/2017/03/12/hello-world/"/>
+    <id>https://git.coding.net/hilly/hilly.git/2017/03/12/hello-world/</id>
     <published>2017-03-12T06:13:43.000Z</published>
     <updated>2017-03-12T06:13:43.000Z</updated>
     
