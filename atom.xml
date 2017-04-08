@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2017-04-07T15:22:04.000Z</updated>
+  <updated>2017-04-08T16:30:17.000Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo博客迁移部署到oschina(开源中国)&amp;&amp;codingNet(码市)</title>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/09/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E9%83%A8%E7%BD%B2%E5%88%B0oschina-%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD-coding-%E7%A0%81%E4%BA%91/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/09/Hexo博客迁移部署到oschina-开源中国-coding-码云/</id>
+    <published>2017-04-08T16:14:29.000Z</published>
+    <updated>2017-04-08T16:30:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这两天突然发现github.io的pags服务挂掉了,导致博客登录不上，为了防止以后类似情况的发生，决定把博客部署到国内的一些托管平台，比如开源中国和码市。因为二者都支持项目开启pages服务，所以迁移起来很简单;</p>
+<h3 id="step1、新建项目仓"><a href="#step1、新建项目仓" class="headerlink" title="step1、新建项目仓"></a>step1、新建项目仓</h3><ul>
+<li>到<a href="https://git.oschina.net">开源中国</a>和<a href="https://coding.net/" target="_blank" rel="external">码市</a>申请账号登录新建项目</li>
+<li><strong>在新建项目的时候，对于pages项目，项目的名称一定要跟用户名一致，不然后面当博客源码推送到仓库上的时候，访问的时候会遇到静态资源都加载失败的情况；</strong></li>
+<li>把项目的pages功能开启，默认使用master分支；<h3 id="step2、修改修改hexo配置"><a href="#step2、修改修改hexo配置" class="headerlink" title="step2、修改修改hexo配置"></a>step2、修改修改hexo配置</h3></li>
+<li><p>打开博客根目录的_config.yml文件，找到：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># URL</span></div><div class="line"><span class="comment">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span></div><div class="line"><span class="comment">#url: http://hillychen.github.io</span></div><div class="line"><span class="comment"># Deployment</span></div><div class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></div><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: https://github.com/HillyChen/HillyChen.github.io</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改为(根据自己的仓库地址修改,其中增加了开源中国仓库地址和码云的仓库地址)：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span></div><div class="line">url: https://git.oschina.net/chenxushan/chenxushan.git</div><div class="line"><span class="comment">#url: http://hillychen.github.io</span></div><div class="line"><span class="comment">#url: https://git.coding.net/hilly/hilly.git</span></div><div class="line"><span class="comment"># Deployment</span></div><div class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></div><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  <span class="comment">#repo: https://github.com/HillyChen/HillyChen.github.io</span></div><div class="line">  repo: https://git.oschina.net/chenxushan/chenxushan.git</div><div class="line">  <span class="comment">#repo: https://git.coding.net/hilly/hilly.git</span></div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后执行下面命令，以重新生成baidusitemap.xml。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo generate <span class="_">-d</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这两天突然发现github.io的pags服务挂掉了,导致博客登录不上，为了防止以后类似情况的发生，决定把博客部署到国内的一些托管平台，比如开源中国和码市。因为二者都支持项目开启pages服务，所以迁移起来很简单;&lt;/p&gt;
+&lt;h3 id=&quot;step1、新建项目仓&quot;&gt;&lt;a h
+    
+    </summary>
+    
+      <category term="博客迁移" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
+    
+    
+      <category term="博客迁移" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机专业基础知识</title>
@@ -84,7 +122,7 @@
     <published>2017-03-18T14:18:13.000Z</published>
     <updated>2017-03-18T14:25:07.000Z</updated>
     
-    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html">demo,点击预览</a></p>
+    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html" target="_blank" rel="external">demo,点击预览</a></p>
 <h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="界面设计"><a href="#界面设计" class="headerlink" title="界面设计"></a>界面设计</h4><h4 id="vue-js在本demo的核心代码实现"><a href="#vue-js在本demo的核心代码实现" class="headerlink" title="vue.js在本demo的核心代码实现"></a>vue.js在本demo的核心代码实现</h4>]]></content>
     
     <summary type="html">
