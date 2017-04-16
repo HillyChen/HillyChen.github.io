@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2017-04-16T09:19:51.000Z</updated>
+  <updated>2017-04-16T09:20:27.000Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/16/c-cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/16/c-cpp学习笔记/</id>
     <published>2017-04-16T09:03:39.000Z</published>
-    <updated>2017-04-16T09:19:51.000Z</updated>
+    <updated>2017-04-16T09:20:27.000Z</updated>
     
     <content type="html"><![CDATA[<p>从大学刚学习c/cpp以来，几年过去了，但是由于大学没有好好深入学习研究c/cpp以及算法，挺后悔的。所以奉劝计算机专业的学生，大学不应该过早步入各种开发的步调，而忽略c/cpp、算法、基础专业知识的学习。其实一开始，最重要的就是把基础打扎实了，编程的思维方式和动手能力很重要，如何将现实问题，通过算法建模转化为代码才是至关重要的，可以视为灵魂。<br>所以我把自己学习的过程做记录，没事的时候仔细体会，别有一番风味，每次也会有不一样的体会。</p>
 <h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><blockquote>
@@ -32,7 +32,6 @@
 <li>通过选取ages作为基址，并且获取位置为i的元素，来对内存块进行索引。</li>
 <li>将ages+i处的元素转换成大小正确的有效的int，这样就返回了你想要的结果：下标i处的int。</li>
 </ul>
-</blockquote>
 <p>指针仅仅是指向计算机中的某个地址，并带有类型限定符，所以你可以通过它得到正确大小的数据，指针的用途就是让你手动对内存块进行索引，一些情况下数组并不能做到。绝大多数情况中，你可能打算使用数组，但是一些处理原始内存块的情况，是指针的用武之地。指针向你提供了原始的、直接的内存块访问途径，让你能够处理它们。<br>指针有四个最基本的操作：</p>
 <ul>
 <li>向OS申请一块内存，并且用指针处理它。这包括字符串，和一些你从来没见过的东西，比如结构体。</li>
@@ -40,6 +39,7 @@
 <li>获取函数的地址用于动态调用。</li>
 <li>对一块内存做复杂的搜索，比如，转换网络套接字中的字节，或者解析文</li>
 </ul>
+</blockquote>
 ]]></content>
     
     <summary type="html">
