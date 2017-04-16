@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2017-04-08T16:32:42.000Z</updated>
+  <updated>2017-04-16T09:16:47.000Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -16,11 +16,48 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>c/cpp学习笔记</title>
+    <link href="http://hillychen.github.io/2017/04/16/c-cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://hillychen.github.io/2017/04/16/c-cpp学习笔记/</id>
+    <published>2017-04-16T09:03:39.000Z</published>
+    <updated>2017-04-16T09:16:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>从大学刚学习c/cpp以来，几年过去了，但是由于大学没有好好深入学习研究c/cpp以及算法，挺后悔的。所以奉劝计算机专业的学生，大学不应该过早步入各种开发的步调，而忽略c/cpp、算法、基础专业知识的学习。其实一开始，最重要的就是把基础打扎实了，编程的思维方式和动手能力很重要，如何将现实问题，通过算法建模转化为代码才是至关重要的，可以视为灵魂。<br>所以我把自己学习的过程做记录，没事的时候仔细体会，别有一番风味，每次也会有不一样的体会。</p>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><blockquote>
+<p>先以一段代码开始<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// create two arrays we care about</span></div><div class="line">    <span class="keyword">int</span> ages[] = &#123;<span class="number">23</span>, <span class="number">43</span>, <span class="number">12</span>, <span class="number">89</span>, <span class="number">2</span>&#125;;</div><div class="line">    <span class="keyword">char</span> *names[] = &#123;</div><div class="line">        <span class="string">"Alan"</span>, <span class="string">"Frank"</span>,</div><div class="line">        <span class="string">"Mary"</span>, <span class="string">"John"</span>, <span class="string">"Lisa"</span></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// safely get the size of ages</span></div><div class="line">    <span class="keyword">int</span> count = <span class="keyword">sizeof</span>(ages) / <span class="keyword">sizeof</span>(<span class="keyword">int</span>);</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">// first way using indexing</span></div><div class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%s has %d years alive.\n"</span>,</div><div class="line">                names[i], ages[i]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"---\n"</span>);</div><div class="line"></div><div class="line">    <span class="comment">// setup the pointers to the start of the arrays</span></div><div class="line">    <span class="keyword">int</span> *cur_age = ages;</div><div class="line">    <span class="keyword">char</span> **cur_name = names;</div><div class="line"></div><div class="line">    <span class="comment">// second way using pointers</span></div><div class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%s is %d years old.\n"</span>,</div><div class="line">                *(cur_name+i), *(cur_age+i));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"---\n"</span>);</div><div class="line">    <span class="comment">// third way, pointers are just arrays</span></div><div class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%s is %d years old again.\n"</span>,</div><div class="line">                cur_name[i], cur_age[i]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"---\n"</span>);</div><div class="line"></div><div class="line">    <span class="comment">// fourth way with pointers in a stupid complex way</span></div><div class="line">    <span class="keyword">for</span>(cur_name = names, cur_age = ages;</div><div class="line">            (cur_age - ages) &lt; count;</div><div class="line">            cur_name++, cur_age++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%s lived %d years so far.\n"</span>,</div><div class="line">                *cur_name, *cur_age);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面的代码很好的诠释了指正的工作原理，首先</p>
+<ul>
+<li>在你的计算机中开辟一块内存。</li>
+<li>将ages这个名字“指向”它的起始位置。</li>
+<li>通过选取ages作为基址，并且获取位置为i的元素，来对内存块进行索引。</li>
+<li>将ages+i处的元素转换成大小正确的有效的int，这样就返回了你想要的结果：下标i处的int。<br>指针仅仅是指向计算机中的某个地址，并带有类型限定符，所以你可以通过它得到正确大小的数据，指针的用途就是让你手动对内存块进行索引，一些情况下数组并不能做到。绝大多数情况中，你可能打算使用数组，但是一些处理原始内存块的情况，是指针的用武之地。指针向你提供了原始的、直接的内存块访问途径，让你能够处理它们。<br>指针有四个最基本的操作：</li>
+<li>向OS申请一块内存，并且用指针处理它。这包括字符串，和一些你从来没见过的东西，比如结构体。</li>
+<li>通过指针向函数传递大块的内存（比如很大的结构体），这样不必把全部数据都传递进去。</li>
+<li>获取函数的地址用于动态调用。</li>
+<li>对一块内存做复杂的搜索，比如，转换网络套接字中的字节，或者解析文</li>
+</ul>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从大学刚学习c/cpp以来，几年过去了，但是由于大学没有好好深入学习研究c/cpp以及算法，挺后悔的。所以奉劝计算机专业的学生，大学不应该过早步入各种开发的步调，而忽略c/cpp、算法、基础专业知识的学习。其实一开始，最重要的就是把基础打扎实了，编程的思维方式和动手能力很重
+    
+    </summary>
+    
+      <category term="c/cpp" scheme="http://hillychen.github.io/categories/c-cpp/"/>
+    
+    
+      <category term="c/cpp" scheme="http://hillychen.github.io/tags/c-cpp/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo博客迁移部署到oschina(开源中国)&amp;&amp;codingNet(码市)</title>
     <link href="http://hillychen.github.io/2017/04/09/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E9%83%A8%E7%BD%B2%E5%88%B0oschina-%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD-coding-%E7%A0%81%E4%BA%91/"/>
     <id>http://hillychen.github.io/2017/04/09/Hexo博客迁移部署到oschina-开源中国-coding-码云/</id>
     <published>2017-04-08T16:14:29.000Z</published>
-    <updated>2017-04-08T16:32:42.000Z</updated>
+    <updated>2017-04-08T16:32:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>这两天突然发现github.io的pags服务挂掉了,导致博客登录不上，为了防止以后类似情况的发生，决定把博客部署到国内的一些托管平台，比如开源中国和码市。因为二者都支持项目开启pages服务，所以迁移起来很简单;</p>
 <h3 id="step1、新建项目仓"><a href="#step1、新建项目仓" class="headerlink" title="step1、新建项目仓"></a>step1、新建项目仓</h3><ul>
@@ -137,7 +174,7 @@
     <published>2017-03-18T14:18:13.000Z</published>
     <updated>2017-03-18T14:25:07.000Z</updated>
     
-    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html" target="_blank" rel="external">demo,点击预览</a></p>
+    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html">demo,点击预览</a></p>
 <h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="界面设计"><a href="#界面设计" class="headerlink" title="界面设计"></a>界面设计</h4><h4 id="vue-js在本demo的核心代码实现"><a href="#vue-js在本demo的核心代码实现" class="headerlink" title="vue.js在本demo的核心代码实现"></a>vue.js在本demo的核心代码实现</h4>]]></content>
     
     <summary type="html">
