@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2017-04-22T06:56:05.000Z</updated>
+  <updated>2017-04-22T06:58:21.000Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -20,11 +20,10 @@
     <link href="http://hillychen.github.io/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://hillychen.github.io/2017/04/22/css学习笔记/</id>
     <published>2017-04-22T06:53:00.000Z</published>
-    <updated>2017-04-22T06:56:05.000Z</updated>
+    <updated>2017-04-22T06:58:21.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近需要为自己的公众号开发一个小程序，所以要温习一下css样式知识，在此做个笔记也供以后便捷温习学习；</p>
-<p>###css学习笔记</p>
-<blockquote>
+<h3 id="css学习笔记"><a href="#css学习笔记" class="headerlink" title="css学习笔记"></a>css学习笔记</h3><blockquote>
 <p>样式</p>
 <ul>
 <li>行内样式：<p>This paragraph simply takes on the browser’s default paragraph style.</p><p style="font-size: 12px; font-weight:bold; font-style:italic; color:red;">By adding inline CSS styling to this paragraph, you override the default styles.</p></li>
@@ -94,11 +93,7 @@ p {color:blue;}
     <summary type="html">
     
       &lt;p&gt;最近需要为自己的公众号开发一个小程序，所以要温习一下css样式知识，在此做个笔记也供以后便捷温习学习；&lt;/p&gt;
-&lt;p&gt;###css学习笔记&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;样式&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;行内样式：&lt;p&gt;This paragraph simply t
+&lt;h3 id=&quot;css学习笔记&quot;&gt;&lt;a href=&quot;#css学习笔记&quot; class=&quot;headerlink&quot; title=&quot;css学习笔记&quot;&gt;&lt;/a&gt;css学习笔
     
     </summary>
     
