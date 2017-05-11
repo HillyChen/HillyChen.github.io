@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2017-04-22T06:58:21.000Z</updated>
+  <updated>2017-05-11T16:07:09.000Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://hillychen.github.io/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://hillychen.github.io/2017/04/22/css学习笔记/</id>
     <published>2017-04-22T06:53:00.000Z</published>
-    <updated>2017-04-22T06:58:21.000Z</updated>
+    <updated>2017-05-11T16:07:09.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近需要为自己的公众号开发一个小程序，所以要温习一下css样式知识，在此做个笔记也供以后便捷温习学习；</p>
 <h3 id="css学习笔记"><a href="#css学习笔记" class="headerlink" title="css学习笔记"></a>css学习笔记</h3><blockquote>
@@ -88,6 +88,30 @@ p {color:blue;}
 </li>
 <li>层叠规则四：顺序决定权重。如果两条规则都影响某元素的同一个属性，而且它们的特指度也相同，则位置最靠下（或后声明）的规则胜出</li>
 </ul>
+<h6 id="规则声明"><a href="#规则声明" class="headerlink" title="规则声明"></a>规则声明</h6><p>css属性值主要分为三类</p>
+<ul>
+<li>文本值：font-weight:bold</li>
+<li><p>数字值(又分为相对值和绝对值)：font-size:12px</p>
+</li>
+<li><p>颜色值：color:#336699</p>
+<ul>
+<li>十六进制颜色（#RRGGBB或#RGB):#rrggbb-十六进制以16为基数，使用数字0-9和字母a-f，共16个值。其中，a-f代表10到15。由于每种颜色用两位十六进制值表示，因此该颜色就有256（16×16）种可能的值，结果就是16 777 216（256×256×256）种组合，也就是可以表示那么多种颜色。纯红色是#ff0000，纯绿色是#00ff00，而纯蓝色是#0000ff。大多数十六进制颜色值不仔细分析可不容易猜，比如#7ca9be是深蓝绿色，我怎么知道的？ 首先我们来看每一对rgb值中的第一个值，也就是7、a、b。蓝色和绿色值相差无几，而红色值也没有那么深。有了这些信息，就可以大致猜出这个颜色了，对，是蓝绿色</li>
+<li>RGB颜色值（R, G , B）</li>
+<li>RGB百分比值（R%, G%, B%）</li>
+<li>HSL (色相, 饱和度%, 亮度%)</li>
+<li>Alpha通道：RGBA,HSLA<br><a href="http://colrd.com" target="_blank" rel="external">色彩网站</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="定位元素"><a href="#定位元素" class="headerlink" title="定位元素"></a>定位元素</h2><blockquote>
+<p>页面版式主要由三个属性控制：position属性、display属性和float属性。其中，position属性控制页面上元素间的位置关系，display属性控制元素是堆叠、并排，还是根本不在页面上出现，float属性提供控制的方式，以便把元素组成成多栏布局。</p>
+<h3 id="理解盒模型"><a href="#理解盒模型" class="headerlink" title="理解盒模型"></a>理解盒模型</h3><ul>
+<li>边框（border）。可以设置边框的宽窄、样式和颜色。</li>
+<li>内边距（padding）。可以设置盒子内容区与边框的间距。</li>
+<li>外边距（margin）。可以设置盒子与相邻元素的间距。</li>
+</ul>
+</blockquote>
 ]]></content>
     
     <summary type="html">
