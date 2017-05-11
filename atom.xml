@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2017-05-11T16:07:09.000Z</updated>
+  <updated>2017-05-11T16:31:01.000Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css学习笔记/</id>
     <published>2017-04-22T06:53:00.000Z</published>
-    <updated>2017-05-11T16:07:09.000Z</updated>
+    <updated>2017-05-11T16:31:01.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近需要为自己的公众号开发一个小程序，所以要温习一下css样式知识，在此做个笔记也供以后便捷温习学习；</p>
 <h3 id="css学习笔记"><a href="#css学习笔记" class="headerlink" title="css学习笔记"></a>css学习笔记</h3><blockquote>
@@ -106,12 +106,19 @@ p {color:blue;}
 <hr>
 <h2 id="定位元素"><a href="#定位元素" class="headerlink" title="定位元素"></a>定位元素</h2><blockquote>
 <p>页面版式主要由三个属性控制：position属性、display属性和float属性。其中，position属性控制页面上元素间的位置关系，display属性控制元素是堆叠、并排，还是根本不在页面上出现，float属性提供控制的方式，以便把元素组成成多栏布局。</p>
-<h3 id="理解盒模型"><a href="#理解盒模型" class="headerlink" title="理解盒模型"></a>理解盒模型</h3><ul>
+</blockquote>
+<h3 id="理解盒模型"><a href="#理解盒模型" class="headerlink" title="理解盒模型"></a><a href="https://www.w3.org/TR/REC-CSS2/box.html" target="_blank" rel="external">理解盒模型</a></h3><ul>
 <li>边框（border）。可以设置边框的宽窄、样式和颜色。</li>
 <li>内边距（padding）。可以设置盒子内容区与边框的间距。</li>
-<li>外边距（margin）。可以设置盒子与相邻元素的间距。</li>
+<li>外边距（margin）。可以设置盒子与相邻元素的间距。<h4 id="简写样式"><a href="#简写样式" class="headerlink" title="简写样式"></a>简写样式</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="attribute">margin-top</span>:<span class="number">5px</span>; <span class="attribute">margin-right</span>:<span class="number">10px</span>; <span class="attribute">margin-bottom</span>:<span class="number">12px</span>; <span class="attribute">margin-left</span>:<span class="number">8px</span>;&#125;</div><div class="line">&#123;<span class="attribute">margin</span>:<span class="number">5px</span> <span class="number">10px</span> <span class="number">12px</span> <span class="number">8px</span>;&#125;</div><div class="line">&#123;<span class="attribute">margin</span>:<span class="number">12px</span> <span class="number">10px</span> <span class="number">6px</span>;&#125;<span class="comment">/*由于没有写最后一个值（左边的值），所以左边就会使用右边的值，即10px。*/</span></div><div class="line">&#123;<span class="attribute">border</span>:<span class="number">2px</span> dashed red;&#125;<span class="comment">/*全部3个属性，全部4条边 */</span></div><div class="line">&#123;<span class="attribute">border-style</span>:dashed;&#125;<span class="comment">/*1个属性，全部4条边 */</span></div><div class="line">&#123;<span class="attribute">border-left-style</span>:dashed;&#125;<span class="comment">/*1个属性，1条边*/</span></div><div class="line">&#123;<span class="attribute">border</span>:<span class="number">4px</span> solid red;&#125;  <span class="comment">/* 先给4条边设置相同的样式 */</span>    </div><div class="line">&#123;<span class="attribute">border-left-width</span>:<span class="number">1px</span>;&#125; <span class="comment">/* 修改左边框宽度 */</span>  </div><div class="line">&#123;<span class="attribute">border-right</span>:none;&#125;     <span class="comment">/* 移除右边框 */</span></div><div class="line"><span class="comment">/*类似地，其他属性也都有这三级粒度，例如padding和border-radius等。*/</span></div></pre></td></tr></table></figure>
+</li>
 </ul>
-</blockquote>
+<h4 id="盒子边框"><a href="#盒子边框" class="headerlink" title="盒子边框"></a>盒子边框</h4><p>边框（border）有3个相关属性。</p>
+<ul>
+<li>宽度（border-width）。可以使用thin、medium和thick等文本值，也可以使用除百分比和负值之外的任何绝对值。</li>
+<li>样式（border-style）。有none、hidden、dotted、dashed、solid、double、groove、ridge、inset和outset等文本值。</li>
+<li>颜色（border-color）。可以使用任意颜色值，包括RGB、HSL、十六进制颜色值和颜色关键字。</li>
+</ul>
 ]]></content>
     
     <summary type="html">
