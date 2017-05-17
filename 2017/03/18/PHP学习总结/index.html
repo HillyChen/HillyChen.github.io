@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><meta name="keywords" content="hexo,blog,博客,github,sunniberg,chenxushan,陈旭山"><title>PHP学习总结 | 草泥上的蚂蚁</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.0"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.0"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">PHP学习总结</h1><a id="logo" href="/.">草泥上的蚂蚁</a><p class="description">知无不言  言无不尽</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a><a href="/cxsresume.html"><i class="fa undefined"> resume</i></a><a href="/resource/"><i class="fa undefined"> resource</i></a><a href="/movie-music"><i class="fa undefined"> movie&amp;music</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">PHP学习总结</h1><div class="post-meta"><span class="date">Mar 18, 2017</span><span class="category"><a href="/categories/PHP/">PHP</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i> Hits</i></i></span><a href="/2017/03/18/PHP学习总结/#comments" class="comment-count"> 留言</a></div><div class="post-content"><p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
+<h2 id="PHP中的常用函数"><a href="#PHP中的常用函数" class="headerlink" title="PHP中的常用函数"></a>PHP中的常用函数</h2><blockquote>
+<p>其实学习PHP或者Python，最终要的一点就是要熟悉一些常用库或者函数，这样在应用的时候才能游刃有余，下面总结一下常用的函数<br>查看数据类型</p>
+<ul>
+<li>gettype(传入一个变量) 能够获得变量的类型</li>
+<li>var_dump(传入一个变量) 输出变类型和值<br>判断数据类型</li>
+<li>is_int/bool/float/string/array/object/null/resource(资源)/scalar(标量)/numeric(是否为数值类型)/callable(是否为函数)<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$float = <span class="number">88.8</span>;</div><div class="line">$type = gettype($float);</div><div class="line">var_dump($float);</div><div class="line"><span class="keyword">echo</span> $type;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><blockquote>
+<p>强制类型转换有三种方式：</p>
+<ul>
+<li>用后面的三个函数可以完成类型转换，intval()、floatval()、strval()</li>
+<li>变量前加上()里面写上类型，将它转换后赋值给其他变量</li>
+<li>settype(变量，类型) 直接改变量本身</li>
+</ul>
+</blockquote>
+<h2 id="常量和变量"><a href="#常量和变量" class="headerlink" title="常量和变量"></a>常量和变量</h2><h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><blockquote>
+<p>定义 define(常量名，常量值)；defined()函数来做安全机制<br>系统的一些常量：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">常量明</th>
+<th style="text-align:left">说明</th>
+<th>常量明</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">LINE</td>
+<td style="text-align:left">当前所在的行</td>
+<td>FILE</td>
+<td style="text-align:left">当前文件在服务器的路径</td>
+</tr>
+<tr>
+<td style="text-align:left">FUNCTIOIN</td>
+<td style="text-align:left">当前函数名</td>
+<td>CLASS</td>
+<td style="text-align:left">当前类名</td>
+</tr>
+<tr>
+<td style="text-align:left">METHOD</td>
+<td style="text-align:left">当前成员方法名</td>
+<td>PHP_OS</td>
+<td style="text-align:left">PHP运行的操作系统</td>
+</tr>
+<tr>
+<td style="text-align:left">PHP_VERSION</td>
+<td style="text-align:left">当前PHP的版本</td>
+<td>TRAIT</td>
+<td style="text-align:left">Trait 的名字,php5.4新加</td>
+</tr>
+<tr>
+<td style="text-align:left">DIR</td>
+<td style="text-align:left">文件所在的目录</td>
+<td>NAMESPACE</td>
+<td style="text-align:left">当前命名空间的名称（区分大小写</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">define(<span class="string">'MY_NAME'</span>,<span class="string">'PHP'</span>);</div><div class="line"><span class="keyword">echo</span> MY_NAME;</div><div class="line"><span class="comment">//下面是错误的调用方式</span></div><div class="line"><span class="keyword">echo</span> <span class="string">'我的名字是MY_NAME'</span>;</div><div class="line"><span class="comment">//正确的调用方式该这么写</span></div><div class="line"><span class="keyword">echo</span> <span class="string">'我的名字是'</span> . MY_NAME;</div></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><blockquote>
+<ul>
+<li><p>变变量其实就是——已声明的变量前，再上变量符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$shu = <span class="string">'biao'</span>;</div><div class="line">$biao = <span class="string">'wo'</span>;</div><div class="line">$wo = <span class="string">'test'</span>;</div><div class="line">$test = <span class="string">'sina'</span>;</div><div class="line">$sina = <span class="string">'zhongguo'</span>;</div><div class="line">$zhongguo = <span class="string">'china'</span>;</div><div class="line">$china = <span class="string">'我爱你'</span>;</div><div class="line"><span class="comment">//别运行，自己去推理一下代码。也写几个可变变量玩玩吧！</span></div><div class="line"><span class="keyword">echo</span> $$$$$shu;(输出是zhongguo)</div></pre></td></tr></table></figure>
+</li>
+<li><p>PHP的外部变量是PHP 在使用过程中规定好的一些变量:<br>应有场景：<br>user.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"reg.php"</span> <span class="attr">method</span>=<span class="string">"get"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"pwd"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>reg.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//$_GET后面加上中括号，将username作为字符串放在中括号里面，就得到了表单里面的&lt;input type="text" name="username" /&gt; 的值</span></div><div class="line">$u = $_GET[<span class="string">'username'</span>];</div><div class="line">$u = $_POST[<span class="string">'username'</span>];</div><div class="line"><span class="keyword">echo</span> $u.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"></div><div class="line"><span class="comment">//$_GET['pwd'] 得到表单&lt;input type="password" name="pwd" /&gt; 的值</span></div><div class="line">$passwd = $_GET[<span class="string">'pwd'</span>];</div><div class="line"><span class="keyword">echo</span> $passwd.<span class="string">'&lt;br /&gt;'</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">全局变量名</th>
+<th style="text-align:left">功能说明</th>
+<th style="text-align:left">全局变量名</th>
+<th style="text-align:left">功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$_COOKIE</td>
+<td style="text-align:left">得到会话控制中cookie传值</td>
+<td style="text-align:left">$_SESSION</td>
+<td style="text-align:left">得到会话控制中session的值</td>
+</tr>
+<tr>
+<td style="text-align:left">$_FILES</td>
+<td style="text-align:left">得到文件上传的结果</td>
+<td style="text-align:left">$_GET</td>
+<td style="text-align:left">得到get传值的结果</td>
+</tr>
+<tr>
+<td style="text-align:left">$_POST</td>
+<td style="text-align:left">得到post传值的结果</td>
+<td style="text-align:left">$_REQUEST</td>
+<td style="text-align:left">即能得到get的传值结果，也能得到post传值的结果</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>一些常用的环境变量的键名和值对应的意思：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">键名</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$_SERVER[“REQUEST_METHOD”]</td>
+<td style="text-align:left">请求当前PHP页面的方法</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“REQUEST_URI”]</td>
+<td style="text-align:left">请求的URI</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“SERVER_SOFTWARE”]</td>
+<td style="text-align:left">用的是哪一种服务器</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“REMOTE_ADDR”]</td>
+<td style="text-align:left">客户的IP地址</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“SERVER_ADDR”]</td>
+<td style="text-align:left">当前服务器的IP地址</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“SCRIPT_FILENAME”]</td>
+<td style="text-align:left">当前请求文件的路径</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“HTTP_USER_AGENT”]</td>
+<td style="text-align:left">当前访问这个网址的电脑和浏览器的情况</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“HTTP_REFERER”]</td>
+<td style="text-align:left">上级来源（用户从哪个地址进入当前网页的）</td>
+</tr>
+<tr>
+<td style="text-align:left">$_SERVER[“REQUEST_TIME”]</td>
+<td style="text-align:left">当前请求时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>变量引用(类似于C语言指正)<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$fo = <span class="number">5</span>;</div><div class="line"><span class="comment">//注意，加上了一个&amp;符哟</span></div><div class="line">$bar = &amp;$fo;</div><div class="line">$bar = <span class="number">6</span>;</div><div class="line"><span class="comment">//$bar的结果为6</span></div><div class="line"><span class="keyword">echo</span> $bar.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"><span class="comment">//$fo的结果为6</span></div><div class="line"><span class="keyword">echo</span> $fo.<span class="string">'&lt;br /&gt;'</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h2 id="三元运算符"><a href="#三元运算符" class="headerlink" title="三元运算符"></a>三元运算符</h2><blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">符号</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$x? 真代码段:假代码段</td>
+<td style="text-align:left">判断是否为真假 ? 真情况 : 假情况;</td>
+</tr>
+<tr>
+<td style="text-align:left">``（反引号）</td>
+<td style="text-align:left">反引号中间插代命令，执行系统命令，等价于shell_exec函数</td>
+</tr>
+<tr>
+<td style="text-align:left">@</td>
+<td style="text-align:left">单行抑制错误，把这一行的错误不让它显示出来了，效率低不建议使用</td>
+</tr>
+<tr>
+<td style="text-align:left">=&gt;</td>
+<td style="text-align:left">数组下标访问符</td>
+</tr>
+<tr>
+<td style="text-align:left">-&gt;</td>
+<td style="text-align:left">对象访问符</td>
+</tr>
+<tr>
+<td style="text-align:left">instanceof</td>
+<td style="text-align:left">判断某个对象是否来自某个类，如果是的返回true，如果不是返回false</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">woziji</span><span class="params">($one,$two,$func)</span></span>&#123;</div><div class="line">        <span class="comment">//我规定：检查$func是否是函数，如果不是函数停止执行本段代码，返回false</span></div><div class="line">        <span class="keyword">if</span>(!is_callable($func))&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//我把$one、$two相加，再把$one和$two传入$func这个函数中处理一次</span></div><div class="line">        <span class="comment">//$func是一个变量函数，参见变量函数这一章</span></div><div class="line">        <span class="keyword">echo</span> $one + $two + $func($one,$two);</div><div class="line">&#125;</div><div class="line"><span class="comment">//我们定义几个函数试试</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">plusx2</span><span class="params">( $foo , $bar)</span></span>&#123;</div><div class="line">        $result = ($foo+$bar)*<span class="number">2</span>;</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">jian</span><span class="params">( $x , $y )</span></span>&#123;</div><div class="line">    $result = $x - $y;</div><div class="line">    <span class="keyword">return</span> $result;</div><div class="line">&#125;</div><div class="line"><span class="comment">//调用一下函数，woziji，向里面传入参数试试</span></div><div class="line"><span class="keyword">echo</span> woziji(<span class="number">20</span>,<span class="number">10</span>,<span class="string">'plusx2'</span>);</div><div class="line"><span class="comment">//将plusx2改成jian试试结果</span></div><div class="line"><span class="keyword">echo</span> woziji(<span class="number">20</span>,<span class="number">10</span>,<span class="string">'jian'</span>);</div></pre></td></tr></table></figure>
+<h3 id="变量函数"><a href="#变量函数" class="headerlink" title="变量函数"></a>变量函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">echo</span> <span class="string">'天王盖地虎'</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'小鸡炖蘑菇'</span>;</div><div class="line">&#125;</div><div class="line">$fu = <span class="string">'demo'</span>;</div><div class="line"><span class="comment">//把$fu变为了demo,把demo后加上了一个括号，就执行函数了</span></div><div class="line">$fu();</div><div class="line"><span class="comment">//把$fu的值改为test字符串再试试？</span></div></pre></td></tr></table></figure>
+<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.变量函数式的匿名函数</span></div><div class="line">$greet = <span class="function"><span class="keyword">function</span><span class="params">($name)</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">echo</span> $name.<span class="string">'，你好'</span>;</div><div class="line">&#125;;</div><div class="line">$greet(<span class="string">'明天'</span>);</div><div class="line">$greet(<span class="string">'PHP学院'</span>);</div><div class="line"><span class="comment">//2.回调式的匿名函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">woziji</span><span class="params">($one,$two,$func)</span></span>&#123;</div><div class="line">        <span class="comment">//我规定：检查$func是否是函数，如果不是函数停止执行本段代码，返回false</span></div><div class="line">        <span class="keyword">if</span>(!is_callable($func))&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//我把$one、$two相加，再把$one和$two传入$func这个函数中处理一次</span></div><div class="line">        <span class="comment">//$func是一个变量函数，参见变量函数这一章</span></div><div class="line">        <span class="keyword">echo</span> $one + $two + $func($one,$two);</div><div class="line"></div><div class="line">&#125;</div><div class="line">woziji(<span class="number">20</span>,<span class="number">30</span>,<span class="function"><span class="keyword">function</span><span class="params">( $foo , $bar)</span></span>&#123;</div><div class="line">                $result = ($foo+$bar)*<span class="number">2</span>;</div><div class="line">                <span class="keyword">return</span> $result;</div><div class="line">            &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<h3 id="内部函数"><a href="#内部函数" class="headerlink" title="内部函数"></a>内部函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'我是函数foo哟，调一下我才会执行定义函数bar的过程&lt;br /&gt;'</span>;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span></span></div><div class="line">  &#123;</div><div class="line">       <span class="keyword">echo</span> <span class="string">'在foo函数内部有个函数叫bar函数&lt;br /&gt;'</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//现在还不能调用bar()函数，因为它还不存在</span></div><div class="line">bar();</div><div class="line">foo();</div><div class="line"><span class="comment">//现在可以调用bar()函数了，因为foo()函数的执行使得bar()函数变为已定义的函数</span></div><div class="line">bar();</div><div class="line"><span class="comment">//再调一次foo()看看是不是会报错？</span></div><div class="line">foo();</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><blockquote>
+<p>我们将函数体外的变量通过$GLOBALS拿到了函数体使用。所以，打破了函数外的变量不能在函数体内使用的限定。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$one = <span class="number">10</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span><span class="params">()</span></span>&#123;</div><div class="line">    $two = <span class="number">100</span>;</div><div class="line">    $result = $two + $GLOBALS[<span class="string">'one'</span>];</div><div class="line">    <span class="keyword">return</span> $result;</div><div class="line">&#125;</div><div class="line"><span class="comment">//你会发现结果变成了110</span></div><div class="line"><span class="keyword">echo</span> demo();</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="使用内置函数"><a href="#使用内置函数" class="headerlink" title="使用内置函数"></a>使用内置函数</h2><blockquote>
+<p>主要掌握如何使用内置函数，就是会看<a href="http://php.net/manual/en/" target="_blank" rel="external">PHP官方文档</a><br>使用函数的重点是三块：</p>
+<ul>
+<li>了解函数的功能，特别是常用函数的功能</li>
+<li>了解函数的参数</li>
+<li>了解函数的返回值<br>针对上面的三块，讲解6个函数，这6个函数，概况了函数的基本用法的全部注意事项：</li>
+<li>直接返回布尔型，如bool copy ()</li>
+<li>带有MIXED参数的函数如何调用。Mixed表示任何类型的数据。如Array_unshift()</li>
+<li>参数中带有&amp;符的参数，一定要传一个变量做为参数。函数里面改变了他的值。</li>
+<li>带有[]的参数，表示可选项。</li>
+<li>带有…的参数，表示可以传任意多个参数。</li>
+<li>带有callback的参数，表示回调函数。需要传一个函数进来。Array_map()</li>
+<li>函数支持的版本你要了解</li>
+</ul>
+</blockquote>
+<h5 id="1-bool-copy-string-source-string-dest-resource-context"><a href="#1-bool-copy-string-source-string-dest-resource-context" class="headerlink" title="1.bool copy ( string $source , string $dest [, resource $context ])"></a>1.bool copy ( string $source , string $dest [, resource $context ])</h5><blockquote>
+<p>这个函数的功能为： 拷备一个文件<br>返回值为为： bool型值，就是成功返回true，失败返回false<br>参数为： 两个字符串的值，一个是copy的源文件，一个为目标文件。第三个参数可选的，不常用，我们不管它。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$file = <span class="string">'example.txt'</span>;</div><div class="line">$newfile = <span class="string">'example.txt.bak'</span>;</div><div class="line"><span class="keyword">if</span> (!copy($file, $newfile)) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"failed to copy $file...\n"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h5 id="2-int-array-unshift-array-amp-array-mixed-value1-mixed-…"><a href="#2-int-array-unshift-array-amp-array-mixed-value1-mixed-…" class="headerlink" title="2.int array_unshift ( array &amp;$array , mixed $value1 [, mixed $… ] )"></a>2.int array_unshift ( array &amp;$array , mixed $value1 [, mixed $… ] )</h5><blockquote>
+<p>Mixed表示任何类型的数据。<br>功能： 操作一个数组，向数组中之前插入其他类型的参数。<br>返回值： int 类型，可能就是插入成功最后的个数<br>参数： 第一个参数为&amp;符，也就是在操作的过程中，改变了第一个参数的值。引用传参。也就是操作这个数组，向这个数组中传入参数。会直接改变这个数组的值。第二个参数为mixed，因为数组可以存入多个不同的类型.mixed是指混合的意思。因此，mixed是指可传入任意类型。第三个数数加了中括号，我们所有遇到中括号的。都是指后面的参数可传，也可以不传。第四，最后还看到了三个…(省略号)。代表可以传入任意多个参数。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$queue = <span class="keyword">array</span>(<span class="string">"orange"</span>, <span class="string">"banana"</span>);</div><div class="line">array_unshift($queue, <span class="string">"apple"</span>, <span class="string">"raspberry"</span>);</div><div class="line">print_r($queue);</div><div class="line"><span class="comment">// The above example will output:</span></div><div class="line"><span class="comment">// Array</span></div><div class="line"><span class="comment">// (</span></div><div class="line"><span class="comment">//     [0] =&gt; apple</span></div><div class="line"><span class="comment">//     [1] =&gt; raspberry</span></div><div class="line"><span class="comment">//     [2] =&gt; orange</span></div><div class="line"><span class="comment">//     [3] =&gt; banana</span></div><div class="line"><span class="comment">// )</span></div></pre></td></tr></table></figure></p>
+</blockquote>
+<h5 id="3、bool-array-walk-array-amp-array-callable-callback-mixed-userdata-NULL"><a href="#3、bool-array-walk-array-amp-array-callable-callback-mixed-userdata-NULL" class="headerlink" title="3、bool array_walk ( array &amp;$array , callable $callback [, mixed $userdata = NULL ] )"></a>3、bool array_walk ( array &amp;$array , callable $callback [, mixed $userdata = NULL ] )</h5><p>功能：传入一个回调函数，将数组的原来的组操作，并且发生变化。<br>返回值：bool 值 也就是意味着，提示成功或者失败<br>参数：第一个参数是要操作的数组。第二个参数是callback 代表着可以传入函数或者匿名函数。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">$fruits = <span class="keyword">array</span>(<span class="string">"d"</span> =&gt; <span class="string">"lemon"</span>, <span class="string">"a"</span> =&gt; <span class="string">"orange"</span>, <span class="string">"b"</span> =&gt; <span class="string">"banana"</span>, <span class="string">"c"</span> =&gt; <span class="string">"apple"</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test_alter</span><span class="params">(&amp;$item1, $key, $prefix)</span></span></div><div class="line">&#123;</div><div class="line">    $item1 = <span class="string">"$prefix: $item1"</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test_print</span><span class="params">($item2, $key)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"$key. $item2&lt;br /&gt;\n"</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">echo</span> <span class="string">"Before ...:\n"</span>;</div><div class="line">array_walk($fruits, <span class="string">'test_print'</span>);</div><div class="line">array_walk($fruits, <span class="string">'test_alter'</span>, <span class="string">'fruit'</span>);</div><div class="line"><span class="keyword">echo</span> <span class="string">"... and after:\n"</span>;</div><div class="line">array_walk($fruits, <span class="string">'test_print'</span>);</div><div class="line"><span class="comment">// The above example will output:</span></div><div class="line"><span class="comment">// Before ...:</span></div><div class="line"><span class="comment">// d. lemon</span></div><div class="line"><span class="comment">// a. orange</span></div><div class="line"><span class="comment">// b. banana</span></div><div class="line"><span class="comment">// c. apple</span></div><div class="line"><span class="comment">// ... and after:</span></div><div class="line"><span class="comment">// d. fruit: lemon</span></div><div class="line"><span class="comment">// a. fruit: orange</span></div><div class="line"><span class="comment">// b. fruit: banana</span></div><div class="line"><span class="comment">// c. fruit: apple</span></div></pre></td></tr></table></figure></p>
+<h2 id="文件包含函数"><a href="#文件包含函数" class="headerlink" title="文件包含函数"></a>文件包含函数</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">函数</th>
+<th style="text-align:left">包含失败</th>
+<th style="text-align:left">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Inlcude</td>
+<td style="text-align:left">返回一条警告</td>
+<td style="text-align:left">文件继续向下执行。通常用于动态包含</td>
+</tr>
+<tr>
+<td style="text-align:left">Require</td>
+<td style="text-align:left">一个致命的错</td>
+<td style="text-align:left">代码就不会继续向下执行。通常包含极为重要的文件，整个代码甭想执行</td>
+</tr>
+<tr>
+<td style="text-align:left">Include_once</td>
+<td style="text-align:left">返回一条警告</td>
+<td style="text-align:left">除了原有include的功能以外，它还会做once检测，如果文件曾经已经被被包含过，不再包含</td>
+</tr>
+<tr>
+<td style="text-align:left">Require_once</td>
+<td style="text-align:left">一个致命的错</td>
+<td style="text-align:left">除了原的功能一外，会做一次once检测，防止文件反复被包含</td>
+</tr>
+</tbody>
+</table>
+<h2 id="日期常用函数"><a href="#日期常用函数" class="headerlink" title="日期常用函数"></a>日期常用函数</h2><blockquote>
+<p>在正式学习日期函数前大家要了解几个概念:</p>
+<ul>
+<li>时区:1884年在华盛顿召开国际经度会议时，为了克服时间上的混乱，规定将全球划分为24个时区。在中国采用首都北京所在地东八区的时间为全国统一使用时间。</li>
+<li>世界时:如果对国际上某一重大事情，用地方时间来记录，就会感到复杂不便．而且将来日子一长容易搞错。因此，天文学家就提出一个大家都能接受且又方便的记录方法，那就是以格林尼治（英国某地区）的地方时间为标准。</li>
+<li>unix时间戳:从Unix纪元（1970 年 1月1日零时）开始到一个时间经过的秒数。<br>时间函数有：</li>
+<li>设置时区：<ul>
+<li>date_default_timezone_get()</li>
+<li>date_default_timezone_set()<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义一下时区常量，以后你可以放到配置文件里</span></div><div class="line">define(<span class="string">'TIME_ZONE'</span>,<span class="string">'Asia/shanghai'</span>);</div><div class="line"><span class="comment">//执行函数</span></div><div class="line">date_default_timezone_set(TIME_ZONE);</div><div class="line"><span class="keyword">echo</span> date_default_timezone_get ();</div><div class="line"><span class="keyword">echo</span> date(<span class="string">'Y-m-d H:i:s'</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>time()获取当前的unix时间戳:time()获取当前的unix时间戳</li>
+<li><p>getdate获取当前系统时间</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">$mytime= getdate()；    </div><div class="line">print_r( $mytime)；</div><div class="line"><span class="comment">// Array</span></div><div class="line"><span class="comment">// (</span></div><div class="line"><span class="comment">//     [seconds] =&gt; 1            //秒</span></div><div class="line"><span class="comment">//     [minutes] =&gt; 10            //分钟</span></div><div class="line"><span class="comment">//     [hours] =&gt; 17            //小时</span></div><div class="line"><span class="comment">//     [mday] =&gt; 18            //日</span></div><div class="line"><span class="comment">//     [wday] =&gt; 0            //星期中的第几天</span></div><div class="line"><span class="comment">//     [mon] =&gt; 1            //月</span></div><div class="line"><span class="comment">//     [year] =&gt; 2015            //年</span></div><div class="line"><span class="comment">//     [yday] =&gt; 17            //年中的第几天</span></div><div class="line"><span class="comment">//     [weekday] =&gt; Sunday        //星期</span></div><div class="line"><span class="comment">//     [month] =&gt; January        //月份</span></div><div class="line"><span class="comment">//     [0] =&gt; 1421597401        //时间戳</span></div><div class="line"><span class="comment">// )</span></div><div class="line">$mytime = getdate();</div><div class="line"><span class="keyword">echo</span> <span class="string">"年 :"</span>.$mytime[<span class="string">'year'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"月 :"</span>.$mytime[<span class="string">'mon'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"日 :"</span>.$mytime[<span class="string">'mday'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"时 :"</span>.$mytime[<span class="string">'hours'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"分 :"</span>.$mytime[<span class="string">'minutes'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"秒 :"</span>.$mytime[<span class="string">'seconds'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"一个小时中的第几钟 :"</span>.$mytime[<span class="string">'minutes'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"这是一分钟的第几秒 :"</span>.$mytime[<span class="string">'seconds'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"星期名称 :"</span>.$mytime[<span class="string">'weekday'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"月份名称 :"</span>.$mytime[<span class="string">'month'</span>].<span class="string">"\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"时间戳   :"</span>.$mytime[<span class="number">0</span>].<span class="string">"\n"</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>日期验证函数:bool checkdate ( int $month , int $day , int $year )</p>
+</li>
+<li>mktime()函数可以对一个日期和时间获得一个本地化时间戳:int mktime (int $hour [, int $minute [, int $second [, int $month [, int $day [. int$year [, int $.is_dstl.l } ] ] 31 )</li>
+<li>将英文文本的日期时间描述解析为 Unix 时间戳:int strtotime ( string $time [, int $now = time() ] )</li>
+<li>程序执行时间检测,microtime()这个函数，能够返回当前 Unix 时间戳和微秒数:mixed microtime ([ bool $get_as_float ] )</li>
+</ul>
+<h2 id="字符串常用函数"><a href="#字符串常用函数" class="headerlink" title="字符串常用函数"></a><a href="http://php.net/manual/zh/book.strings.php" target="_blank" rel="external">字符串常用函数</a></h2><p>声明：</p>
+<blockquote>
+<p>内容参考：<a href="http://www.kancloud.cn/phpxy/phpbook/33191" target="_blank" rel="external">《7天学会PHP》</a></p>
+</blockquote>
+</div><div class="tags"><a href="/tags/PHP/">PHP</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2017/03/18/学习vue-js实现的一个小demo/" class="pre">学习vue.js实现的一个小demo</a><a href="/2017/03/12/算法学习01/" class="next">算法学习01</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8yODY5MC81MjYx"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP中的常用函数"><span class="toc-text">PHP中的常用函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#强制类型转换"><span class="toc-text">强制类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常量和变量"><span class="toc-text">常量和变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常量"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量"><span class="toc-text">变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三元运算符"><span class="toc-text">三元运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-text">回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量函数"><span class="toc-text">变量函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匿名函数"><span class="toc-text">匿名函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部函数"><span class="toc-text">内部函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量作用域"><span class="toc-text">变量作用域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用内置函数"><span class="toc-text">使用内置函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-bool-copy-string-source-string-dest-resource-context"><span class="toc-text">1.bool copy ( string $source , string $dest [, resource $context ])</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-int-array-unshift-array-amp-array-mixed-value1-mixed-…"><span class="toc-text">2.int array_unshift ( array &$array , mixed $value1 [, mixed $… ] )</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3、bool-array-walk-array-amp-array-callable-callback-mixed-userdata-NULL"><span class="toc-text">3、bool array_walk ( array &$array , callable $callback [, mixed $userdata = NULL ] )</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件包含函数"><span class="toc-text">文件包含函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期常用函数"><span class="toc-text">日期常用函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串常用函数"><span class="toc-text">字符串常用函数</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/UI/">UI</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-cpp/">c/cpp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客迁移/">博客迁移</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机基础/">计算机基础</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/css/" style="font-size: 15px;">css</a> <a href="/tags/博客迁移/" style="font-size: 15px;">博客迁移</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/c-cpp/" style="font-size: 15px;">c/cpp</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/计算机基础/" style="font-size: 15px;">计算机基础</a> <a href="/tags/UI/" style="font-size: 15px;">UI</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/css学习笔记/">css学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/c-cpp学习笔记/">c/cpp学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/09/Hexo博客迁移部署到oschina-开源中国-coding-码云/">Hexo博客迁移部署到oschina(开源中国)&&codingNet(码市)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/计算机专业基础知识/">计算机专业基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/设计师和程序员必备：全世界最著名的-icons-网站/">设计师和程序员必备：全世界最著名的 icons 网站</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/学习vue-js实现的一个小demo/">学习vue.js实现的一个小demo</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/PHP学习总结/">PHP学习总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/算法学习01/">算法学习01</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/javascript学习总结/">javascript学习总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/Git总结/">Git总结</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-weibo"> 新浪微博</i></div><iframe width="100%" height="400" frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&amp;width=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=5&amp;isTitle=0&amp;noborder=0&amp;isWeibo=1&amp;isFans=0&amp;uid=2937891631&amp;verifier=fbb6cab5&amp;colors=ffffff,ffffff,333333,40759b,ecfbfd&amp;dpc=1" class="share_self"></iframe></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://jiyiren.github.io/" title="jiyiren" target="_blank">jiyiren</a><ul></ul><a href="https://scratch.mit.edu" title="scracth" target="_blank">scracth</a><ul></ul><a href="http://www.geeksforgeeks.org" title="geeksforgeeks" target="_blank">geeksforgeeks</a><ul></ul><a href="https://leetcode.com" title="leetcode" target="_blank">leetcode</a><ul></ul><a href="https://www.reddit.com" title="reddit(美国的百度贴吧)" target="_blank">reddit(美国的百度贴吧)</a><ul></ul><a href="https://www.quora.com/" title="Quora(美国的知乎)" target="_blank">Quora(美国的知乎)</a><ul></ul><a href="http://www.pinterest.com" title="pinterest(汇集了这个世界上最美的图集，设计师的最爱，目前被强了，得推墙才能看!)" target="_blank">pinterest(汇集了这个世界上最美的图集，设计师的最爱，目前被强了，得推墙才能看!)</a><ul></ul><a href="https://github.com/jobbole" title="awesome-cn系列" target="_blank">awesome-cn系列</a><ul></ul><a href="https://github.com/computeracy" title="computeracy" target="_blank">computeracy</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">sunniberg.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-93478395-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e93a3164e8e805ff6aa39ba955d338ec";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.0"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.0" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script></body></html>
