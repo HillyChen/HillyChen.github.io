@@ -688,7 +688,7 @@ p {color:blue;}
     <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Mysql学习总结/</id>
     <published>2017-03-12T14:05:44.000Z</published>
-    <updated>2017-05-14T09:05:51.000Z</updated>
+    <updated>2017-05-21T15:40:55.000Z</updated>
     
     <content type="html"><![CDATA[<p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
@@ -770,10 +770,71 @@ p {color:blue;}
 <li>城市、州和邮政编码存储在不同的列中(应该这样)，但邮件标签 打印程序却需要把它们作为一个恰当格式的字段检索出来。</li>
 <li>列数据是大小写混合的，但报表程序需要把所有数据按大写表示 出来。</li>
 <li>物品订单表存储物品的价格和数量，但不需要存储每个物品的总 价格(用价格乘以数量即可)。为打印发票，需要物品的总价格。</li>
-<li>需要根据表数据进行总数、平均数计算或其他计算。<br>在上述每个例子中，存储在表中的数据都不是应用程序所需要的。 我们需要直接从数据库中检索出转换、计算或格式化过的数据;而不是 检索出数据，然后再在客户机应用程序或报告程序中重新格式化。<br>这就是计算字段发挥作用的所在了。与前面各章介绍过的列不同， 计算字段并不实际存在于数据库表中。计算字段是运行时在SELECT语句 内创建的。<h5 id="拼接字段"><a href="#拼接字段" class="headerlink" title="拼接字段"></a>拼接字段</h5>为了说明如何使用计算字段，举一个创建由两列组成的标题的简单例子。vendors表包含供应商名和位置信息。假如要生成一个供应商报表， 需要在供应商的名字中按照name(location)这样的格式列出供应商的位 置。此报表需要单个值，而表中数据存储在两个列vend_name和vend_country中在MySQL的SELECT语句中，可使用Concat()函数来拼接两个列。<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- MySQL的不同之处 多数DBMS使用+或||来实现拼接， MySQL则使用Concat()函数来实现。当把SQL语句转换成 MySQL语句时一定要把这个区别铭记在心。</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">Concat</span>(vend_name,<span class="string">'('</span>,vend_country,<span class="string">')'</span>) <span class="keyword">FROM</span> vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</div><div class="line"><span class="comment">-- 曾提到通过删除数据右侧多余的空格来整理数据，这可以 使用MySQL的RTrim()函数来完成</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">Concat</span>(<span class="keyword">RTrim</span>(vend_name),<span class="string">'('</span>,<span class="keyword">RTrim</span>(vend_country),<span class="string">')'</span>) <span class="keyword">FROM</span> vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</div></pre></td></tr></table></figure>
+<li>需要根据表数据进行总数、平均数计算或其他计算。<br>在上述每个例子中，存储在表中的数据都不是应用程序所需要的。 我们需要直接从数据库中检索出转换、计算或格式化过的数据;而不是 检索出数据，然后再在客户机应用程序或报告程序中重新格式化。<br>这就是计算字段发挥作用的所在了。与前面各章介绍过的列不同， 计算字段并不实际存在于数据库表中。计算字段是运行时在SELECT语句 内创建的。<h5 id="拼接字段"><a href="#拼接字段" class="headerlink" title="拼接字段"></a>拼接字段</h5>为了说明如何使用计算字段，举一个创建由两列组成的标题的简单例子。vendors表包含供应商名和位置信息。假如要生成一个供应商报表， 需要在供应商的名字中按照name(location)这样的格式列出供应商的位 置。此报表需要单个值，而表中数据存储在两个列vend_name和vend_country中在MySQL的SELECT语句中，可使用Concat()函数来拼接两个列。<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- MySQL的不同之处 多数DBMS使用+或||来实现拼接， MySQL则使用Concat()函数来实现。当把SQL语句转换成 MySQL语句时一定要把这个区别铭记在心。</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">Concat</span>(vend_name,<span class="string">'('</span>,vend_country,<span class="string">')'</span>) <span class="keyword">FROM</span> vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</div><div class="line"><span class="comment">-- 曾提到通过删除数据右侧多余的空格来整理数据，这可以 使用MySQL的RTrim()函数来完成</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">Concat</span>(<span class="keyword">RTrim</span>(vend_name),<span class="string">'('</span>,<span class="keyword">RTrim</span>(vend_country),<span class="string">')'</span>) <span class="keyword">FROM</span> vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</div><div class="line"><span class="comment">-- 使用别名</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">Concat</span>(<span class="keyword">RTrim</span>(vend_name),<span class="string">'('</span>,<span class="keyword">RTrim</span>(vend_country),<span class="string">')'</span>) <span class="keyword">AS</span> vend_title <span class="keyword">FROM</span> vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</div><div class="line"><span class="comment">-- 执行算数运算</span></div><div class="line"><span class="keyword">SELECT</span> product_id,quantity,item_price,quantity*item_price <span class="keyword">AS</span> price <span class="keyword">FROM</span> ordertiems <span class="keyword">WHERE</span> order_num = <span class="number">20005</span>;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </blockquote>
+<h4 id="使用数据处理函数"><a href="#使用数据处理函数" class="headerlink" title="使用数据处理函数"></a>使用数据处理函数</h4><blockquote>
+<p>函数:SQL支持利用函数来处理数据。函数一般是在数据上执行的，它给数据的转换和处理提供了方便。去掉串尾空格的RTrim()就是一个函数例子。大多数SQL实现支持以下类型的函数。</p>
+<ul>
+<li>用于处理文本串(如删除或填充值，转换值为大写或小写)的文本函数。</li>
+<li>用于在数值数据上进行算术操作(如返回绝对值，进行代数运算)的数值函数。</li>
+<li>用于处理日期和时间值并从这些值中提取特定成分(例如，返回两个日期之差，检查日期有效性等)的日期和时间函数。</li>
+<li>返回DBMS正使用的特殊信息(如返回用户登录信息，检查版本细节)的系统函数。</li>
+</ul>
+</blockquote>
+<h5 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>,<span class="keyword">Upper</span>(<span class="keyword">name</span>) <span class="keyword">AS</span> name_upcase <span class="keyword">FROM</span> tablename ,<span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">name</span>;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">函数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Left()</td>
+<td style="text-align:left">返回串左边的字符</td>
+</tr>
+<tr>
+<td style="text-align:left">Length()</td>
+<td style="text-align:left">返回串的长度</td>
+</tr>
+<tr>
+<td style="text-align:left">Locate()</td>
+<td style="text-align:left">找出串的一个子串</td>
+</tr>
+<tr>
+<td style="text-align:left">Lower()</td>
+<td style="text-align:left">将串转换为小写</td>
+</tr>
+<tr>
+<td style="text-align:left">LTrim()</td>
+<td style="text-align:left">去掉串左边的空格</td>
+</tr>
+<tr>
+<td style="text-align:left">Right()</td>
+<td style="text-align:left">返回串右边的字符</td>
+</tr>
+<tr>
+<td style="text-align:left">RTrim()</td>
+<td style="text-align:left">去掉串右边的空格</td>
+</tr>
+<tr>
+<td style="text-align:left">Soundex()</td>
+<td style="text-align:left">返回串的SOUNDEX值</td>
+</tr>
+<tr>
+<td style="text-align:left">SubString()</td>
+<td style="text-align:left">返回子串的字符</td>
+</tr>
+<tr>
+<td style="text-align:left">Upper()</td>
+<td style="text-align:left">将串转换为大写</td>
+</tr>
+</tbody>
+</table>
+<h5 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h5><p>|AddDate()|增加一个日期(天、周等)|<br>|AddTime()|增加一个时间(时、分等)|<br>|CurDate()|返回当前日期|<br>|CurTime()|返回当前时间|<br>|Date()|返回日期时间的日期部分|<br>|DateDiff()|计算两个日期之差|<br>|Date_Add()|高度灵活的日期运算函数|<br>|Date_Format()|返回一个格式化的日期或时间串|<br>|Day()|返回一个日期的天数部分|<br>|DayOfWeek()|对于一个日期，返回对应的星期几|<br>|Hour()|返回一个时间的小时部分|<br>|Minute()|返回一个时间的分钟部分|<br>|Month()|返回一个日期的月份部分|<br>|Now()|返回当前日期和时间|<br>|Second()|返回一个时间的秒部分|<br>|Time()|返回一个日期时间的时间部分|<br>|Year()|返回一个日期的年份部分|</p>
 <h3 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h3><h4 id="01创建一个表格"><a href="#01创建一个表格" class="headerlink" title="01创建一个表格"></a>01创建一个表格</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> teacher</div><div class="line">(</div><div class="line"><span class="keyword">id</span> TINYINT <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line"><span class="keyword">name</span> <span class="built_in">CHAR</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">tele <span class="built_in">NUMERIC</span>(<span class="number">8</span>),</div><div class="line">sex ENUM(<span class="string">"F"</span>,<span class="string">"M"</span>) <span class="keyword">DEFAULT</span> <span class="string">"M"</span></div><div class="line">)</div></pre></td></tr></table></figure>
 <p>由上面这个例子可以知道，创建列类型的语法是: col_name col_type [col_attributes][general_attributes]</p>
 <ul>
