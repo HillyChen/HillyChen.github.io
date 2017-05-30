@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2017-05-11T16:32:28.000Z</updated>
+  <updated>2017-05-30T14:34:01.000Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -14,6 +14,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>sketch学习笔记以及设计相关知识积累</title>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/05/29/sketch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BB%A5%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%A7%AF%E7%B4%AF/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/05/29/sketch学习笔记以及设计相关知识积累/</id>
+    <published>2017-05-29T14:35:17.000Z</published>
+    <updated>2017-05-30T14:34:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>sketch是设计师眼中一款很牛逼的设计软件，和PS的一个区别就是sketch是矢量图的设计软件</p>
+<h3 id="sketch插件"><a href="#sketch插件" class="headerlink" title="sketch插件"></a>sketch插件</h3><blockquote>
+<p>安装的三种方法：</p>
+<ul>
+<li>sketch toolbox</li>
+<li>github下载插件项目，直接双击压缩包里面的.sketchplugin的插件文件</li>
+<li>直接将解压缩包里面的插件文件拷贝放到Plugins路径下<br>插件：</li>
+<li>Duplicator:快捷键复制插件</li>
+<li>Content Generator:自动内容填充</li>
+<li>Magic mirror:选中一个区域，可以将你制定的一个图片去填充选中区域，比如图片中一个手机界面，可以用钢笔描边选中，然后用另一张图片去填充图片中手机的屏幕，具体用法是把屏幕用vector工具转变成path</li>
+<li>sketch Style Inventory:导入所有的设计稿的颜色、文本样式、元件</li>
+<li>Material Design Color Palette Sketch Plugin:生成配色方案的插件</li>
+<li><strong>sketch notebook</strong>:标注设计稿的注意事项</li>
+<li>Sketch Measure: 标注尺寸</li>
+</ul>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;sketch是设计师眼中一款很牛逼的设计软件，和PS的一个区别就是sketch是矢量图的设计软件&lt;/p&gt;
+&lt;h3 id=&quot;sketch插件&quot;&gt;&lt;a href=&quot;#sketch插件&quot; class=&quot;headerlink&quot; title=&quot;sketch插件&quot;&gt;&lt;/a&gt;sketch
+    
+    </summary>
+    
+      <category term="sketch design" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/sketch-design/"/>
+    
+    
+      <category term="sketch design" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/sketch-design/"/>
+    
+  </entry>
   
   <entry>
     <title>css学习笔记</title>
