@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://git.oschina.net/chenxushan/chenxushan.git/movie-music/index.html</loc>
+    
+    <lastmod>2017-06-05T13:57:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A001/</loc>
     
     <lastmod>2017-06-02T16:23:06.000Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</loc>
     
     <lastmod>2017-05-29T14:18:52.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://git.oschina.net/chenxushan/chenxushan.git/movie-music/index.html</loc>
-    
-    <lastmod>2017-05-21T15:10:56.000Z</lastmod>
     
   </url>
   
