@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2017-05-30T14:34:01.000Z</updated>
+  <updated>2017-06-10T14:58:42.000Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -20,9 +20,14 @@
     <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/05/29/sketch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BB%A5%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%A7%AF%E7%B4%AF/"/>
     <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/05/29/sketch学习笔记以及设计相关知识积累/</id>
     <published>2017-05-29T14:35:17.000Z</published>
-    <updated>2017-05-30T14:34:01.000Z</updated>
+    <updated>2017-06-10T14:58:42.000Z</updated>
     
-    <content type="html"><![CDATA[<p>sketch是设计师眼中一款很牛逼的设计软件，和PS的一个区别就是sketch是矢量图的设计软件</p>
+    <content type="html"><![CDATA[<p>sketch是设计师眼中一款很牛逼的设计软件，和PS的一个区别就是sketch是矢量图的设计软件<br>sketch学习网站</p>
+<ul>
+<li><a href="http://sketch.im" target="_blank" rel="external">sketch.im</a></li>
+<li><a href="http://www.sketchchina.com" target="_blank" rel="external">skecth中国社区</a></li>
+<li>to add ….</li>
+</ul>
 <h3 id="sketch插件"><a href="#sketch插件" class="headerlink" title="sketch插件"></a>sketch插件</h3><blockquote>
 <p>安装的三种方法：</p>
 <ul>
@@ -38,12 +43,25 @@
 <li>Sketch Measure: 标注尺寸</li>
 </ul>
 </blockquote>
+<h3 id="神奇的点9图"><a href="#神奇的点9图" class="headerlink" title="神奇的点9图"></a>神奇的点9图</h3><blockquote>
+<p>只针对android手机开发者设计图片时制作，例如微信聊天文字对话框会根据文字的多少，手机屏幕尺寸进行拉伸，所以点9<br>图产生了。PS也可以制作点9图具体参考如下<br><a href="http://www.sketchchina.com/read-142.html" target="_blank" rel="external">教程</a><br><a href="http://www.sketchchina.com/read-66.html" target="_blank" rel="external">制作工具/插件</a></p>
+</blockquote>
+<h3 id="UI实战"><a href="#UI实战" class="headerlink" title="UI实战"></a>UI实战</h3><h4 id="UI界面设计工作流程"><a href="#UI界面设计工作流程" class="headerlink" title="UI界面设计工作流程"></a>UI界面设计工作流程</h4><ul>
+<li>根据原型或者交互稿设计UI界面</li>
+<li>在手机上预览设计稿</li>
+<li>设计稿的沟通修改和确认环节</li>
+<li>根据设计稿输出高保真的demo(可选)</li>
+<li>设计稿的标注</li>
+<li>切图</li>
+<li>开发完成后的视觉走查</li>
+</ul>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;sketch是设计师眼中一款很牛逼的设计软件，和PS的一个区别就是sketch是矢量图的设计软件&lt;/p&gt;
-&lt;h3 id=&quot;sketch插件&quot;&gt;&lt;a href=&quot;#sketch插件&quot; class=&quot;headerlink&quot; title=&quot;sketch插件&quot;&gt;&lt;/a&gt;sketch
+      &lt;p&gt;sketch是设计师眼中一款很牛逼的设计软件，和PS的一个区别就是sketch是矢量图的设计软件&lt;br&gt;sketch学习网站&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://sketch.im&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ske
     
     </summary>
     
