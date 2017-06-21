@@ -77,7 +77,7 @@
     <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css学习笔记/</id>
     <published>2017-04-22T06:53:00.000Z</published>
-    <updated>2017-06-21T14:53:28.000Z</updated>
+    <updated>2017-06-21T15:16:27.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近需要为自己的公众号开发一个小程序，所以要温习一下css样式知识，在此做个笔记也供以后便捷温习学习；</p>
 <h3 id="css学习笔记"><a href="#css学习笔记" class="headerlink" title="css学习笔记"></a>css学习笔记</h3><blockquote>
@@ -185,6 +185,10 @@ p {color:blue;}
 <h4 id="外边距的单位"><a href="#外边距的单位" class="headerlink" title="外边距的单位"></a>外边距的单位</h4><blockquote>
 <p>根据经验，为文本元素设置外边距时通常需要混合使用不同的单位。比如说，一个段落的左、右外边距可以使用像素，以便该段文本始终与包含元素边界保持固定间距，不受字号变大或变小的影响。而对于上、下外边距，以em为单位则可以让段间距随字号变化而相应增大或缩小<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*这里使用了简写属性把上、下外边距设置为.75em，把左、右外边距设置为30像素*/</span></div><div class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">font-size</span>:<span class="number">1em</span>; <span class="attribute">margin</span>:.<span class="number">75em</span> <span class="number">30px</span>;&#125;</div></pre></td></tr></table></figure></p>
 </blockquote>
+<h3 id="盒子模型详解"><a href="#盒子模型详解" class="headerlink" title="盒子模型详解"></a>盒子模型详解</h3><h4 id="没有宽度的盒子"><a href="#没有宽度的盒子" class="headerlink" title="没有宽度的盒子"></a>没有宽度的盒子</h4><blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span> &#123;<span class="attribute">font-family</span>:helvetica, arial, sans-serif; <span class="attribute">font-size</span>:<span class="number">1em</span>; <span class="attribute">margin</span>:<span class="number">0px</span>; <span class="attribute">background-color</span>:<span class="number">#caebff</span>;&#125;</div><div class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">margin</span>:<span class="number">0</span> <span class="number">30px</span>; <span class="attribute">background-color</span>:<span class="number">#fff</span>; <span class="attribute">padding</span>:<span class="number">0</span> <span class="number">20px</span>; <span class="attribute">border</span>:solid red; <span class="attribute">border-width</span>:<span class="number">0</span> <span class="number">6px</span> <span class="number">0</span> <span class="number">6px</span>;&#125;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>外边距在元素盒子与窗口之间创造了空白，此时内容宽度变成了288像素（400 – ( (20 + 6 + 30)× 2) ）。而元素声明的总宽度并没有变，仍然是400像素。<br>盒模型结论一：没有（就是没有设置width的）宽度的元素始终会扩展到填满其父元素的宽度为止。添加水平边框、内边距和外边距，会导致内容宽度减少，减少量等于水平边框、内边距和外边距的和。<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fgt8b06ln7j20ms0fc48f.jpg" alt=""></p>
 ]]></content>
     
     <summary type="html">
