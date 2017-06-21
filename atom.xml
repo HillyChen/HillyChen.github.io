@@ -77,7 +77,7 @@
     <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css学习笔记/</id>
     <published>2017-04-22T06:53:00.000Z</published>
-    <updated>2017-06-21T15:16:27.000Z</updated>
+    <updated>2017-06-21T16:02:04.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近需要为自己的公众号开发一个小程序，所以要温习一下css样式知识，在此做个笔记也供以后便捷温习学习；</p>
 <h3 id="css学习笔记"><a href="#css学习笔记" class="headerlink" title="css学习笔记"></a>css学习笔记</h3><blockquote>
@@ -187,8 +187,13 @@ p {color:blue;}
 </blockquote>
 <h3 id="盒子模型详解"><a href="#盒子模型详解" class="headerlink" title="盒子模型详解"></a>盒子模型详解</h3><h4 id="没有宽度的盒子"><a href="#没有宽度的盒子" class="headerlink" title="没有宽度的盒子"></a>没有宽度的盒子</h4><blockquote>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span> &#123;<span class="attribute">font-family</span>:helvetica, arial, sans-serif; <span class="attribute">font-size</span>:<span class="number">1em</span>; <span class="attribute">margin</span>:<span class="number">0px</span>; <span class="attribute">background-color</span>:<span class="number">#caebff</span>;&#125;</div><div class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">margin</span>:<span class="number">0</span> <span class="number">30px</span>; <span class="attribute">background-color</span>:<span class="number">#fff</span>; <span class="attribute">padding</span>:<span class="number">0</span> <span class="number">20px</span>; <span class="attribute">border</span>:solid red; <span class="attribute">border-width</span>:<span class="number">0</span> <span class="number">6px</span> <span class="number">0</span> <span class="number">6px</span>;&#125;</div></pre></td></tr></table></figure>
+<p>外边距在元素盒子与窗口之间创造了空白，此时内容宽度变成了288像素（400 – ( (20 + 6 + 30)× 2) ）。而元素声明的总宽度并没有变，仍然是400像素。<br><strong>盒模型结论一</strong>：没有（就是没有设置width的）宽度的元素始终会扩展到填满其父元素的宽度为止。添加水平边框、内边距和外边距，会导致内容宽度减少，减少量等于水平边框、内边距和外边距的和。<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fgt8b06ln7j20ms0fc48f.jpg" alt=""><br><strong>盒模型结论二</strong>：为设定了宽度的盒子添加边框、内边距和外边距，会导致盒子扩展得更宽。实际上，盒子的width属性设定的只是盒子内容区的宽度，而非盒子要占据的水平宽度。<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fgt9evv240j20s80xkdvj.jpg" alt=""></p>
 </blockquote>
-<p>外边距在元素盒子与窗口之间创造了空白，此时内容宽度变成了288像素（400 – ( (20 + 6 + 30)× 2) ）。而元素声明的总宽度并没有变，仍然是400像素。<br>盒模型结论一：没有（就是没有设置width的）宽度的元素始终会扩展到填满其父元素的宽度为止。添加水平边框、内边距和外边距，会导致内容宽度减少，减少量等于水平边框、内边距和外边距的和。<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fgt8b06ln7j20ms0fc48f.jpg" alt=""></p>
+<h4 id="浮动和清除"><a href="#浮动和清除" class="headerlink" title="浮动和清除"></a>浮动和清除</h4><blockquote>
+<p>浮动和清除是用来组织页面布局的又一柄利剑，这柄剑的剑刃就是float和clear属性。浮动，你看这俩字儿多形象，意思就是把元素从常规文档流中拿出来。拿出来干什么？一是可以实现传统出版物上那种文字绕排图片的效果，二是可以让原来上下堆叠的块级元素，变成左右并列，从而实现布局中的分栏。浮动元素脱离了常规文档流之后，原来紧跟其后的元素就会在空间允许的情况下，向上提升到与浮动元素平起平坐。如果浮动元素后面有两个段落，而你只想让第一段与浮动元素并列（就算旁边还能放下第二段，也不想让它上来），怎么办？用clear属性来“清除”第二段，然后它就乖乖地呆在浮动元素下面了。</p>
+<h5 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h5><p>CSS设计float属性的主要目的，是为了实现文本绕排图片的效果。然而，这个属性居然也成了创建多栏布局最简单的方式。<br>文本绕排图片<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;img …… /&gt;</div><div class="line">&lt;p&gt;…the paragraph text…&lt;/p&gt;</div><div class="line">/*为简明起见，省略了字体声明*/</div><div class="line">p &#123;margin:0; border:1px solid red;&#125;</div><div class="line">/*外边距防止图片紧挨文本*/</div><div class="line">img &#123;float:left; margin:0 4px 4px 0;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>动图片会从文档流中被移除，如果在标记中有文本元素跟在它后面，则其中的文本会绕开图片.浮动非图片元素时，必须给它设定宽度，否则后果难以预料。图片无所谓，因为它本身有默认的宽度。<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fgt9ngl84aj20q80gm4ei.jpg" alt=""></p>
 ]]></content>
     
     <summary type="html">
