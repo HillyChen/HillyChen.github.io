@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2017-06-10T14:58:42.000Z</updated>
+  <updated>2017-09-24T13:45:51.000Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -14,6 +14,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机网络</title>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/09/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/09/24/计算机网络/</id>
+    <published>2017-09-24T13:28:54.000Z</published>
+    <updated>2017-09-24T13:45:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>从事IT行业的人，可能有一部分人不是科班出身，或者即使是科班出身，可能对计算机的一些基础理论知识掌握的不是很牢靠，目前国内的计算机学院的专业课程中最重要的就是这四门：计算机组成、操作系统、数据结构、计算机网络。这四门也是目前计算机考研所涉及的，很重要，也很基础，虽然现在很多软件开发人员在工作中都不涉及这些知识，但是对于大公司来说，要想深入技术领域产品的研发，这些知识是很重要的，所以对于打算一直走技术路线的人来说，职业生涯很有必要抽出时间进行学习。八个字：“巩固、充实、深入、探索”。下面是整理的一些思维导图。</p>
+<h3 id="计算机网络体系"><a href="#计算机网络体系" class="headerlink" title="计算机网络体系"></a>计算机网络体系</h3><p><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fjuzlii841j22ju27ce81.jpg" alt="计算机网络体系"></p>
+<h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fjuzj4i8j0j22mk3e5b2a.jpg" alt="物理层"></p>
+<h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fjuzgi56igj22m93tau0z.jpg" alt="数据链路层"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从事IT行业的人，可能有一部分人不是科班出身，或者即使是科班出身，可能对计算机的一些基础理论知识掌握的不是很牢靠，目前国内的计算机学院的专业课程中最重要的就是这四门：计算机组成、操作系统、数据结构、计算机网络。这四门也是目前计算机考研所涉及的，很重要，也很基础，虽然现在很多
+    
+    </summary>
+    
+      <category term="计算机基础" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="计算机基础" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
   
   <entry>
     <title>sketch学习笔记以及设计相关知识积累</title>
@@ -367,7 +393,7 @@ p {color:blue;}
     
     <content type="html"><![CDATA[<p>这两天突然发现github.io的pags服务挂掉了,导致博客登录不上，为了防止以后类似情况的发生，决定把博客部署到国内的一些托管平台，比如开源中国和码市。因为二者都支持项目开启pages服务，所以迁移起来很简单;</p>
 <h3 id="step1、新建项目仓"><a href="#step1、新建项目仓" class="headerlink" title="step1、新建项目仓"></a>step1、新建项目仓</h3><ul>
-<li>到<a href="https://git.oschina.net" target="_blank" rel="external">开源中国</a>和<a href="https://coding.net/" target="_blank" rel="external">码市</a>申请账号登录新建项目</li>
+<li>到<a href="https://git.oschina.net">开源中国</a>和<a href="https://coding.net/" target="_blank" rel="external">码市</a>申请账号登录新建项目</li>
 <li><strong>在新建项目的时候，对于pages项目，项目的名称一定要跟用户名一致，不然后面当博客源码推送到仓库上的时候，访问的时候会遇到静态资源都加载失败的情况；</strong></li>
 <li>把项目的pages功能开启，默认使用master分支；</li>
 </ul>
@@ -486,7 +512,7 @@ p {color:blue;}
     <published>2017-03-18T14:18:13.000Z</published>
     <updated>2017-03-18T14:25:07.000Z</updated>
     
-    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html">demo,点击预览</a></p>
+    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html" target="_blank" rel="external">demo,点击预览</a></p>
 <h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="界面设计"><a href="#界面设计" class="headerlink" title="界面设计"></a>界面设计</h4><h4 id="vue-js在本demo的核心代码实现"><a href="#vue-js在本demo的核心代码实现" class="headerlink" title="vue.js在本demo的核心代码实现"></a>vue.js在本demo的核心代码实现</h4>]]></content>
     
     <summary type="html">
