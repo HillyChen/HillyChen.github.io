@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2018-01-02T06:26:12.523Z</updated>
+  <updated>2018-01-02T06:28:50.306Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -20,22 +20,22 @@
     <link href="https://git.oschina.net/chenxushan/chenxushan.git/2018/01/02/Python%E7%AC%94%E8%AE%B0/"/>
     <id>https://git.oschina.net/chenxushan/chenxushan.git/2018/01/02/Python笔记/</id>
     <published>2018-01-02T06:17:36.000Z</published>
-    <updated>2018-01-02T06:26:12.523Z</updated>
+    <updated>2018-01-02T06:28:50.306Z</updated>
     
     <content type="html"><![CDATA[<hr>
+<p>人生苦短，我用python</p>
 <h2 id="基础数据集"><a href="#基础数据集" class="headerlink" title="基础数据集"></a>基础数据集</h2><blockquote>
 <p>list,tuple,dictionary</p>
-<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fn28t1wd8uj20dg0fmdgp.jpg" alt=""></p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">li = [<span class="number">1</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">4</span>]  <span class="comment">#定义</span></div><div class="line">li_reflect = [elem*<span class="number">2</span> <span class="keyword">for</span> elem <span class="keyword">in</span> li] <span class="comment">#映射</span></div><div class="line"><span class="comment">#方法</span></div><div class="line"><span class="comment">#append,count,extend,index,insert,pop,remove,reverse,sort</span></div></pre></td></tr></table></figure>
-]]></content>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">li = [<span class="number">1</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">4</span>]  <span class="comment">#定义</span></div><div class="line">li_reflect = [elem*<span class="number">2</span> <span class="keyword">for</span> elem <span class="keyword">in</span> li] <span class="comment">#映射</span></div><div class="line"><span class="comment">#方法</span></div><div class="line"><span class="comment">#append,count,extend,index,insert,pop,remove,reverse,sort</span></div></pre></td></tr></table></figure>
+<h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h3>]]></content>
     
     <summary type="html">
     
       &lt;hr&gt;
+&lt;p&gt;人生苦短，我用python&lt;/p&gt;
 &lt;h2 id=&quot;基础数据集&quot;&gt;&lt;a href=&quot;#基础数据集&quot; class=&quot;headerlink&quot; title=&quot;基础数据集&quot;&gt;&lt;/a&gt;基础数据集&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;list,tuple,dictionary&lt;/p&gt;
-&lt;h3 id=&quot;list&quot;&gt;
+&lt;p&gt;list,tuple,dictiona
     
     </summary>
     
