@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
-  <updated>2018-01-11T12:55:37.077Z</updated>
+  <updated>2018-01-19T12:40:08.341Z</updated>
   <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>利用Flask+Nginx+Gunicorn+Supervisor在Ubuntu16.04上部署web项目</title>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2018/01/19/%E5%88%A9%E7%94%A8Flask-Nginx-Gunicorn-Supervisor%E5%9C%A8Ubuntu16-04%E4%B8%8A%E9%83%A8%E7%BD%B2web%E9%A1%B9%E7%9B%AE/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2018/01/19/利用Flask-Nginx-Gunicorn-Supervisor在Ubuntu16-04上部署web项目/</id>
+    <published>2018-01-19T12:21:44.000Z</published>
+    <updated>2018-01-19T12:40:08.341Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近做自己个人的一个项目，利用python和flask开发，在Ubuntu16.04上面部署，所以记录了部署的过程，整个过程利用的工具有：Flask,Nginx,Gunicorn,Supervisor，下面我会按顺序来一一介绍</p>
+<h2 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h2><blockquote>
+<p>Flask是python语言中一个有名的开源web框架，在python语言中，有两大主流的web开发框架，一个是Django，另外就是Flask，从github上的火热程度来看，这两个都比较火，二者的区别就是Django比较规范笨拙，集成度高，功能齐全，Flask比较灵活，很多功能都是靠插件来实现。每个人有每个人的喜好，根据自己喜好和项目需要来选择。<br><a href="http://flask.pocoo.org/docs/0.12/quickstart/" target="_blank" rel="external">flask的官方文档</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>python 开发，最好借助pip来安装各种需要的包，没有的话，可以直接安装</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install pip</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果你要在纯洁的虚拟环境里面开发项目可以安装virtualenv，借助它来生产环境，剩下的具体看官网文档</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install virtualenv</div></pre></td></tr></table></figure>
+<blockquote>
+<p>另外一种是全局安装，直接运行</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install Flask</div></pre></td></tr></table></figure>
+<p>安装好之后，可以运行flas -version,结果显示如下，即表示安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Flask 0.12.2</div><div class="line">Python 2.7.12 (default, Dec  4 2017, 14:50:18)</div><div class="line">[GCC 5.4.0 20160609]</div></pre></td></tr></table></figure></p>
+<p>之后可以写一个脚本来测试运行一下，在/home/{yourusername}/目录下新建一个目录表示项目位置，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir myapp</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近做自己个人的一个项目，利用python和flask开发，在Ubuntu16.04上面部署，所以记录了部署的过程，整个过程利用的工具有：Flask,Nginx,Gunicorn,Supervisor，下面我会按顺序来一一介绍&lt;/p&gt;
+&lt;h2 id=&quot;Flask&quot;&gt;&lt;a h
+    
+    </summary>
+    
+    
+      <category term="Flask,Nginx,Gunicorn,Supervisor,Ubuntu16.04" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/Flask-Nginx-Gunicorn-Supervisor-Ubuntu16-04/"/>
+    
+  </entry>
   
   <entry>
     <title>Python笔记</title>
