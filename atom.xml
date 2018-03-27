@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hillychen.github.io/"/>
-  <updated>2018-01-19T16:25:41.890Z</updated>
+  <updated>2018-03-27T10:10:07.704Z</updated>
   <id>http://hillychen.github.io/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue.js学习笔记</title>
+    <link href="http://hillychen.github.io/2018/03/27/Vue-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://hillychen.github.io/2018/03/27/Vue-js学习笔记/</id>
+    <published>2018-03-27T10:05:02.000Z</published>
+    <updated>2018-03-27T10:10:07.704Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近主攻深入javascript和vue前端框架技术栈,所以要系统深入学习,写博客以记之…</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近主攻深入javascript和vue前端框架技术栈,所以要系统深入学习,写博客以记之…&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="sketch design" scheme="http://hillychen.github.io/categories/sketch-design/"/>
+    
+    
+      <category term="Vue" scheme="http://hillychen.github.io/tags/Vue/"/>
+    
+  </entry>
   
   <entry>
     <title>利用Flask+Nginx+Gunicorn+Supervisor在Ubuntu16.04上部署web项目</title>
@@ -1109,7 +1133,7 @@ p {color:blue;}
     <link href="http://hillychen.github.io/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://hillychen.github.io/2017/03/12/Mysql学习总结/</id>
     <published>2017-03-12T14:05:44.000Z</published>
-    <updated>2017-05-29T14:18:52.000Z</updated>
+    <updated>2018-01-29T06:01:40.266Z</updated>
     
     <content type="html"><![CDATA[<p>知识在乎不断的积累和总结，好记性不如烂笔头.读各种书，以博客以记之，为了自己日后学习查阅，也可以和远方来的朋友分享交流。</p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
@@ -1460,7 +1484,32 @@ p {color:blue;}
 <li>general_attributes 通用属性，可以应用在出少数列的任意列，例如上面提到了 NULL、 NOT NULL、和 DEFAULT。</li>
 <li>MySQL 的数字列类型<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fdp6efjbxmj20qm0k841v.jpg" alt=""><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1fdp7523ke3j20sg0o60x7.jpg" alt=""></li>
 </ul>
-<p>####</p>
+<h3 id="mysql基础配置"><a href="#mysql基础配置" class="headerlink" title="mysql基础配置"></a>mysql基础配置</h3><h4 id="创建新用户并给授权指定的数据库权限"><a href="#创建新用户并给授权指定的数据库权限" class="headerlink" title="创建新用户并给授权指定的数据库权限"></a>创建新用户并给授权指定的数据库权限</h4><blockquote>
+<p>给其他工作人员提供某台服务器的 mysql 中某个数据库的访问权限。<br>之所以要做限制，是防止对其他的数据库非法进行操作。</p>
+<ul>
+<li>使用 root 管理员登陆 mysql<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -p;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>创建新用户<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE USER &apos;user1&apos;@&apos;%&apos; IDENTIFIED BY &apos;password&apos;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>‘%’ - 所有情况都能访问<br>‘localhost’ - 本机才能访问<br>’111.222.33.44‘ - 指定 ip 才能访问</p>
+<ul>
+<li><p>注：修改密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update mysql.user set password=password(&apos;新密码&apos;) where user=&apos;user1&apos;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>给该用户添加权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">grant all privileges on 想授权的数据库.* to &apos;user1&apos;@&apos;%&apos;;</div><div class="line">#all 可以替换为 select,delete,update,create,drop</div></pre></td></tr></table></figure>
+</li>
+<li><p>删除用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Delete FROM mysql.user Where User=&apos;user1&apos;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>刷新修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+</li>
+</ul>
 ]]></content>
     
     <summary type="html">
