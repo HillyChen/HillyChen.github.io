@@ -4,9 +4,9 @@
   <subtitle>知无不言  言无不尽</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://hillychen.github.io/"/>
+  <link href="https://git.oschina.net/chenxushan/chenxushan.git/"/>
   <updated>2018-03-27T10:10:07.704Z</updated>
-  <id>http://hillychen.github.io/</id>
+  <id>https://git.oschina.net/chenxushan/chenxushan.git/</id>
   
   <author>
     <name>sunniberg</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Vue.js学习笔记</title>
-    <link href="http://hillychen.github.io/2018/03/27/Vue-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://hillychen.github.io/2018/03/27/Vue-js学习笔记/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2018/03/27/Vue-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2018/03/27/Vue-js学习笔记/</id>
     <published>2018-03-27T10:05:02.000Z</published>
     <updated>2018-03-27T10:10:07.704Z</updated>
     
@@ -32,17 +32,17 @@
     
     </summary>
     
-      <category term="sketch design" scheme="http://hillychen.github.io/categories/sketch-design/"/>
+      <category term="sketch design" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/sketch-design/"/>
     
     
-      <category term="Vue" scheme="http://hillychen.github.io/tags/Vue/"/>
+      <category term="Vue" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/Vue/"/>
     
   </entry>
   
   <entry>
     <title>利用Flask+Nginx+Gunicorn+Supervisor在Ubuntu16.04上部署web项目</title>
-    <link href="http://hillychen.github.io/2018/01/19/%E5%88%A9%E7%94%A8Flask-Nginx-Gunicorn-Supervisor%E5%9C%A8Ubuntu16-04%E4%B8%8A%E9%83%A8%E7%BD%B2web%E9%A1%B9%E7%9B%AE/"/>
-    <id>http://hillychen.github.io/2018/01/19/利用Flask-Nginx-Gunicorn-Supervisor在Ubuntu16-04上部署web项目/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2018/01/19/%E5%88%A9%E7%94%A8Flask-Nginx-Gunicorn-Supervisor%E5%9C%A8Ubuntu16-04%E4%B8%8A%E9%83%A8%E7%BD%B2web%E9%A1%B9%E7%9B%AE/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2018/01/19/利用Flask-Nginx-Gunicorn-Supervisor在Ubuntu16-04上部署web项目/</id>
     <published>2018-01-19T12:21:44.000Z</published>
     <updated>2018-01-19T16:25:41.890Z</updated>
     
@@ -129,14 +129,14 @@
     </summary>
     
     
-      <category term="Flask,Nginx,Gunicorn,Supervisor,Ubuntu16.04" scheme="http://hillychen.github.io/tags/Flask-Nginx-Gunicorn-Supervisor-Ubuntu16-04/"/>
+      <category term="Flask,Nginx,Gunicorn,Supervisor,Ubuntu16.04" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/Flask-Nginx-Gunicorn-Supervisor-Ubuntu16-04/"/>
     
   </entry>
   
   <entry>
     <title>Python笔记</title>
-    <link href="http://hillychen.github.io/2018/01/02/Python%E7%AC%94%E8%AE%B0/"/>
-    <id>http://hillychen.github.io/2018/01/02/Python笔记/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2018/01/02/Python%E7%AC%94%E8%AE%B0/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2018/01/02/Python笔记/</id>
     <published>2018-01-02T06:17:36.000Z</published>
     <updated>2018-01-11T12:55:37.077Z</updated>
     
@@ -229,14 +229,14 @@
     </summary>
     
     
-      <category term="Python" scheme="http://hillychen.github.io/tags/Python/"/>
+      <category term="Python" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>计算机网络</title>
-    <link href="http://hillychen.github.io/2017/09/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    <id>http://hillychen.github.io/2017/09/24/计算机网络/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/09/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/09/24/计算机网络/</id>
     <published>2017-09-24T13:28:54.000Z</published>
     <updated>2017-09-24T14:18:29.000Z</updated>
     
@@ -267,17 +267,17 @@
     
     </summary>
     
-      <category term="计算机基础" scheme="http://hillychen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="计算机基础" scheme="http://hillychen.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>sketch学习笔记以及设计相关知识积累</title>
-    <link href="http://hillychen.github.io/2017/05/29/sketch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BB%A5%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%A7%AF%E7%B4%AF/"/>
-    <id>http://hillychen.github.io/2017/05/29/sketch学习笔记以及设计相关知识积累/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/05/29/sketch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BB%A5%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%A7%AF%E7%B4%AF/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/05/29/sketch学习笔记以及设计相关知识积累/</id>
     <published>2017-05-29T14:35:17.000Z</published>
     <updated>2017-06-10T14:58:42.000Z</updated>
     
@@ -324,17 +324,17 @@
     
     </summary>
     
-      <category term="sketch design" scheme="http://hillychen.github.io/categories/sketch-design/"/>
+      <category term="sketch design" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/sketch-design/"/>
     
     
-      <category term="sketch design" scheme="http://hillychen.github.io/tags/sketch-design/"/>
+      <category term="sketch design" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/sketch-design/"/>
     
   </entry>
   
   <entry>
     <title>css学习笔记</title>
-    <link href="http://hillychen.github.io/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://hillychen.github.io/2017/04/22/css学习笔记/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/22/css学习笔记/</id>
     <published>2017-04-22T06:53:00.000Z</published>
     <updated>2017-07-16T09:28:51.000Z</updated>
     
@@ -559,17 +559,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="css" scheme="http://hillychen.github.io/categories/css/"/>
+      <category term="css" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/css/"/>
     
     
-      <category term="css" scheme="http://hillychen.github.io/tags/css/"/>
+      <category term="css" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/css/"/>
     
   </entry>
   
   <entry>
     <title>c/cpp学习笔记</title>
-    <link href="http://hillychen.github.io/2017/04/16/c-cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://hillychen.github.io/2017/04/16/c-cpp学习笔记/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/16/c-cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/16/c-cpp学习笔记/</id>
     <published>2017-04-16T09:03:39.000Z</published>
     <updated>2017-04-16T14:33:58.000Z</updated>
     
@@ -610,23 +610,23 @@ p {color:blue;}
     
     </summary>
     
-      <category term="c/cpp" scheme="http://hillychen.github.io/categories/c-cpp/"/>
+      <category term="c/cpp" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/c-cpp/"/>
     
     
-      <category term="c/cpp" scheme="http://hillychen.github.io/tags/c-cpp/"/>
+      <category term="c/cpp" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/c-cpp/"/>
     
   </entry>
   
   <entry>
     <title>Hexo博客迁移部署到oschina(开源中国)&amp;&amp;codingNet(码市)</title>
-    <link href="http://hillychen.github.io/2017/04/09/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E9%83%A8%E7%BD%B2%E5%88%B0oschina-%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD-coding-%E7%A0%81%E4%BA%91/"/>
-    <id>http://hillychen.github.io/2017/04/09/Hexo博客迁移部署到oschina-开源中国-coding-码云/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/09/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E9%83%A8%E7%BD%B2%E5%88%B0oschina-%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD-coding-%E7%A0%81%E4%BA%91/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/09/Hexo博客迁移部署到oschina-开源中国-coding-码云/</id>
     <published>2017-04-08T16:14:29.000Z</published>
     <updated>2017-04-08T16:32:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>这两天突然发现github.io的pags服务挂掉了,导致博客登录不上，为了防止以后类似情况的发生，决定把博客部署到国内的一些托管平台，比如开源中国和码市。因为二者都支持项目开启pages服务，所以迁移起来很简单;</p>
 <h3 id="step1、新建项目仓"><a href="#step1、新建项目仓" class="headerlink" title="step1、新建项目仓"></a>step1、新建项目仓</h3><ul>
-<li>到<a href="https://git.oschina.net" target="_blank" rel="external">开源中国</a>和<a href="https://coding.net/" target="_blank" rel="external">码市</a>申请账号登录新建项目</li>
+<li>到<a href="https://git.oschina.net">开源中国</a>和<a href="https://coding.net/" target="_blank" rel="external">码市</a>申请账号登录新建项目</li>
 <li><strong>在新建项目的时候，对于pages项目，项目的名称一定要跟用户名一致，不然后面当博客源码推送到仓库上的时候，访问的时候会遇到静态资源都加载失败的情况；</strong></li>
 <li>把项目的pages功能开启，默认使用master分支；</li>
 </ul>
@@ -650,17 +650,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="博客迁移" scheme="http://hillychen.github.io/categories/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
+      <category term="博客迁移" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
     
     
-      <category term="博客迁移" scheme="http://hillychen.github.io/tags/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
+      <category term="博客迁移" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
     
   </entry>
   
   <entry>
     <title>计算机专业基础知识</title>
-    <link href="http://hillychen.github.io/2017/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    <id>http://hillychen.github.io/2017/04/07/计算机专业基础知识/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/07/计算机专业基础知识/</id>
     <published>2017-04-07T15:12:31.000Z</published>
     <updated>2017-04-09T07:25:50.000Z</updated>
     
@@ -689,17 +689,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="计算机基础" scheme="http://hillychen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="计算机基础" scheme="http://hillychen.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>设计师和程序员必备：全世界最著名的 icons 网站</title>
-    <link href="http://hillychen.github.io/2017/04/05/%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%92%8C%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%EF%BC%9A%E5%85%A8%E4%B8%96%E7%95%8C%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84-icons-%E7%BD%91%E7%AB%99/"/>
-    <id>http://hillychen.github.io/2017/04/05/设计师和程序员必备：全世界最著名的-icons-网站/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/04/05/%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%92%8C%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%EF%BC%9A%E5%85%A8%E4%B8%96%E7%95%8C%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84-icons-%E7%BD%91%E7%AB%99/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/04/05/设计师和程序员必备：全世界最著名的-icons-网站/</id>
     <published>2017-04-05T15:05:33.000Z</published>
     <updated>2017-07-01T15:29:14.000Z</updated>
     
@@ -731,21 +731,21 @@ p {color:blue;}
     
     </summary>
     
-      <category term="UI" scheme="http://hillychen.github.io/categories/UI/"/>
+      <category term="UI" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/UI/"/>
     
     
-      <category term="UI" scheme="http://hillychen.github.io/tags/UI/"/>
+      <category term="UI" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/UI/"/>
     
   </entry>
   
   <entry>
     <title>学习vue.js实现的一个小demo</title>
-    <link href="http://hillychen.github.io/2017/03/18/%E5%AD%A6%E4%B9%A0vue-js%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8Fdemo/"/>
-    <id>http://hillychen.github.io/2017/03/18/学习vue-js实现的一个小demo/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/18/%E5%AD%A6%E4%B9%A0vue-js%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8Fdemo/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/18/学习vue-js实现的一个小demo/</id>
     <published>2017-03-18T14:18:13.000Z</published>
     <updated>2017-03-18T14:25:07.000Z</updated>
     
-    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html">demo,点击预览</a></p>
+    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html" target="_blank" rel="external">demo,点击预览</a></p>
 <h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="界面设计"><a href="#界面设计" class="headerlink" title="界面设计"></a>界面设计</h4><h4 id="vue-js在本demo的核心代码实现"><a href="#vue-js在本demo的核心代码实现" class="headerlink" title="vue.js在本demo的核心代码实现"></a>vue.js在本demo的核心代码实现</h4>]]></content>
     
     <summary type="html">
@@ -759,8 +759,8 @@ p {color:blue;}
   
   <entry>
     <title>PHP学习总结</title>
-    <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/18/PHP学习总结/</id>
     <published>2017-03-18T10:40:32.000Z</published>
     <updated>2017-03-19T15:06:02.000Z</updated>
     
@@ -1057,17 +1057,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="PHP" scheme="http://hillychen.github.io/categories/PHP/"/>
+      <category term="PHP" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://hillychen.github.io/tags/PHP/"/>
+      <category term="PHP" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/PHP/"/>
     
   </entry>
   
   <entry>
     <title>算法学习01</title>
-    <link href="http://hillychen.github.io/2017/03/12/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A001/"/>
-    <id>http://hillychen.github.io/2017/03/12/算法学习01/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A001/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/算法学习01/</id>
     <published>2017-03-12T14:08:09.000Z</published>
     <updated>2017-06-02T16:23:06.000Z</updated>
     
@@ -1085,17 +1085,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="algorithm" scheme="http://hillychen.github.io/categories/algorithm/"/>
+      <category term="algorithm" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/algorithm/"/>
     
     
-      <category term="algorithm" scheme="http://hillychen.github.io/tags/algorithm/"/>
+      <category term="algorithm" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/algorithm/"/>
     
   </entry>
   
   <entry>
     <title>javascript学习总结</title>
-    <link href="http://hillychen.github.io/2017/03/12/javascript%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/12/javascript学习总结/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/javascript%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/javascript学习总结/</id>
     <published>2017-03-12T14:06:51.000Z</published>
     <updated>2017-03-16T12:56:34.000Z</updated>
     
@@ -1103,17 +1103,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="javascript" scheme="http://hillychen.github.io/categories/javascript/"/>
+      <category term="javascript" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/javascript/"/>
     
     
-      <category term="javascript" scheme="http://hillychen.github.io/tags/javascript/"/>
+      <category term="javascript" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/javascript/"/>
     
   </entry>
   
   <entry>
     <title>Git总结</title>
-    <link href="http://hillychen.github.io/2017/03/12/Git%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/12/Git总结/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Git%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Git总结/</id>
     <published>2017-03-12T14:06:27.000Z</published>
     <updated>2017-03-12T14:38:11.000Z</updated>
     
@@ -1121,17 +1121,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="git" scheme="http://hillychen.github.io/categories/git/"/>
+      <category term="git" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/git/"/>
     
     
-      <category term="git" scheme="http://hillychen.github.io/tags/git/"/>
+      <category term="git" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/git/"/>
     
   </entry>
   
   <entry>
     <title>Mysql学习总结</title>
-    <link href="http://hillychen.github.io/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>http://hillychen.github.io/2017/03/12/Mysql学习总结/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Mysql学习总结/</id>
     <published>2017-03-12T14:05:44.000Z</published>
     <updated>2018-01-29T06:01:40.266Z</updated>
     
@@ -1519,17 +1519,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="Mysql" scheme="http://hillychen.github.io/categories/Mysql/"/>
+      <category term="Mysql" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/Mysql/"/>
     
     
-      <category term="Mysql" scheme="http://hillychen.github.io/tags/Mysql/"/>
+      <category term="Mysql" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/Mysql/"/>
     
   </entry>
   
   <entry>
     <title>java学习</title>
-    <link href="http://hillychen.github.io/2017/03/12/Java/"/>
-    <id>http://hillychen.github.io/2017/03/12/Java/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Java/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/Java/</id>
     <published>2017-03-12T10:00:35.000Z</published>
     <updated>2017-03-12T14:10:59.000Z</updated>
     
@@ -1537,17 +1537,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="java" scheme="http://hillychen.github.io/categories/java/"/>
+      <category term="java" scheme="https://git.oschina.net/chenxushan/chenxushan.git/categories/java/"/>
     
     
-      <category term="java" scheme="http://hillychen.github.io/tags/java/"/>
+      <category term="java" scheme="https://git.oschina.net/chenxushan/chenxushan.git/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://hillychen.github.io/2017/03/12/hello-world/"/>
-    <id>http://hillychen.github.io/2017/03/12/hello-world/</id>
+    <link href="https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/hello-world/"/>
+    <id>https://git.oschina.net/chenxushan/chenxushan.git/2017/03/12/hello-world/</id>
     <published>2017-03-12T06:13:43.000Z</published>
     <updated>2017-03-12T06:13:43.000Z</updated>
     
