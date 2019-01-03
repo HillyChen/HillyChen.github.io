@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://gitee.com/chenxushan/chenxushan.git/"/>
-  <updated>2018-03-27T10:40:40.954Z</updated>
+  <updated>2019-01-03T15:39:40.100Z</updated>
   <id>https://gitee.com/chenxushan/chenxushan.git/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux下gdb调试c/cpp程序</title>
+    <link href="https://gitee.com/chenxushan/chenxushan.git/2019/01/03/linux%E4%B8%8Bgdb%E8%B0%83%E8%AF%95c-cpp%E7%A8%8B%E5%BA%8F/"/>
+    <id>https://gitee.com/chenxushan/chenxushan.git/2019/01/03/linux下gdb调试c-cpp程序/</id>
+    <published>2019-01-03T15:27:18.000Z</published>
+    <updated>2019-01-03T15:39:40.100Z</updated>
+    
+    <content type="html"><![CDATA[<p>作为一个程序员，除了要写好程序，还有个必须的技能就是要学会调试程序，也就是debug，很多IDE都内置UI调试程序功能，但是有的时候，一个c/cpp项目是部署在服务器端的，只有终端环境，这个时候要想在线上去快速定位一个紧急的bug，就需要我们在服务器环境进行调试定位解决问题。同时，我们平时在写代码的时候，如果遇到一些疑难杂症，也需要我们进行调试。所以调试技能是必备的。<br>所以自己把学习gdb调试的过程记录下来作为回顾，以ubuntu环境为学习环境。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><blockquote>
+<p>首先要安装的就是</p>
+<ul>
+<li>gcc</li>
+<li>g++</li>
+<li>gdb<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt install gcc</div><div class="line">sudo apt install g++</div><div class="line">sudo apt install gdb</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="编译程序"><a href="#编译程序" class="headerlink" title="编译程序"></a>编译程序</h4><blockquote>
+<p>现在有个程序如下:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;stack&gt;</div><div class="line">#include &lt;queue&gt;</div><div class="line"></div><div class="line">using namespace std;</div><div class="line">typedef int tree_node_elem_n;</div><div class="line"></div><div class="line">struct binary_tree_node_t &#123;</div><div class="line">    binary_tree_node_t *left;</div><div class="line">    binary_tree_node_t *right;</div><div class="line">    tree_node_elem_n elem;</div><div class="line">    binary_tree_node_t()&#123;&#125;;</div><div class="line">    binary_tree_node_t(tree_node_elem_n value)&#123;</div><div class="line">        elem = value;</div><div class="line">        left = nullptr;</div><div class="line">        right = nullptr;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">void pre_order_r(const binary_tree_node_t *root,int(*visit)(const binary_tree_node_t*))&#123;</div><div class="line">    if(root == nullptr) return;</div><div class="line">    int n;</div><div class="line">    n = visit(root);</div><div class="line">    cout &lt;&lt; n &lt;&lt; " ";</div><div class="line">    pre_order_r(root-&gt;left,visit);</div><div class="line">    pre_order_r(root-&gt;right,visit);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int visit(const binary_tree_node_t* n)&#123;</div><div class="line">    </div><div class="line">    return n-&gt;elem;</div><div class="line">&#125;</div><div class="line">void in_order_r(const binary_tree_node_t *root,int(*visit)(const binary_tree_node_t*))&#123;</div><div class="line">    if(root == nullptr) return;</div><div class="line">    int n;</div><div class="line">    in_order_r(root-&gt;left,visit);</div><div class="line">    n = visit(root);</div><div class="line">    cout &lt;&lt; n &lt;&lt; " ";</div><div class="line">    in_order_r(root-&gt;right,visit);</div><div class="line">&#125;</div><div class="line">void post_order_r(const binary_tree_node_t *root,int(*visit)(const binary_tree_node_t*))&#123;</div><div class="line">    if(root == nullptr) return;</div><div class="line">    int n;</div><div class="line">    post_order_r(root-&gt;left,visit);</div><div class="line">    post_order_r(root-&gt;right,visit);</div><div class="line">    n = visit(root);</div><div class="line">    cout &lt;&lt; n &lt;&lt; " ";</div><div class="line">&#125;</div><div class="line">void pre_order(const binary_tree_node_t *root,int(*visit)(const binary_tree_node_t*))&#123;</div><div class="line">    const binary_tree_node_t *p;</div><div class="line">    stack&lt;const binary_tree_node_t *&gt; s;</div><div class="line">    p = root;</div><div class="line">    if(p != nullptr) s.push(p);</div><div class="line">    // while(s)</div><div class="line">&#125;</div><div class="line">int main()&#123;</div><div class="line">    binary_tree_node_t node1(1);</div><div class="line">    binary_tree_node_t node2(4); </div><div class="line">    binary_tree_node_t node3(5);</div><div class="line">    binary_tree_node_t node4(1);</div><div class="line">    binary_tree_node_t node5(6);</div><div class="line">    binary_tree_node_t node6(3);</div><div class="line">    node1.left = &amp;node2;</div><div class="line">    node1.right = &amp;node3;</div><div class="line">    node2.left = &amp;node4;</div><div class="line">    node2.right = &amp;node5;</div><div class="line">    // node4.left = nullptr;</div><div class="line">    // node4.right = nullptr;</div><div class="line">    node5.left = &amp;node6;</div><div class="line">    // node5.right = nullptr;</div><div class="line">    // node6.left = nullptr;</div><div class="line">    // node6.right = nullptr;</div><div class="line">    pre_order_r(&amp;node1,visit);</div><div class="line">    cout&lt;&lt;endl;</div><div class="line">    in_order_r(&amp;node1,visit);</div><div class="line">    cout&lt;&lt;endl;</div><div class="line">    post_order_r(&amp;node1,visit);</div><div class="line">    cout&lt;&lt;endl;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>首先要编译程序，编译成有debug信息的可执行文件，命令如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">g++ -std=gnu++0x -g -o test test.cpp</div><div class="line">#其实只需要如下即可，因为程序里面有个nullptr，在ubuntu要想编译通过，就必须增加-std=gun++0x参数进行编译</div><div class="line">g++ -g -o test test.cpp</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作为一个程序员，除了要写好程序，还有个必须的技能就是要学会调试程序，也就是debug，很多IDE都内置UI调试程序功能，但是有的时候，一个c/cpp项目是部署在服务器端的，只有终端环境，这个时候要想在线上去快速定位一个紧急的bug，就需要我们在服务器环境进行调试定位解决问题
+    
+    </summary>
+    
+      <category term="linux,debug,c,cpp" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/linux-debug-c-cpp/"/>
+    
+    
+      <category term="linux" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue.js学习笔记</title>
@@ -627,7 +663,7 @@ p {color:blue;}
     
     <content type="html"><![CDATA[<p>这两天突然发现github.io的pags服务挂掉了,导致博客登录不上，为了防止以后类似情况的发生，决定把博客部署到国内的一些托管平台，比如开源中国和码市。因为二者都支持项目开启pages服务，所以迁移起来很简单;</p>
 <h3 id="step1、新建项目仓"><a href="#step1、新建项目仓" class="headerlink" title="step1、新建项目仓"></a>step1、新建项目仓</h3><ul>
-<li>到<a href="https://git.oschina.net">开源中国</a>和<a href="https://coding.net/" target="_blank" rel="external">码市</a>申请账号登录新建项目</li>
+<li>到<a href="https://git.oschina.net" target="_blank" rel="external">开源中国</a>和<a href="https://coding.net/" target="_blank" rel="external">码市</a>申请账号登录新建项目</li>
 <li><strong>在新建项目的时候，对于pages项目，项目的名称一定要跟用户名一致，不然后面当博客源码推送到仓库上的时候，访问的时候会遇到静态资源都加载失败的情况；</strong></li>
 <li>把项目的pages功能开启，默认使用master分支；</li>
 </ul>
