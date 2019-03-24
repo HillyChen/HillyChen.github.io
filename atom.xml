@@ -4,9 +4,9 @@
   <subtitle>知无不言  言无不尽</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://gitee.com/chenxushan/chenxushan.git/"/>
-  <updated>2019-03-18T15:36:33.641Z</updated>
-  <id>https://gitee.com/chenxushan/chenxushan.git/</id>
+  <link href="http://hillychen.github.io/"/>
+  <updated>2019-03-24T15:12:23.496Z</updated>
+  <id>http://hillychen.github.io/</id>
   
   <author>
     <name>sunniberg</name>
@@ -16,9 +16,117 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>linux中进程的创建和切换以及可执行文件加载的研究</title>
+    <link href="http://hillychen.github.io/2019/03/24/linux%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%87%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E7%9A%84%E7%A0%94%E7%A9%B6/"/>
+    <id>http://hillychen.github.io/2019/03/24/linux中进程的创建和切换以及可执行文件加载的研究/</id>
+    <published>2019-03-24T13:41:28.000Z</published>
+    <updated>2019-03-24T15:12:23.496Z</updated>
+    
+    <content type="html"><![CDATA[<p>原创作品转载请注明出处 + <a href="https://github.com/mengning/linuxkernel/" target="_blank" rel="external">https://github.com/mengning/linuxkernel/</a></p>
+<h3 id="概念知识点理解"><a href="#概念知识点理解" class="headerlink" title="概念知识点理解"></a>概念知识点理解</h3><ul>
+<li><p><strong>进程控制块</strong></p>
+<blockquote>
+<p>进程控制块：PCB是操作系统管理控制进程运行所有的信息集合，主要包括进程描述信息、进程控制和管理信息、资源分配清单和处理机相关信息等，是进程实体的一部分，进程存在的唯一标志。<br>PCB是进程在内存中的静态存在方式，因此进程的静态描述符必须保证一个进程在获得CPU并重新进入运行态时，能够精确的接着上次运行的位置继续运行，相关的程序段、数据以及CPU现场信息都要保存下来，CPU的现场信息主要包括内部寄存器和堆栈的基本数据。</p>
+</blockquote>
+</li>
+<li><p><strong>进程上下文</strong></p>
+<blockquote>
+<p>进程上下文：当程序执行了系统调用或中断而进入内核态时，进程切换现场就称为进程上下文，包含了一个进程所具有的全部信息，一般包括：进程控制块（PCB）、有关程序段和相应的数据集。</p>
+</blockquote>
+</li>
+<li><p><strong>进程堆栈</strong></p>
+<blockquote>
+<p>进程的堆栈：内核在创建进程的时候，会为进程创建相应的堆栈。每个进程会有两个栈，一个用户栈，存在于用户空间，一个内核栈，存在于内核空间。当进程在用户空间运行时，cpu堆栈指针寄存器里面的内容是用户堆栈地址，使用用户栈；当进程在内核空间时，cpu堆栈指针寄存器里面的内容是内核栈空间地址，使用内核栈。进程用户栈和内核栈的切换：当进程因中断或系统调用而陷入内核态运行时，进程所使用的堆栈也要从用户栈转到内核栈。进程进入内核态后，先把用户态堆栈的地址保存在内核栈之中，然后设置堆栈指针寄存器的内容为内核栈的地址，完成用户栈向内核栈的转换；当进程从内核态恢复到用户态之行时，在内核态之行的最后将保存在内核栈里面的用户栈的地址恢复到堆栈指针寄存器，实现内核栈和用户栈的互转。那么，我们知道从内核转到用户态时用户栈的地址是在陷入内核的时候保存在内核栈里面的，但是在陷入内核的时候，我们是如何知道内核栈的地址的呢？关键在进程从用户态转到内核态的时候，进程的内核栈总是空的。这是因为，当进程在用户态运行时，使用的是用户栈，当进程陷入到内核态时，内核栈保存进程在内核态运行的相关信息，但是一旦进程返回到用户态后，内核栈中保存的信息无效，会全部恢复，因此每次进程从用户态陷入内核的时候得到的内核栈都是空的。所以在进程陷入内核的时候，直接把内核栈的栈顶地址给堆栈指针寄存器就可以了。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h3><p>Linux创建进程是通过子进程复制父进程所拥有的资源来实现的。现代Linux通过写时复制、共享数据等方法优化这一过程，提高创建子进程的效率。<br>在Linux中，进程创建实际上是通过do_fork函数处理的。do_fork函数的功能相对简单(kernel/fork.c):</p>
+<ul>
+<li>检查是否或者哪个事件应该汇报给ptracer。</li>
+<li>通过copy_process创建进程描述符和子进程执行所需要的其它数据结构。</li>
+<li>执行wake_up_new_task函数，唤醒新进程。</li>
+<li>结束并返回子进程的ID<br>copy_process则负责对进程创建的相关资源的申请(kernel/fork.c):</li>
+<li>调用security_task_create以及稍后调用的security_task_alloc执行附加的安全检查。</li>
+<li>执行dup_task_struct复制父进程的task_struct描述符</li>
+<li>初始化新结构体的各个字段：did_exec,utime,stime,gtime，irq_events，hardirqs_enabled等等</li>
+<li>进行调度相关的初始化:perf_event_init_task,audit_alloc.</li>
+<li>复制父进程的信息到子进程：copy_semundo,copy_files,copy_fs,copy_mm等</li>
+<li>初始化其它进程相关字段</li>
+<li>将total_forks增加1</li>
+</ul>
+<p>从上可得task_struct进程控制块与进程地址空间的联系：<br>在task_struct结构体内的struct mm_struct成员执行内存区描述符的指针。在进程描述符中，还应该存储进程空间的页表信息，和将逻辑地址转换成页号和页内偏移地址所需的相关信息。<br>通过总结可以得到：进程的创建的系统调用clone fork vfork都是调用do_fork实现的，而do_fork在做了一些参数检查之后。调用了copy_process函数，copy_process函数在进行安全性检查之后，使用dup_task_struct复制父进程的结构体。对新进程描述符的一些标志信息和时间信息进行初始化，之后将父进程的所有进程信息拷贝到子进程空间，包括IO、文件、内存信息等。然后，设置新进程的pid，将新进程加入进程调度队列中。子进程的eax设置为0，父进程则返回新进程的pid，所以在fork调用中，子进程返回的是0，父进程返回的是新进程的pid。详细见后续代码分析。</p>
+<h3 id="可执行程序的加载"><a href="#可执行程序的加载" class="headerlink" title="可执行程序的加载"></a>可执行程序的加载</h3><p>在Linux中提供了一系列的函数，这些函数能用可执行文件所描述的新上下文代替进程的上下文。这样的函数名以前缀exec开始。所有的exec函数都是调用了execve()系统调用。<br>sys_execve接受参数：</p>
+<ul>
+<li>可执行文件的路径</li>
+<li>命令行参数字符串 </li>
+<li>环境变量字符串<br>sys_execve是调用do_execve实现的。do_execve则是调用do_execve_common实现的，依次执行以下操作(fs/exec.h)：</li>
+<li>在堆上分配一个linux_binprm结构。</li>
+<li>调用open_exec读取可执行文件。</li>
+<li>调用sched_exec()，确定最小负载的CPU以执行新程序，并把当前进程转移过去。</li>
+<li>调用bprm_mm_init()函数，为新程序初始化内存管理。</li>
+<li>调用prepare_bprm()函数填充linux_binprm数据结构。</li>
+<li>拷贝命令行参数argv,环境变量envp,可执行文件名filename到新进程中</li>
+<li>调用search_binary_handler()函数对formats链表进行扫描，并尝试每个load_binary函数，如果成功加载了文件的执行格式，对formats的扫描终止。</li>
+<li>释放linux_binprm数据结构，返回从该文件可执行格式的load_binary中获得的代码。<br>然后是load_binary分析如下：</li>
+<li>检查存放在文件前128字节的一些魔数进行匹配以确认文件格式。</li>
+<li>读可执行文件的首部。</li>
+<li>从可执行文件中确定动态链接程序的路径名，并用它来确定共享库的位置并把他们映射到内存。</li>
+<li>获得动态链接程序的目录项对象。</li>
+<li>检查动态链接的执行许可权。</li>
+<li>把动态链接程序的前128字节拷贝到缓冲区。</li>
+<li>对动态链接程序类型执行一致性检查。</li>
+<li>调用arch_pick_mmap_layout(),以选择进程线性区的布局。</li>
+<li>调用setup_arg_pages()函数为进程的用户态堆栈分配一个新的线性区描述符。</li>
+<li>调用do_mmap()函数创建一个新线性区来对可执行文件正文段进行映射。</li>
+<li>调用装入动态链接程序的函数</li>
+<li>把可执行格式的linux_binfmt对象的地址放在进程描述符的binfmt字段。</li>
+<li>创建动态链接程序表，并把它们放在用户态堆栈。</li>
+<li>调用do_brk()函数创建一个新的匿名线性区来映射程序的bss段。</li>
+<li>调用start_thread()宏修改保存在内核态堆栈。</li>
+<li>返回0.<br>以上分析可得：<br>Linux内核使用execve系统调用就开始进行程序的装载。execve()系统调用相应的实现是sys_execve()。<br>sys_execve()进行一些参数检查复制之后，调用do_execve()。<br>do_execve会首先查找被执行的文件，如果找打文件。则读取文件的前128个字节以确定被检查的文件的格式。然后，继续调用search_binary_handle()去搜索合适的可执行文件装载处理过程。<br>对ELF可执行文件的装载处理工程是load_elf_binary()。步骤是：检查elf文件的有效性，寻找动态链接库的“.interp”段，设置动态链接器的路径，根据ELF的可执行文件的程序头表的描述，对ELF文件进行映射，初始化ELF进程环境。<br>最后，将系统调用的返回地址修改为ELF可执行文件的入口点。在设置了eip之后，sys_execve返回到用户态时，程序就返回到新的程序开始执行，ELF可执行文件装载完成。详细代码见后续分析<br>ELF文件格式与进程地址空间的联系：在壮载ELF文件时，会将文件头部的.init、.text、.rodata段装载到进程的代码段中，将ELF中数据相关的部分，装载到数据段中。在动态链接的过程中，ELF文件全局变量的数据区的部分会在进程空间中拷贝一份，代码段则多个进程进行共享。exec执行之后,EIP指向的地方：EIP指向新程序的入口点，在sys_execve执行完成进入用户态之后，将从新的程序入口点继续执行。</li>
+</ul>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><h4 id="fork调用"><a href="#fork调用" class="headerlink" title="fork调用"></a>fork调用</h4><p>fork()调用创建一个新的进程，该进程几乎是当前进程的一个完全拷贝。由fork()创建的新进程被称为子进程。fork函数被调用一次但返回两次。两次返回的唯一区别是子进程中返回0值，而父进程中返回子进程ID。子进程是父进程的副本，它将获得父进程数据空间、堆、栈等资源的副本。注意，子进程持有的是上述存储空间的“副本”，这意味着父子进程间不共享这些存储空间。Linux将复制父进程的地址空间内容给子进程，因此，子进程拥有独立的地址空间。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// fork_example.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">pid_t</span> pid;</div><div class="line">    </div><div class="line">    <span class="keyword">char</span> stack_data[] = <span class="string">"stack_data"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">char</span> *heap_data = <span class="built_in">malloc</span>(<span class="number">10</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));    </div><div class="line">    <span class="built_in">strcpy</span>(heap_data, <span class="string">"heap_data"</span>);</div><div class="line">    </div><div class="line">    pid = fork();</div><div class="line">    <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"CHILD PROCESS: %s, %s\n"</span>, stack_data, heap_data);</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pid &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"PARENT PROCESS: %s, %s\n"</span>, stack_data, heap_data);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"FORK FAILED."</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 输出结果</span></div><div class="line"><span class="comment">// CHILD PROCESS: stack_data, heap_data</span></div><div class="line"><span class="comment">// PARENT PROCESS: stack_data, heap_data</span></div></pre></td></tr></table></figure></p>
+<p>从输出结果可以看出：父进程和子进程的栈和堆的数据是相同的。这些数据在创建子进程时是通过拷贝产生的。</p>
+<h4 id="execl调用"><a href="#execl调用" class="headerlink" title="execl调用"></a>execl调用</h4><blockquote>
+<p>系统调用exec是以新的进程去代替原来的进程，但进程的PID保持不变。因此，可以这样认为，exec系统调用并没有创建新的进程，只是替换了原来进程上下文的内容。原进程的代码段，数据段，堆栈段被新的进程所代替。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// execl_example.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    execl(<span class="string">"./hello_world"</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</div><div class="line">    </div><div class="line">    <span class="comment">/* We can only reach this code when there is an error in execl */</span>    </div><div class="line">    <span class="built_in">printf</span>(<span class="string">"The execl must be failed!\n"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 输出结果：The execl must be failed!</span></div></pre></td></tr></table></figure>
+<p>我们执行一个不存在的hello_world程序,会报错。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// hello_world.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Hello World!\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们如果添加一个函数，现在我们继续运行execl_example程序，这时输出为：Hello World!<br>通过比较两次输出，我们发现：当execl成功时，原有的进程执行就会被打断，替换为新的进程继续执行。</p>
+<h4 id="使用汇编进行系统调用"><a href="#使用汇编进行系统调用" class="headerlink" title="使用汇编进行系统调用"></a>使用汇编进行系统调用</h4><p>我们知道在Linux中，每个系统调用都对应一个系统调用号。这个系统调用号是在unistd.h中定义的。文件的位置是在：<br>/usr/src/linux-headers-2.6.28-11-generic/arch/x86/include/asm/unistd_32.h<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_restart_syscall      0</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_exit          1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_fork          2</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_read          3</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_write          4</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_open          5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_close          6</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_waitpid          7</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_creat          8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_link          9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_unlink         10</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_execve         11</span></div></pre></td></tr></table></figure></p>
+<p>使用汇编调用fork:<br>可以看到fork的系统调用号是2，我们现在使用汇编代码重新编写fork_example.c<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">#include &lt;memory.h&gt;</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line">#include &lt;sys/types.h&gt;</div><div class="line">#include &lt;unistd.h&gt;</div><div class="line"></div><div class="line">int  main()</div><div class="line">&#123;</div><div class="line">    pid_t pid;</div><div class="line">    char stack_data[] = "stack_data";</div><div class="line"></div><div class="line">    char *heap_data = malloc(10 * sizeof(char));</div><div class="line">    strcpy(heap_data, "heap_data");</div><div class="line"></div><div class="line">    // pid = fork();</div><div class="line">    asm volatile(</div><div class="line">        "mov $0x2, %%eax\n\t" // 将fork的系统调用号2存到eax寄存器  </div><div class="line">        "int $0x80\n\t"       // 产生int 0x80中断</div><div class="line">        "mov %%eax,%0\n\t"    // 将结果存入pid中</div><div class="line">        : "=m" (pid)</div><div class="line">    );</div><div class="line">    if (pid == 0) &#123;</div><div class="line">        printf("CHILD PROCESS: %s, %s\n", stack_data, heap_data);</div><div class="line">    &#125; else if (pid &gt; 0) &#123;</div><div class="line">        printf("PARENT PROCESS: %s, %s\n", stack_data, heap_data);</div><div class="line">    &#125; else &#123;</div><div class="line">        printf("FORK FAILED.\n");</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出结果为：CHILD PROCESS: stack_data, heap_data<br>PARENT PROCESS: stack_data, heap_data</p>
+<h2 id="可以尝试将调用号替换一下，改成-0x3，得到的结果是：FORK-FAILED"><a href="#可以尝试将调用号替换一下，改成-0x3，得到的结果是：FORK-FAILED" class="headerlink" title="可以尝试将调用号替换一下，改成$0x3，得到的结果是：FORK FAILED."></a>可以尝试将调用号替换一下，改成$0x3，得到的结果是：FORK FAILED.</h2><p>使用汇编调用execl:我们再尝试一下使用汇编调用execl。通过上面的观察我们可以看到execl的系统调用号是11.<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line">#include &lt;unistd.h&gt;</div><div class="line"></div><div class="line">int main(int argc, const char *argv[])</div><div class="line">&#123;</div><div class="line">    // execl("./hello_world", NULL, NULL);</div><div class="line">    const char *program = "./hello_world";</div><div class="line">    asm volatile (</div><div class="line">        "mov %0,%%ebx\n\t"   // 使用program做为参数1</div><div class="line">        "mov $0,%%ecx\n\t"   // 参数2为NULL</div><div class="line">        "mov $0,%%edx\n\t"   // 参数3为NULL</div><div class="line">        "mov $0xb,%%eax\n\t" // 将execl的系统调用好11存入eax中</div><div class="line">        "int $0x80\n\t"      // 产生0x80中断</div><div class="line">        : "=m" (program)</div><div class="line">    );</div><div class="line">    /* We can only reach this code when there is an error in execl */</div><div class="line">    printf("The execl must be failed!\n");</div><div class="line"></div><div class="line">    return 1;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果为：Hello World!<br>如果将系统调用号改为0x3，输出结果为：The execl must be failed!</p>
+<h3 id="系统调用过程详解"><a href="#系统调用过程详解" class="headerlink" title="系统调用过程详解"></a>系统调用过程详解</h3><p>通过上一步的过程，我们了解到，系统调用在内核中的执行是依靠中断实现的。如果我们想进一步定位fork和execl的代码，我们需要先了解系统调用的详细过程。即回答以下两个问题：<br>1.中断是怎么工作的？<br>2.int 0x80中断是怎么工作的？</p>
+<p><strong>中断是怎么工作的</strong><br>    在Linux操作系统中，中断是通过中断描述符表工作的。中断描述符表（Interrupt Descriptor Table, IDT）是一个系统表，它与每一个中断或者异常向量相联系，每一个向量在表中有相应的中断或者异常处理程序的入口地址。内核在允许中断发生前，必须适当的初始化IDT。对于每个中断，都会有对应的中断处理程序。当产生一个中断时，Linux根据中断向量表中对应的项找到存储中断处理程序的地址，然后调用相应的中断处理程序。中段描述符表在内存中的地址存储在idtr寄存器中。内核在启动中断前，必须初始化IDT，然后将IDT的地址壮载到idtr中。<br>    内核初始化的时候调用trap_init()函数和init_IRQ()函数初始化中断向量表。</p>
+<p><strong>int 0x80中断是怎么工作的</strong><br>通过上面的分析，我们知道每个中断都有对应的处理程序。在系统调用的过程中，会有一个系统调用分派表，每个表项存储了一个系统调用。系统调用中断处理程序，根据系统调用号找到对应的系统调用执行。对于系统调用，参数的传递是通过寄存器ebx ecx edx进行传递的。eax中存储的是系统调用号。系统调用最大为__NR_syscalls个。<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1g1eab20nkej20o60dago5.jpg" alt=""><br>在arch/x86/include/asm/irq_vectors.h中定义了</p>
+<h1 id="define-SYSCALL-VECTOR-0x80"><a href="#define-SYSCALL-VECTOR-0x80" class="headerlink" title="define SYSCALL_VECTOR            0x80"></a>define SYSCALL_VECTOR            0x80</h1><p>现在我们查找trap_init函数，在arch/x86/kernel/traps.c中<br>set_system_trap_gate(SYSCALL_VECTOR, &amp;system_call);<br>现在，查找system_call函数，在arch/x86/kernel/entry_32.s中：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">ENTRY(system_call)</div><div class="line">    RING0_INT_FRAME            # can't unwind into user space anyway</div><div class="line">    ASM_CLAC</div><div class="line">    pushl_cfi %eax            # save orig_eax</div><div class="line">    SAVE_ALL</div><div class="line">    GET_THREAD_INFO(%ebp)</div><div class="line">                    # system call tracing in operation / emulation</div><div class="line">    testl $_TIF_WORK_SYSCALL_ENTRY,TI_flags(%ebp)</div><div class="line">    jnz syscall_trace_entry</div><div class="line">    cmpl $(NR_syscalls), %eax</div><div class="line">    jae syscall_badsys</div><div class="line">syscall_call:</div><div class="line">    call *sys_call_table(,%eax,4)</div><div class="line">    movl %eax,PT_EAX(%esp)        # store the return value</div><div class="line">syscall_exit:</div><div class="line">    LOCKDEP_SYS_EXIT</div><div class="line">    DISABLE_INTERRUPTS(CLBR_ANY)    # make sure we don't miss an interrupt</div><div class="line">                    # setting need_resched or sigpending</div><div class="line">                    # between sampling and the iret</div><div class="line">    TRACE_IRQS_OFF</div><div class="line">    movl TI_flags(%ebp), %ecx</div><div class="line">    testl $_TIF_ALLWORK_MASK, %ecx    # current-&gt;work</div><div class="line">    jne syscall_exit_work</div></pre></td></tr></table></figure></p>
+<p>在include/uapi/asm_generic/unistd.h中找到：<br><strong>SYSCALL(</strong>NR_fork, sys_fork)<br>fork的系统调用号是2，对应的系统调用分派表中为sys_fork函数。在kernel/fork.c中找到如下代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __ARCH_WANT_SYS_FORK</span></div><div class="line">SYSCALL_DEFINE0(fork)</div><div class="line">&#123;</div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_MMU</span></div><div class="line">    <span class="keyword">return</span> do_fork(SIGCHLD, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</div><div class="line"><span class="meta">#<span class="meta-keyword">else</span></span></div><div class="line">    <span class="comment">/* can not support in nommu mode */</span></div><div class="line">    <span class="keyword">return</span>(-EINVAL);</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
+<h4 id="do-fork源码分析"><a href="#do-fork源码分析" class="headerlink" title="do_fork源码分析"></a>do_fork源码分析</h4><p>现在查找do_fork函数，也在kernel/fork.c中：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> *  Ok, 这就是fork例程的主要部分。</div><div class="line"> *</div><div class="line"> * 函数执行进程的复制，如果成功则启动新进程。并且等待新进程完成VM的使用。</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">long</span> <span class="title">do_fork</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> clone_flags,</span></span></div><div class="line">          <span class="keyword">unsigned</span> <span class="keyword">long</span> stack_start,</div><div class="line">          <span class="keyword">unsigned</span> <span class="keyword">long</span> stack_size,</div><div class="line">          <span class="keyword">int</span> __user *parent_tidptr,</div><div class="line">          <span class="keyword">int</span> __user *child_tidptr)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">struct</span> task_struct *p;</div><div class="line">    <span class="keyword">int</span> trace = <span class="number">0</span>;</div><div class="line">    <span class="keyword">long</span> nr;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 在分配之前做一些参数和权限检查。</div><div class="line">     */</div><div class="line">    <span class="keyword">if</span> (clone_flags &amp; (CLONE_NEWUSER | CLONE_NEWPID)) &#123;</div><div class="line">        <span class="keyword">if</span> (clone_flags &amp; (CLONE_THREAD|CLONE_PARENT))</div><div class="line">            <span class="keyword">return</span> -EINVAL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 确定是否需要报告给ptracer，或者哪些需要汇报给ptracer。如果是调用者内核线程</div><div class="line">     * 或者标志了CLONE_UNTRACED，则不报告任何跟踪信息。否则，报告相应fork的跟踪信息。</div><div class="line">     */</div><div class="line">    <span class="keyword">if</span> (!(clone_flags &amp; CLONE_UNTRACED)) &#123;</div><div class="line">        <span class="keyword">if</span> (clone_flags &amp; CLONE_VFORK)</div><div class="line">            trace = PTRACE_EVENT_VFORK;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((clone_flags &amp; CSIGNAL) != SIGCHLD)</div><div class="line">            trace = PTRACE_EVENT_CLONE;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            trace = PTRACE_EVENT_FORK;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (likely(!ptrace_event_enabled(current, trace)))</div><div class="line">            trace = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">　　</div><div class="line">    <span class="comment">// copy_process函数创建进程描述符和子进程需要的其他数据结构。</span></div><div class="line">    p = copy_process(clone_flags, stack_start, stack_size,</div><div class="line">             child_tidptr, <span class="literal">NULL</span>, trace);</div><div class="line">             </div><div class="line">    <span class="comment">/* 现在唤醒新线程。*/</span></div><div class="line">    <span class="keyword">if</span> (!IS_ERR(p)) &#123;</div><div class="line">        <span class="keyword">struct</span> completion vfork;</div><div class="line"></div><div class="line">        trace_sched_process_fork(current, p);</div><div class="line"></div><div class="line">        nr = task_pid_vnr(p);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (clone_flags &amp; CLONE_PARENT_SETTID)</div><div class="line">            put_user(nr, parent_tidptr);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (clone_flags &amp; CLONE_VFORK) &#123;</div><div class="line">            p-&gt;vfork_done = &amp;vfork;</div><div class="line">            init_completion(&amp;vfork);</div><div class="line">            get_task_struct(p);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        wake_up_new_task(p);</div><div class="line"></div><div class="line">        <span class="comment">/* fork已经完成，子进程也已经启动。现在通知ptracer。 */</span></div><div class="line">        <span class="keyword">if</span> (unlikely(trace))</div><div class="line">            ptrace_event(trace, nr);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (clone_flags &amp; CLONE_VFORK) &#123;</div><div class="line">            <span class="keyword">if</span> (!wait_for_vfork_done(p, &amp;vfork))</div><div class="line">                ptrace_event(PTRACE_EVENT_VFORK_DONE, nr);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        nr = PTR_ERR(p);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> nr;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到do_fork调用了copy_process完成了绝大部分的工作。copy_process位于同一个文件当中：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * 以复制的方式创建一个新的进程。但不启动运行新创建的进程。</div><div class="line"> *</div><div class="line"> * 主要复制寄存器和其它进程环境中的相应的合适部分。真正的</div><div class="line"> * 启动工作则交由调用者完成。</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">struct</span> task_struct *<span class="title">copy_process</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> clone_flags,</span></span></div><div class="line">                    <span class="keyword">unsigned</span> <span class="keyword">long</span> stack_start,</div><div class="line">                    <span class="keyword">unsigned</span> <span class="keyword">long</span> stack_size,</div><div class="line">                    <span class="keyword">int</span> __user *child_tidptr,</div><div class="line">                    <span class="keyword">struct</span> pid *pid,</div><div class="line">                    <span class="keyword">int</span> trace)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> retval;</div><div class="line">    <span class="keyword">struct</span> task_struct *p; <span class="comment">// 保存新的进程描述符。</span></div><div class="line">    </div><div class="line">    <span class="comment">/* 删除了对标志位的一致性和合法性的检查 */</span></div><div class="line">    </div><div class="line">    <span class="comment">// security_task_create和security_task_alloc()执行所有附加的安全检查。</span></div><div class="line">    retval = security_task_create(clone_flags);</div><div class="line">    <span class="comment">// dup_task_struct为子进程获取进程描述符。稍后分析。</span></div><div class="line">    p = dup_task_struct(current);</div><div class="line">    <span class="comment">// task结构中ftrace_ret_stack结构变量的初始化，即函数返回用的栈。</span></div><div class="line">    ftrace_graph_init_task(p);</div><div class="line">    get_seccomp_filter(p);</div><div class="line">    <span class="comment">// task中互斥变量的初始化。</span></div><div class="line">    rt_mutex_init_task(p);</div><div class="line">    <span class="comment">// 第1个if对进程占用的资源数做出限制，task_rlimit(p, RLIMIT_NPROC)</span></div><div class="line">    <span class="comment">// 限制了改进程用户可以拥有的进程总数。 </span></div><div class="line">    <span class="keyword">if</span> (atomic_read(&amp;p-&gt;real_cred-&gt;user-&gt;processes) &gt;= task_rlimit(p, RLIMIT_NPROC)) &#123;</div><div class="line">        <span class="comment">// 第2个if使用了capable（）函数来对权限做出检查，检查是否有权对指定</span></div><div class="line">        <span class="comment">// 的资源进行操作，该函数返回0则代表无权操作。</span></div><div class="line">        <span class="keyword">if</span> (!capable(CAP_SYS_ADMIN) &amp;&amp; !capable(CAP_SYS_RESOURCE) &amp;&amp; p-&gt;real_cred-&gt;user != INIT_USER)</div><div class="line">            <span class="keyword">goto</span> bad_fork_free;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    current-&gt;flags &amp;= ~PF_NPROC_EXCEEDED; <span class="comment">// 将当前进程标志位中的PF_NPROC_EXCEEDED置0。</span></div><div class="line">    copy_creds(p, clone_flags); <span class="comment">// copy_creds()复制证书，应该是复制权限及身份信息。</span></div><div class="line"></div><div class="line">    <span class="comment">// 检查创建的线程是否超过了系统进程总量。</span></div><div class="line">    <span class="keyword">if</span> (nr_threads &gt;= max_threads)</div><div class="line">        <span class="keyword">goto</span> bad_fork_cleanup_count;</div><div class="line">    </div><div class="line">    <span class="comment">// 增加执行实体的模块引用计数。</span></div><div class="line">    <span class="keyword">if</span> (!try_module_get(task_thread_info(p)-&gt;exec_domain-&gt;<span class="keyword">module</span>))</div><div class="line">        <span class="keyword">goto</span> bad_fork_cleanup_count;</div><div class="line"></div><div class="line">    p-&gt;did_exec = <span class="number">0</span>;</div><div class="line">    delayacct_tsk_init(p);    <span class="comment">/* Must remain after dup_task_struct() */</span></div><div class="line">    copy_flags(clone_flags, p); <span class="comment">// 更新task_struct结构中flags成员</span></div><div class="line">    INIT_LIST_HEAD(&amp;p-&gt;children); <span class="comment">// 初始化task_struct结构中的子进程链表</span></div><div class="line">    INIT_LIST_HEAD(&amp;p-&gt;sibling); <span class="comment">// 初始化task_struct结构中的兄弟进程链表</span></div><div class="line">    rcu_copy_process(p); <span class="comment">// rcu相关变量的初始化</span></div><div class="line">    p-&gt;vfork_done = <span class="literal">NULL</span>; </div><div class="line">    spin_lock_init(&amp;p-&gt;alloc_lock); </div><div class="line"></div><div class="line">    init_sigpending(&amp;p-&gt;pending);</div><div class="line"></div><div class="line">    p-&gt;utime = p-&gt;stime = p-&gt;gtime = <span class="number">0</span>;</div><div class="line">    p-&gt;utimescaled = p-&gt;stimescaled = <span class="number">0</span>;</div><div class="line">    p-&gt;prev_cputime.utime = p-&gt;prev_cputime.stime = <span class="number">0</span>;</div><div class="line">    seqlock_init(&amp;p-&gt;vtime_seqlock);</div><div class="line">    p-&gt;vtime_snap = <span class="number">0</span>;</div><div class="line">    p-&gt;vtime_snap_whence = VTIME_SLEEPING;</div><div class="line"></div><div class="line">    <span class="built_in">memset</span>(&amp;p-&gt;rss_stat, <span class="number">0</span>, <span class="keyword">sizeof</span>(p-&gt;rss_stat));</div><div class="line"></div><div class="line">    p-&gt;default_timer_slack_ns = current-&gt;timer_slack_ns;</div><div class="line"></div><div class="line">    task_io_accounting_init(&amp;p-&gt;ioac); <span class="comment">// 进程描述符中的io数据记录的初始化</span></div><div class="line">    acct_clear_integrals(p);</div><div class="line"></div><div class="line">    posix_cpu_timers_init(p); <span class="comment">// timer初始化</span></div><div class="line"></div><div class="line">    do_posix_clock_monotonic_gettime(&amp;p-&gt;start_time);</div><div class="line">    p-&gt;real_start_time = p-&gt;start_time;</div><div class="line">    monotonic_to_bootbased(&amp;p-&gt;real_start_time);</div><div class="line">    p-&gt;io_context = <span class="literal">NULL</span>;</div><div class="line">    p-&gt;audit_context = <span class="literal">NULL</span>;</div><div class="line">    <span class="keyword">if</span> (clone_flags &amp; CLONE_THREAD)</div><div class="line">        threadgroup_change_begin(current);</div><div class="line">    cgroup_fork(p);</div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_NUMA</span></div><div class="line">    p-&gt;mempolicy = mpol_dup(p-&gt;mempolicy);</div><div class="line">    <span class="keyword">if</span> (IS_ERR(p-&gt;mempolicy)) &#123;</div><div class="line">        retval = PTR_ERR(p-&gt;mempolicy);</div><div class="line">        p-&gt;mempolicy = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">goto</span> bad_fork_cleanup_cgroup;</div><div class="line">    &#125;</div><div class="line">    mpol_fix_fork_child_flag(p);</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">    <span class="comment">/* 设置CPU */</span></div><div class="line">    p-&gt;cpuset_mem_spread_rotor = NUMA_NO_NODE;</div><div class="line">    p-&gt;cpuset_slab_spread_rotor = NUMA_NO_NODE;</div><div class="line">    seqcount_init(&amp;p-&gt;mems_allowed_seq);</div><div class="line">    <span class="comment">/* 设置跟踪中断标志 */</span> </div><div class="line">    p-&gt;irq_events = <span class="number">0</span>;</div><div class="line">    p-&gt;hardirqs_enabled = <span class="number">0</span>;</div><div class="line">    p-&gt;hardirq_enable_ip = <span class="number">0</span>;</div><div class="line">    p-&gt;hardirq_enable_event = <span class="number">0</span>;</div><div class="line">    p-&gt;hardirq_disable_ip = _THIS_IP_;</div><div class="line">    p-&gt;hardirq_disable_event = <span class="number">0</span>;</div><div class="line">    p-&gt;softirqs_enabled = <span class="number">1</span>;</div><div class="line">    p-&gt;softirq_enable_ip = _THIS_IP_;</div><div class="line">    p-&gt;softirq_enable_event = <span class="number">0</span>;</div><div class="line">    p-&gt;softirq_disable_ip = <span class="number">0</span>;</div><div class="line">    p-&gt;softirq_disable_event = <span class="number">0</span>;</div><div class="line">    p-&gt;hardirq_context = <span class="number">0</span>;</div><div class="line">    p-&gt;softirq_context = <span class="number">0</span>;</div><div class="line">    <span class="comment">/* 设置锁深度 */</span></div><div class="line">    p-&gt;lockdep_depth = <span class="number">0</span>; <span class="comment">/* no locks held yet */</span></div><div class="line">    p-&gt;curr_chain_key = <span class="number">0</span>;</div><div class="line">    p-&gt;lockdep_recursion = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_DEBUG_MUTEXES</span></div><div class="line">    p-&gt;blocked_on = <span class="literal">NULL</span>; <span class="comment">/* not blocked yet */</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_MEMCG</span></div><div class="line">    p-&gt;memcg_batch.do_batch = <span class="number">0</span>;</div><div class="line">    p-&gt;memcg_batch.memcg = <span class="literal">NULL</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line">    sched_fork(p); <span class="comment">// 调度相关初始化,将新进程分配到某个CPU上。</span></div><div class="line"></div><div class="line">    perf_event_init_task(p);</div><div class="line">    audit_alloc(p);</div><div class="line">        </div><div class="line">    <span class="comment">/* 以下根据clone_flags的设置复制相应的部分，进行重新分配或者共享父进程的内容 */</span></div><div class="line">    copy_semundo(clone_flags, p);</div><div class="line">    copy_files(clone_flags, p);</div><div class="line">    copy_fs(clone_flags, p);</div><div class="line">    copy_sighand(clone_flags, p);</div><div class="line">    copy_signal(clone_flags, p);</div><div class="line">    copy_mm(clone_flags, p);</div><div class="line">    copy_namespaces(clone_flags, p);</div><div class="line">    copy_io(clone_flags, p);</div><div class="line">    copy_thread(clone_flags, stack_start, stack_size, p);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (pid != &amp;init_struct_pid) &#123;</div><div class="line">        retval = -ENOMEM;</div><div class="line">        pid = alloc_pid(p-&gt;nsproxy-&gt;pid_ns);</div><div class="line">        <span class="keyword">if</span> (!pid)</div><div class="line">            <span class="keyword">goto</span> bad_fork_cleanup_io;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    p-&gt;pid = pid_nr(pid);</div><div class="line">    p-&gt;tgid = p-&gt;pid;</div><div class="line">    <span class="comment">// 如果设置了同在一个线程组则继承TGID。 </span></div><div class="line">    <span class="comment">// 对于普通进程来说TGID和PID相等， </span></div><div class="line">    <span class="comment">// 对于线程来说，同一线程组内的所有线程的TGID都相等， </span></div><div class="line">    <span class="comment">// 这使得这些多线程可以通过调用getpid()获得相同的PID。</span></div><div class="line">    <span class="keyword">if</span> (clone_flags &amp; CLONE_THREAD)</div><div class="line">        p-&gt;tgid = current-&gt;tgid;</div><div class="line"></div><div class="line">    p-&gt;set_child_tid = (clone_flags &amp; CLONE_CHILD_SETTID) ? child_tidptr : <span class="literal">NULL</span>;</div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Clear TID on mm_release()?</div><div class="line">     */</div><div class="line">    p-&gt;clear_child_tid = (clone_flags &amp; CLONE_CHILD_CLEARTID) ? child_tidptr : <span class="literal">NULL</span>;</div><div class="line">    uprobe_copy_process(p);</div><div class="line">    <span class="comment">/*</span></div><div class="line">     * sigaltstack should be cleared when sharing the same VM</div><div class="line">     */</div><div class="line">    <span class="keyword">if</span> ((clone_flags &amp; (CLONE_VM|CLONE_VFORK)) == CLONE_VM)</div><div class="line">        p-&gt;sas_ss_sp = p-&gt;sas_ss_size = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Syscall tracing and stepping should be turned off in the</div><div class="line">     * child regardless of CLONE_PTRACE.</div><div class="line">     */</div><div class="line">    user_disable_single_step(p);</div><div class="line">    clear_tsk_thread_flag(p, TIF_SYSCALL_TRACE);</div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> TIF_SYSCALL_EMU</span></div><div class="line">    clear_tsk_thread_flag(p, TIF_SYSCALL_EMU);</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">    clear_all_latency_tracing(p);</div><div class="line"></div><div class="line">    <span class="comment">/* ok, now we should be set up.. */</span></div><div class="line">    <span class="keyword">if</span> (clone_flags &amp; CLONE_THREAD)</div><div class="line">        p-&gt;exit_signal = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (clone_flags &amp; CLONE_PARENT)</div><div class="line">        p-&gt;exit_signal = current-&gt;group_leader-&gt;exit_signal;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        p-&gt;exit_signal = (clone_flags &amp; CSIGNAL);</div><div class="line"></div><div class="line">    p-&gt;pdeath_signal = <span class="number">0</span>;</div><div class="line">    p-&gt;exit_state = <span class="number">0</span>;</div><div class="line"></div><div class="line">    p-&gt;nr_dirtied = <span class="number">0</span>;</div><div class="line">    p-&gt;nr_dirtied_pause = <span class="number">128</span> &gt;&gt; (PAGE_SHIFT - <span class="number">10</span>);</div><div class="line">    p-&gt;dirty_paused_when = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Ok, make it visible to the rest of the system.</div><div class="line">     * We dont wake it up yet.</div><div class="line">     */</div><div class="line">    p-&gt;group_leader = p;</div><div class="line">    INIT_LIST_HEAD(&amp;p-&gt;thread_group);</div><div class="line">    p-&gt;task_works = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Need tasklist lock for parent etc handling! */</span></div><div class="line">    write_lock_irq(&amp;tasklist_lock);</div><div class="line"></div><div class="line">    <span class="comment">// 如果这两个标志设定了，那么和父进程有相同的父进程</span></div><div class="line">    <span class="keyword">if</span> (clone_flags &amp; (CLONE_PARENT|CLONE_THREAD)) &#123;</div><div class="line">        p-&gt;real_parent = current-&gt;real_parent;</div><div class="line">        p-&gt;parent_exec_id = current-&gt;parent_exec_id;</div><div class="line">    &#125; <span class="keyword">else</span> &#123; </div><div class="line">    <span class="comment">// 否则父进程为实际父进程</span></div><div class="line">        p-&gt;real_parent = current;</div><div class="line">        p-&gt;parent_exec_id = current-&gt;self_exec_id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    spin_lock(&amp;current-&gt;sighand-&gt;siglock);</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Process group and session signals need to be delivered to just the</div><div class="line">     * parent before the fork or both the parent and the child after the</div><div class="line">     * fork. Restart if a signal comes in before we add the new process to</div><div class="line">     * it's process group.</div><div class="line">     * A fatal signal pending means that current will exit, so the new</div><div class="line">     * thread can't slip out of an OOM kill (or normal SIGKILL).</div><div class="line">    */</div><div class="line">    recalc_sigpending();</div><div class="line">    <span class="keyword">if</span> (signal_pending(current)) &#123;</div><div class="line">        spin_unlock(&amp;current-&gt;sighand-&gt;siglock);</div><div class="line">        write_unlock_irq(&amp;tasklist_lock);</div><div class="line">        retval = -ERESTARTNOINTR;</div><div class="line">        <span class="keyword">goto</span> bad_fork_free_pid;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 如果和父进程有相同的线程组</span></div><div class="line">    <span class="keyword">if</span> (clone_flags &amp; CLONE_THREAD) &#123;</div><div class="line">        current-&gt;signal-&gt;nr_threads++;</div><div class="line">        atomic_inc(&amp;current-&gt;signal-&gt;live);</div><div class="line">        atomic_inc(&amp;current-&gt;signal-&gt;sigcnt);</div><div class="line">        p-&gt;group_leader = current-&gt;group_leader;</div><div class="line">        list_add_tail_rcu(&amp;p-&gt;thread_group, &amp;p-&gt;group_leader-&gt;thread_group);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (likely(p-&gt;pid)) &#123;</div><div class="line">        ptrace_init_task(p, (clone_flags &amp; CLONE_PTRACE) || trace); <span class="comment">// ptrace的相关初始化</span></div><div class="line">        </div><div class="line">        <span class="comment">// 如果进程p是线程组leader</span></div><div class="line">        <span class="keyword">if</span> (thread_group_leader(p)) &#123;</div><div class="line">            <span class="keyword">if</span> (is_child_reaper(pid)) &#123;</div><div class="line">                ns_of_pid(pid)-&gt;child_reaper = p;</div><div class="line">                p-&gt;signal-&gt;flags |= SIGNAL_UNKILLABLE;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            p-&gt;signal-&gt;leader_pid = pid;</div><div class="line">            p-&gt;signal-&gt;tty = tty_kref_get(current-&gt;signal-&gt;tty);</div><div class="line">            </div><div class="line">            <span class="comment">/* 加入对应的PID哈希表 */</span></div><div class="line">            attach_pid(p, PIDTYPE_PGID, task_pgrp(current));</div><div class="line">            attach_pid(p, PIDTYPE_SID, task_session(current));</div><div class="line">            </div><div class="line">            list_add_tail(&amp;p-&gt;sibling, &amp;p-&gt;real_parent-&gt;children);</div><div class="line">            list_add_tail_rcu(&amp;p-&gt;tasks, &amp;init_task.tasks); <span class="comment">// 加入队列</span></div><div class="line">            __this_cpu_inc(process_counts); <span class="comment">// 将per cpu变量加一</span></div><div class="line">        &#125;</div><div class="line">        attach_pid(p, PIDTYPE_PID, pid); <span class="comment">// 维护pid变量</span></div><div class="line">        nr_threads++; <span class="comment">// 线程数加1。</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    total_forks++; <span class="comment">// 将全局变量total_forks加1.</span></div><div class="line">    spin_unlock(&amp;current-&gt;sighand-&gt;siglock);</div><div class="line">    write_unlock_irq(&amp;tasklist_lock);</div><div class="line">    proc_fork_connector(p);</div><div class="line">    cgroup_post_fork(p);</div><div class="line">    <span class="keyword">if</span> (clone_flags &amp; CLONE_THREAD)</div><div class="line">        threadgroup_change_end(current);</div><div class="line">    perf_event_fork(p);</div><div class="line"></div><div class="line">    trace_task_newtask(p, clone_flags);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> p;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>dup_task_struct也在fork.c文件中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">struct</span> task_struct *<span class="title">dup_task_struct</span><span class="params">(<span class="keyword">struct</span> task_struct *orig)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">struct</span> task_struct *tsk; <span class="comment">// 存放新的task_sturct结构体</span></div><div class="line">    <span class="keyword">struct</span> thread_info *ti; <span class="comment">// 存放线程信息</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> *stackend; </div><div class="line">    <span class="keyword">int</span> node = tsk_fork_get_node(orig); </div><div class="line">    <span class="keyword">int</span> err;</div><div class="line"></div><div class="line">    tsk = alloc_task_struct_node(node); <span class="comment">// 通过alloc_task_struct()函数创建task_struct结构空间</span></div><div class="line"></div><div class="line">    ti = alloc_thread_info_node(tsk, node); <span class="comment">// 分配thread_info结构空间</span></div><div class="line"></div><div class="line">    err = arch_dup_task_struct(tsk, orig); <span class="comment">// 关于浮点结构的复制</span></div><div class="line">    </div><div class="line">    tsk-&gt;<span class="built_in">stack</span> = ti; <span class="comment">// task的对应栈</span></div><div class="line"></div><div class="line">    setup_thread_stack(tsk, orig);</div><div class="line">    clear_user_return_notifier(tsk);</div><div class="line">    clear_tsk_need_resched(tsk);</div><div class="line">    stackend = end_of_stack(tsk);</div><div class="line">    *stackend = STACK_END_MAGIC;    <span class="comment">/* for overflow detection */</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_CC_STACKPROTECTOR</span></div><div class="line">    tsk-&gt;stack_canary = get_random_int(); <span class="comment">// 金丝雀的设置，用于防御栈溢出攻击</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * One for us, one for whoever does the "release_task()" (usually</div><div class="line">     * parent)</div><div class="line">     */</div><div class="line">    atomic_set(&amp;tsk-&gt;usage, <span class="number">2</span>); <span class="comment">// 设置进程块的使用计数。</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_BLK_DEV_IO_TRACE</span></div><div class="line">    tsk-&gt;btrace_seq = <span class="number">0</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">    tsk-&gt;splice_pipe = <span class="literal">NULL</span>;</div><div class="line">    tsk-&gt;task_frag.page = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line">    account_kernel_stack(ti, <span class="number">1</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> tsk;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过上面的代码，可以总结出fork的工作的基本流程是：<br><img src="http://ww1.sinaimg.cn/large/af1cab2fgy1g1eag05v64j20h80kwgna.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原创作品转载请注明出处 + &lt;a href=&quot;https://github.com/mengning/linuxkernel/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/mengning/linuxkernel/&lt;
+    
+    </summary>
+    
+      <category term="linux,mykernel,进程创建和切换,可执行程序的加载和执行" scheme="http://hillychen.github.io/categories/linux-mykernel-%E8%BF%9B%E7%A8%8B%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%87%E6%8D%A2-%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C/"/>
+    
+    
+      <category term="linux" scheme="http://hillychen.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>跟踪分析Linux内核5.0系统调用处理过程</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2019/03/18/%E8%B7%9F%E8%B8%AA%E5%88%86%E6%9E%90Linux%E5%86%85%E6%A0%B85-0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2019/03/18/跟踪分析Linux内核5-0系统调用处理过程/</id>
+    <link href="http://hillychen.github.io/2019/03/18/%E8%B7%9F%E8%B8%AA%E5%88%86%E6%9E%90Linux%E5%86%85%E6%A0%B85-0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/"/>
+    <id>http://hillychen.github.io/2019/03/18/跟踪分析Linux内核5-0系统调用处理过程/</id>
     <published>2019-03-18T13:22:41.000Z</published>
     <updated>2019-03-18T15:36:33.641Z</updated>
     
@@ -72,17 +180,17 @@
     
     </summary>
     
-      <category term="linux,mykernel,操作系统" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/linux-mykernel-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+      <category term="linux,mykernel,操作系统" scheme="http://hillychen.github.io/categories/linux-mykernel-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
     
-      <category term="linux" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/linux/"/>
+      <category term="linux" scheme="http://hillychen.github.io/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>基于mykernel完成时间片轮询多道进程的简单内核</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2019/03/11/%E5%9F%BA%E4%BA%8Emykernel%E5%AE%8C%E6%88%90%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%AF%A2%E5%A4%9A%E9%81%93%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%AE%80%E5%8D%95%E5%86%85%E6%A0%B8/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2019/03/11/基于mykernel完成时间片轮询多道进程的简单内核/</id>
+    <link href="http://hillychen.github.io/2019/03/11/%E5%9F%BA%E4%BA%8Emykernel%E5%AE%8C%E6%88%90%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%AF%A2%E5%A4%9A%E9%81%93%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%AE%80%E5%8D%95%E5%86%85%E6%A0%B8/"/>
+    <id>http://hillychen.github.io/2019/03/11/基于mykernel完成时间片轮询多道进程的简单内核/</id>
     <published>2019-03-11T11:48:53.000Z</published>
     <updated>2019-03-11T12:03:13.431Z</updated>
     
@@ -126,17 +234,17 @@
     
     </summary>
     
-      <category term="linux,mykernel,操作系统" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/linux-mykernel-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+      <category term="linux,mykernel,操作系统" scheme="http://hillychen.github.io/categories/linux-mykernel-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
     
-      <category term="linux" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/linux/"/>
+      <category term="linux" scheme="http://hillychen.github.io/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>linux下gdb调试c/cpp程序</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2019/01/03/linux%E4%B8%8Bgdb%E8%B0%83%E8%AF%95c-cpp%E7%A8%8B%E5%BA%8F/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2019/01/03/linux下gdb调试c-cpp程序/</id>
+    <link href="http://hillychen.github.io/2019/01/03/linux%E4%B8%8Bgdb%E8%B0%83%E8%AF%95c-cpp%E7%A8%8B%E5%BA%8F/"/>
+    <id>http://hillychen.github.io/2019/01/03/linux下gdb调试c-cpp程序/</id>
     <published>2019-01-03T15:27:18.000Z</published>
     <updated>2019-01-03T15:39:40.100Z</updated>
     
@@ -162,17 +270,17 @@
     
     </summary>
     
-      <category term="linux,debug,c,cpp" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/linux-debug-c-cpp/"/>
+      <category term="linux,debug,c,cpp" scheme="http://hillychen.github.io/categories/linux-debug-c-cpp/"/>
     
     
-      <category term="linux" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/linux/"/>
+      <category term="linux" scheme="http://hillychen.github.io/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>Vue.js学习笔记</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2018/03/27/Vue-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2018/03/27/Vue-js学习笔记/</id>
+    <link href="http://hillychen.github.io/2018/03/27/Vue-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://hillychen.github.io/2018/03/27/Vue-js学习笔记/</id>
     <published>2018-03-27T10:05:02.000Z</published>
     <updated>2018-03-27T10:40:40.954Z</updated>
     
@@ -187,17 +295,17 @@
     
     </summary>
     
-      <category term="sketch design" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/sketch-design/"/>
+      <category term="sketch design" scheme="http://hillychen.github.io/categories/sketch-design/"/>
     
     
-      <category term="Vue" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/Vue/"/>
+      <category term="Vue" scheme="http://hillychen.github.io/tags/Vue/"/>
     
   </entry>
   
   <entry>
     <title>利用Flask+Nginx+Gunicorn+Supervisor在Ubuntu16.04上部署web项目</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2018/01/19/%E5%88%A9%E7%94%A8Flask-Nginx-Gunicorn-Supervisor%E5%9C%A8Ubuntu16-04%E4%B8%8A%E9%83%A8%E7%BD%B2web%E9%A1%B9%E7%9B%AE/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2018/01/19/利用Flask-Nginx-Gunicorn-Supervisor在Ubuntu16-04上部署web项目/</id>
+    <link href="http://hillychen.github.io/2018/01/19/%E5%88%A9%E7%94%A8Flask-Nginx-Gunicorn-Supervisor%E5%9C%A8Ubuntu16-04%E4%B8%8A%E9%83%A8%E7%BD%B2web%E9%A1%B9%E7%9B%AE/"/>
+    <id>http://hillychen.github.io/2018/01/19/利用Flask-Nginx-Gunicorn-Supervisor在Ubuntu16-04上部署web项目/</id>
     <published>2018-01-19T12:21:44.000Z</published>
     <updated>2018-01-19T16:25:41.890Z</updated>
     
@@ -284,14 +392,14 @@
     </summary>
     
     
-      <category term="Flask,Nginx,Gunicorn,Supervisor,Ubuntu16.04" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/Flask-Nginx-Gunicorn-Supervisor-Ubuntu16-04/"/>
+      <category term="Flask,Nginx,Gunicorn,Supervisor,Ubuntu16.04" scheme="http://hillychen.github.io/tags/Flask-Nginx-Gunicorn-Supervisor-Ubuntu16-04/"/>
     
   </entry>
   
   <entry>
     <title>Python笔记</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2018/01/02/Python%E7%AC%94%E8%AE%B0/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2018/01/02/Python笔记/</id>
+    <link href="http://hillychen.github.io/2018/01/02/Python%E7%AC%94%E8%AE%B0/"/>
+    <id>http://hillychen.github.io/2018/01/02/Python笔记/</id>
     <published>2018-01-02T06:17:36.000Z</published>
     <updated>2018-01-11T12:55:37.077Z</updated>
     
@@ -384,14 +492,14 @@
     </summary>
     
     
-      <category term="Python" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/Python/"/>
+      <category term="Python" scheme="http://hillychen.github.io/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>计算机网络</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/09/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/09/24/计算机网络/</id>
+    <link href="http://hillychen.github.io/2017/09/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    <id>http://hillychen.github.io/2017/09/24/计算机网络/</id>
     <published>2017-09-24T13:28:54.000Z</published>
     <updated>2017-09-24T14:18:29.000Z</updated>
     
@@ -422,17 +530,17 @@
     
     </summary>
     
-      <category term="计算机基础" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="http://hillychen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="计算机基础" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="http://hillychen.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>sketch学习笔记以及设计相关知识积累</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/05/29/sketch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BB%A5%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%A7%AF%E7%B4%AF/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/05/29/sketch学习笔记以及设计相关知识积累/</id>
+    <link href="http://hillychen.github.io/2017/05/29/sketch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BB%A5%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%A7%AF%E7%B4%AF/"/>
+    <id>http://hillychen.github.io/2017/05/29/sketch学习笔记以及设计相关知识积累/</id>
     <published>2017-05-29T14:35:17.000Z</published>
     <updated>2017-06-10T14:58:42.000Z</updated>
     
@@ -479,17 +587,17 @@
     
     </summary>
     
-      <category term="sketch design" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/sketch-design/"/>
+      <category term="sketch design" scheme="http://hillychen.github.io/categories/sketch-design/"/>
     
     
-      <category term="sketch design" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/sketch-design/"/>
+      <category term="sketch design" scheme="http://hillychen.github.io/tags/sketch-design/"/>
     
   </entry>
   
   <entry>
     <title>css学习笔记</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/04/22/css学习笔记/</id>
+    <link href="http://hillychen.github.io/2017/04/22/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://hillychen.github.io/2017/04/22/css学习笔记/</id>
     <published>2017-04-22T06:53:00.000Z</published>
     <updated>2017-07-16T09:28:51.000Z</updated>
     
@@ -714,17 +822,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="css" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/css/"/>
+      <category term="css" scheme="http://hillychen.github.io/categories/css/"/>
     
     
-      <category term="css" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/css/"/>
+      <category term="css" scheme="http://hillychen.github.io/tags/css/"/>
     
   </entry>
   
   <entry>
     <title>c/cpp学习笔记</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/04/16/c-cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/04/16/c-cpp学习笔记/</id>
+    <link href="http://hillychen.github.io/2017/04/16/c-cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://hillychen.github.io/2017/04/16/c-cpp学习笔记/</id>
     <published>2017-04-16T09:03:39.000Z</published>
     <updated>2017-04-16T14:33:58.000Z</updated>
     
@@ -765,17 +873,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="c/cpp" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/c-cpp/"/>
+      <category term="c/cpp" scheme="http://hillychen.github.io/categories/c-cpp/"/>
     
     
-      <category term="c/cpp" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/c-cpp/"/>
+      <category term="c/cpp" scheme="http://hillychen.github.io/tags/c-cpp/"/>
     
   </entry>
   
   <entry>
     <title>Hexo博客迁移部署到oschina(开源中国)&amp;&amp;codingNet(码市)</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/04/09/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E9%83%A8%E7%BD%B2%E5%88%B0oschina-%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD-coding-%E7%A0%81%E4%BA%91/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/04/09/Hexo博客迁移部署到oschina-开源中国-coding-码云/</id>
+    <link href="http://hillychen.github.io/2017/04/09/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E9%83%A8%E7%BD%B2%E5%88%B0oschina-%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD-coding-%E7%A0%81%E4%BA%91/"/>
+    <id>http://hillychen.github.io/2017/04/09/Hexo博客迁移部署到oschina-开源中国-coding-码云/</id>
     <published>2017-04-08T16:14:29.000Z</published>
     <updated>2017-04-08T16:32:56.000Z</updated>
     
@@ -805,17 +913,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="博客迁移" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
+      <category term="博客迁移" scheme="http://hillychen.github.io/categories/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
     
     
-      <category term="博客迁移" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
+      <category term="博客迁移" scheme="http://hillychen.github.io/tags/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/"/>
     
   </entry>
   
   <entry>
     <title>计算机专业基础知识</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/04/07/计算机专业基础知识/</id>
+    <link href="http://hillychen.github.io/2017/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://hillychen.github.io/2017/04/07/计算机专业基础知识/</id>
     <published>2017-04-07T15:12:31.000Z</published>
     <updated>2017-04-09T07:25:50.000Z</updated>
     
@@ -844,17 +952,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="计算机基础" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="http://hillychen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="计算机基础" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+      <category term="计算机基础" scheme="http://hillychen.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>设计师和程序员必备：全世界最著名的 icons 网站</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/04/05/%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%92%8C%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%EF%BC%9A%E5%85%A8%E4%B8%96%E7%95%8C%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84-icons-%E7%BD%91%E7%AB%99/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/04/05/设计师和程序员必备：全世界最著名的-icons-网站/</id>
+    <link href="http://hillychen.github.io/2017/04/05/%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%92%8C%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%EF%BC%9A%E5%85%A8%E4%B8%96%E7%95%8C%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84-icons-%E7%BD%91%E7%AB%99/"/>
+    <id>http://hillychen.github.io/2017/04/05/设计师和程序员必备：全世界最著名的-icons-网站/</id>
     <published>2017-04-05T15:05:33.000Z</published>
     <updated>2017-07-01T15:29:14.000Z</updated>
     
@@ -886,21 +994,21 @@ p {color:blue;}
     
     </summary>
     
-      <category term="UI" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/UI/"/>
+      <category term="UI" scheme="http://hillychen.github.io/categories/UI/"/>
     
     
-      <category term="UI" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/UI/"/>
+      <category term="UI" scheme="http://hillychen.github.io/tags/UI/"/>
     
   </entry>
   
   <entry>
     <title>学习vue.js实现的一个小demo</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/03/18/%E5%AD%A6%E4%B9%A0vue-js%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8Fdemo/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/03/18/学习vue-js实现的一个小demo/</id>
+    <link href="http://hillychen.github.io/2017/03/18/%E5%AD%A6%E4%B9%A0vue-js%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8Fdemo/"/>
+    <id>http://hillychen.github.io/2017/03/18/学习vue-js实现的一个小demo/</id>
     <published>2017-03-18T14:18:13.000Z</published>
     <updated>2017-03-18T14:25:07.000Z</updated>
     
-    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html" target="_blank" rel="external">demo,点击预览</a></p>
+    <content type="html"><![CDATA[<p>学习vue.js最好的方法，当然首要就是<a href="https://cn.vuejs.org" target="_blank" rel="external">vue官方文档</a>，作为一个由中国开发者开发的一个前端框架，目前github上的start数量已经四千多，所以还是比较强悍的，我在学习的时候，边看文档，便去实现一个特定场景的功能，就是对一个表格数据进行增、删、改、查、搜索;鄙人水平有限，仅供入门者交流学习，望大神别吐槽！哈哈！<br><a href="http://hillychen.github.io/vue/html/admin.html">demo,点击预览</a></p>
 <h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="界面设计"><a href="#界面设计" class="headerlink" title="界面设计"></a>界面设计</h4><h4 id="vue-js在本demo的核心代码实现"><a href="#vue-js在本demo的核心代码实现" class="headerlink" title="vue.js在本demo的核心代码实现"></a>vue.js在本demo的核心代码实现</h4>]]></content>
     
     <summary type="html">
@@ -914,8 +1022,8 @@ p {color:blue;}
   
   <entry>
     <title>PHP学习总结</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/03/18/PHP学习总结/</id>
+    <link href="http://hillychen.github.io/2017/03/18/PHP%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>http://hillychen.github.io/2017/03/18/PHP学习总结/</id>
     <published>2017-03-18T10:40:32.000Z</published>
     <updated>2017-03-19T15:06:02.000Z</updated>
     
@@ -1212,17 +1320,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="PHP" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/PHP/"/>
+      <category term="PHP" scheme="http://hillychen.github.io/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/PHP/"/>
+      <category term="PHP" scheme="http://hillychen.github.io/tags/PHP/"/>
     
   </entry>
   
   <entry>
     <title>算法学习01</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/03/12/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A001/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/03/12/算法学习01/</id>
+    <link href="http://hillychen.github.io/2017/03/12/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A001/"/>
+    <id>http://hillychen.github.io/2017/03/12/算法学习01/</id>
     <published>2017-03-12T14:08:09.000Z</published>
     <updated>2017-06-02T16:23:06.000Z</updated>
     
@@ -1240,17 +1348,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="algorithm" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/algorithm/"/>
+      <category term="algorithm" scheme="http://hillychen.github.io/categories/algorithm/"/>
     
     
-      <category term="algorithm" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/algorithm/"/>
+      <category term="algorithm" scheme="http://hillychen.github.io/tags/algorithm/"/>
     
   </entry>
   
   <entry>
     <title>javascript学习总结</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/03/12/javascript%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/03/12/javascript学习总结/</id>
+    <link href="http://hillychen.github.io/2017/03/12/javascript%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>http://hillychen.github.io/2017/03/12/javascript学习总结/</id>
     <published>2017-03-12T14:06:51.000Z</published>
     <updated>2017-03-16T12:56:34.000Z</updated>
     
@@ -1258,17 +1366,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="javascript" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/javascript/"/>
+      <category term="javascript" scheme="http://hillychen.github.io/categories/javascript/"/>
     
     
-      <category term="javascript" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/javascript/"/>
+      <category term="javascript" scheme="http://hillychen.github.io/tags/javascript/"/>
     
   </entry>
   
   <entry>
     <title>Git总结</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/03/12/Git%E6%80%BB%E7%BB%93/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/03/12/Git总结/</id>
+    <link href="http://hillychen.github.io/2017/03/12/Git%E6%80%BB%E7%BB%93/"/>
+    <id>http://hillychen.github.io/2017/03/12/Git总结/</id>
     <published>2017-03-12T14:06:27.000Z</published>
     <updated>2017-03-12T14:38:11.000Z</updated>
     
@@ -1276,17 +1384,17 @@ p {color:blue;}
     
     </summary>
     
-      <category term="git" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/git/"/>
+      <category term="git" scheme="http://hillychen.github.io/categories/git/"/>
     
     
-      <category term="git" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/git/"/>
+      <category term="git" scheme="http://hillychen.github.io/tags/git/"/>
     
   </entry>
   
   <entry>
     <title>Mysql学习总结</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/03/12/Mysql学习总结/</id>
+    <link href="http://hillychen.github.io/2017/03/12/Mysql%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>http://hillychen.github.io/2017/03/12/Mysql学习总结/</id>
     <published>2017-03-12T14:05:44.000Z</published>
     <updated>2018-01-29T06:01:40.267Z</updated>
     
@@ -1674,28 +1782,10 @@ p {color:blue;}
     
     </summary>
     
-      <category term="Mysql" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/Mysql/"/>
+      <category term="Mysql" scheme="http://hillychen.github.io/categories/Mysql/"/>
     
     
-      <category term="Mysql" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/Mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java学习</title>
-    <link href="https://gitee.com/chenxushan/chenxushan.git/2017/03/12/Java/"/>
-    <id>https://gitee.com/chenxushan/chenxushan.git/2017/03/12/Java/</id>
-    <published>2017-03-12T10:00:35.000Z</published>
-    <updated>2017-03-12T14:10:59.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="java" scheme="https://gitee.com/chenxushan/chenxushan.git/categories/java/"/>
-    
-    
-      <category term="java" scheme="https://gitee.com/chenxushan/chenxushan.git/tags/java/"/>
+      <category term="Mysql" scheme="http://hillychen.github.io/tags/Mysql/"/>
     
   </entry>
   
